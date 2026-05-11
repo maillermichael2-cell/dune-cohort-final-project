@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="content">
+    <div class="formHolder">
+        <header class="formHeader">
+            <a class="a2" href="{% url 'login' %}">login</a>
+            <h1>SignUp</h1>
+        </header>
+        <form method="POST" class="form">
+            {% csrf_token %}
+                <div class="input">
+                    {{form.as_p}}
+                </div>
+            
+            <button class="submit" type="submit">Register</button>
+        </form>
+        <div class="auth-footer">
+            <a style="text-decoration: none;color: black;" href="{% url 'login' %}">Already have an account Login</a></p>
+        </div>
+    </div>
+    <div class="sideContent">
+
+    </div>
+</div>
+{% endblock %}

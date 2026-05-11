@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="landingpage">
+    <h1>Welcome to DomusHub</h1>
+    <!--later add an extra content container sideways to welcome container-->
+    <!--section adding -->
+    <div class="projectExplanation">
+
+    </div>
+    <div class="links">
+        <a class="getStarted" href="{% url 'login' %}">
+            <button class="getStartedBtn">
+                Get Started
+            </button>
+        </a>
+    </div>
+</div>
+{% endblock %}

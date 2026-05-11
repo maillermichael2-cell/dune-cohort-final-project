@@ -1,0 +1,56 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DomusHub Home</title>
+    <link rel='stylesheet' href="{% static 'css/main.css' %}">
+    <link rel="stylesheet" href="{% static 'css/responsive.css' %}">
+    
+    <!--fontawesome cdn link section !!! -->
+</head>
+<body class="body">
+    <script src="{% static 'js/main.js' %}"></script>
+    <div class="wrapper">
+        <header class="header">
+            <div class="logo">Logo</div>
+            <nav class="nav2">
+                {% if request.user.is_authenticated %}
+                <div class="user">
+                    <button class="sideBarBtn">///</button>
+                    <div id="sidebar" class="sideBar">
+                        <div class="sideBarHeader">
+                            <div class="userWelcome">Hello {{request.user.username}}</div>
+                        </div>
+                        <div class="menuList">
+                            
+                        </div>
+                        <form action="{% url 'logout' %}" method="POST" class="logoutForm">
+                            {% csrf_token %}
+                            <button class="logout2" type="submit">Logout</button>
+                        </form>
+                    </div>
+                </div>
+                {% else %}
+                    <div class="linksHolder">
+                        <a class="links3" href="{% url 'login' %}">Login</a>
+                        <a class="links3" href="{% url 'register' %}">Register</a>
+                    </div>
+                {% endif %}
+            </nav>
+        </header>
+        <main>
+            {% if messages %}
+            {% for message in messages %}
+                <div class='alert alert-{{ message.tags }}'>
+                    {{ message }}
+                </div>
+            {% endfor %}
+            {% endif %}
+            {% block content %}
+            {% endblock %}
+        </main>
+    </div>
+</body>
+</html>

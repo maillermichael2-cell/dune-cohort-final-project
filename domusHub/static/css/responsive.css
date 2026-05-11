@@ -1,0 +1,63 @@
+/*
+    screen breakpoints :
+        600px 
+        768px
+        992px
+        1200px
+*/
+
+
+/*600px*/
+@media only screen and (min-width:600px){
+
+}
+
+/*768px*/
+@media only screen and (min-width:768px){
+
+}
+
+/*992px*/
+@media only screen and (min-width:992px){
+    /*----------base section start-----------------*/
+        .nav2{justify-content: space-around;}
+    /*----------base section end-------------------*/
+    /*----------landing page section start-----------*/
+        .getStartedBtn{
+            width: 35%;
+        }
+        .projectExplanation{
+            display: flex;
+            border: 1px solid red;
+            width: 70%;height: 400px;
+            background-color: white;border-radius: 10px;
+        }
+    /*----------landing page section end-------------*/
+
+    /*----------------------form section start------------------*/
+        .formHolder{
+            width: 40%;margin-top: 50px;
+        }
+        .linksHolder{
+            display: none;
+        }
+        .content{
+            width: 100%;height: auto;
+            display: flex;justify-content: center;
+            align-items: center;gap: 30px;margin-top: 50px;
+        }
+        .sideContent{
+            border: 1px solid greenyellow;
+            display: flex;border-radius: 10px;
+            width: 50%;height: 70vh;
+        }
+        .input input{
+            height: 40px;
+        }
+    /*----------------------form section end--------------------*/
+}
+
+/*1200px*/
+@media only screen and (min-width:992px){
+
+}

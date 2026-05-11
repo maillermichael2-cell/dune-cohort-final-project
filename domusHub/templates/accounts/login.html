@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="content">
+    <div class="formHolder">
+        <header class="formHeader">
+        <a class="a2" href="{% url 'home' %}">Back to home</a>
+        <h2>Sign in to DomusHub</h2>
+        </header>
+        <form method="POST" class="form">
+            {% csrf_token %}
+                <div class="input">
+                    {{form.as_p}}
+                </div>
+            <button class="submit" type="submit">Login</button>
+        </form>
+
+        <p>Follow us on </p>
+        <div class="socialMedia">
+
+        </div>
+        
+        <div class="links2">
+            <a class="a" href="{% url 'register' %}">Dont have an account register</a>
+        </div>
+    </div>
+
+    <!--side bar section start------------------------------------->
+    <div class="sideContent">
+
+    </div>
+</div>
+{% endblock %}

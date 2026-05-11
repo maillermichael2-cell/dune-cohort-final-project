@@ -1,0 +1,196 @@
+/* Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Base */
+.body {
+  font-family: Arial, sans-serif;
+  line-height: 1.6;
+  background: white;
+  color: black;
+}
+
+
+
+/*-------------------base.html section start----------------*/
+.header{
+  width: 100%;height: 50px;display: flex;justify-content: center;align-items: center;
+  gap: 10px;position: fixed;top: 0%;left: 0%;right: 0%;background-color: white;
+}
+.header p{color: greenyellow;font-weight: bolder;font-size:15px;}
+.nav2{
+  width: 80%;height: 50px;display: flex;justify-content: end;align-items: center;
+  gap: 110px;
+}
+.logo{
+  width: 20%;height: 50px;display: flex;justify-content: center;align-items: center;
+  color: greenyellow;
+}
+.linksHolder{
+  width: 80%;height: 50px;display: flex;justify-content: space-around;
+  align-items: center;
+}.links3{
+  border: 1px solid greenyellow;
+  width: 40%;height: 30px;border-radius:3px;background-color: greenyellow;
+  color: black;display: flex;justify-content: center;align-items: center;
+  color: black;text-decoration:none;font-size: 15px;font-weight: bold;
+}
+.logout2{
+  width: 60%;height: 35px;background-color:greenyellow;
+  color: black;border: transparent;border-radius: 2px;
+  margin-right: 0%;font-size: 10px;font-weight: bolder;
+}
+.logoutForm{
+  width: 100%;height: auto;display: flex;justify-content: center;
+  align-items: center;flex-direction: column;margin-bottom: 10px;margin-top: 10px;
+}
+.user{
+  width: 100%;height: 50px;display: flex;justify-content: end;
+  align-items: center;
+}
+.sideBarBtn{
+  width: 25%;height: 40px;border:2px solid greenyellow;border-radius: 3px;background-color: white;
+  color:black;margin-right: 5px;
+}
+.sideBar{
+  border: 1px solid greenyellow;
+  width: 70%;height: auto;position: fixed;top: 60px;right: 0px;
+  border-radius: 10px 0px 0px 10px ;display: flex;flex-direction: column;
+  justify-content: start;align-items: center;background-color: white;
+}
+.sideBarHeader{
+  width: 100%;height: auto;display: flex;justify-content: center;align-items: center;
+}
+.userWelcome{
+  width: 100%;height: auto;padding-top: 5px;border-bottom: 1px soli\Fd greenyellow;
+  display: flex;justify-content: center;align-items: center;
+}
+.menuList{
+  width: 100%;height: 400px;display: flex;flex-direction: column;justify-content: start;
+  align-items: center;color: black;
+}
+/*-------------------base.html section end------------------*/
+
+
+/*-------------------landingpage.html section start-------------------*/
+.landingpage{
+  border: transparent;
+  width: 100%;height: 90vh;background-color:transparent;
+  display: flex;justify-content: center;align-items: center;flex-direction: column;
+  gap: 30px;margin-top: 50px;
+}
+.projectExplanation{
+  display: none;
+}
+.links{
+  border: transparent;
+  width: 100%;height: auto;display: flex;justify-content: center;align-items: center;
+}
+.getStarted{
+  text-decoration: none;
+  width: 50%;height: auto;display: flex;justify-content: center;align-items: center;
+}
+.getStartedBtn{
+  border: transparent;
+  display: flex;justify-content: center;align-items: center;
+  color: black;width: 100%;height: 50px;border-radius: 5px;
+  background-color: greenyellow;color: black;font-weight: bolbder;
+  font-size: 15px;
+}
+/*-------------------landingpage.html section end---------------------*/
+
+
+
+/*-------------------login page section start----------------------*/
+.content{
+  background-color: white;width: 100%;height: auto;
+  margin-top: 50px;
+}
+.logout{
+  width: 100%;height: 90vh;display: flex;justify-content: center;
+  align-items: center;flex-direction: column;gap: 25px;
+}
+.logout p{color: red;}
+.logout form{
+  width: 50%;height: auto;display: flex;justify-content: center;
+  align-items: center;
+}
+.logout form button{
+  width: 70%;height: 45px;background-color: greenyellow;font-weight: bolder;
+  border-radius: 5px;
+}
+.formHolder{
+  width: 100%;height: auto;display: flex;
+  flex-direction: column;justify-content: center;align-items: center;
+  background-color: white;padding-top: 20px;padding-bottom: 20px;
+  margin-top: 50px;
+}.form{
+  width: 100%;height: auto;display: flex;flex-direction: column;justify-content: center;
+  align-items: center;margin-bottom: 50px;padding-top: 20px;
+}
+.input{
+  width: 95%;height: auto;
+  display: flex;flex-direction: column;justify-content: start;align-items: center;
+  gap: 15px;
+}
+.input ul{display: none;}
+.helptext{
+  display: none;
+}
+.input input{
+  width: 100%;height: 60px;padding-left: 10px;background:white;border: transparent;
+  border-radius: 5px;font-size: 15px;border: 3px solid black;color: black;
+  border: 1px solid gray;
+}.input input::placeholder{color: black;}
+.input p{
+  width: 100%;height: auto;
+}
+.input p label{font-size: 20px;margin-bottom: 20px;}
+.input span a {
+  color: white;text-decoration: none;width: 100%;height:auto;
+  margin-top: 20px;
+}
+.submit{
+  border: transparent;
+  margin-top: 50px;width: 95%;height: 55px;background-color: greenyellow;
+  color: black;border-radius: 5px;font-weight: bolder;
+}
+.links2{
+  width: 80%;height: auto;display: flex;justify-content: space-around;align-items: center;
+}
+.a{
+  color:black;text-decoration: none;
+}
+.a2{
+  font-size: 15px;text-decoration: none;color: black;
+}
+.formHeader{
+  width: 100%;height: 40px;display: flex;justify-content: space-around;align-items: center;
+}
+.socialMedia{
+  border: 1px solid greenyellow;
+  width: 90%;height: 60px;display: flex;justify-content: space-around;
+  align-items: center;margin-top: 0px;margin-bottom: 15px;
+}
+.sideContent{
+  border: 1px solid red;
+  display: none;
+}
+/*-------------------login page section end------------------------*/
+
+/*-------------------dashboard page section start----------------*/
+.dashboardContainer{
+  border: 1px solid white;
+  width: 100%;height: auto;
+}
+.backgroundImg{
+  width: 100%;height: 100vh;object-fit: cover;object-position: center;
+  position: fixed;top: 0%;left: 0%;right: 0%;z-index: -1;
+}
+/*-------------------dashboard page section end------------------*/
+
+
+
