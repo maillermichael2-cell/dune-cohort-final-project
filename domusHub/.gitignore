@@ -1,5 +1,5 @@
-env
-media 
+env/
+media/
 db.sqlite3
-media
-__pycache__
+__pycache__/
+*.py[cod]
