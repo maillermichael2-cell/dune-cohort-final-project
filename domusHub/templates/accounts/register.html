@@ -5,22 +5,47 @@
     <div class="formHolder">
         <header class="formHeader">
             <a class="a2" href="{% url 'login' %}">login</a>
-            <h1>SignUp</h1>
+            <h1>Sign Up</h1>
         </header>
-        <form method="POST" class="form">
+        <form method="POST" class="form" id="register-form">
             {% csrf_token %}
-                <div class="input">
-                    {{form.as_p}}
-                </div>
-            
+            <div class="input">
+                {{ form.as_p }}
+            </div>
             <button class="submit" type="submit">Register</button>
         </form>
         <div class="auth-footer">
-            <a style="text-decoration: none;color: black;" href="{% url 'login' %}">Already have an account Login</a></p>
+            <a style="text-decoration: none;color: black;" href="{% url 'login' %}">Already have an account? Login</a>
         </div>
     </div>
-    <div class="sideContent">
-
-    </div>
+    <div class="sideContent"></div>
 </div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const roleField = document.getElementById('id_role');
+        const fieldsToToggle = ['license_number', 'agency_name'];
+
+        function getFieldWrapper(name) {
+            const field = document.querySelector('[name="' + name + '"]');
+            return field ? field.closest('p') : null;
+        }
+
+        function updateAgentFields() {
+            const role = roleField ? roleField.value : '';
+            const showAgentFields = role === 'ESTATE AGENT';
+            fieldsToToggle.forEach(function (name) {
+                const wrapper = getFieldWrapper(name);
+                if (wrapper) {
+                    wrapper.style.display = showAgentFields ? 'block' : 'none';
+                }
+            });
+        }
+
+        if (roleField) {
+            roleField.addEventListener('change', updateAgentFields);
+            updateAgentFields();
+        }
+    });
+</script>
 {% endblock %}

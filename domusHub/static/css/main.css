@@ -52,7 +52,7 @@
   align-items: center;
 }
 .sideBarBtn{
-  width: 25%;height: 40px;border:2px solid greenyellow;border-radius: 3px;background-color: white;
+  width: 20%;height: 40px;border:2px solid greenyellow;border-radius: 3px;background-color: black;
   color:black;margin-right: 5px;
 }
 .sideBar{
@@ -60,6 +60,7 @@
   width: 70%;height: auto;position: fixed;top: 60px;right: 0px;
   border-radius: 10px 0px 0px 10px ;display: flex;flex-direction: column;
   justify-content: start;align-items: center;background-color: white;
+  display: none;
 }
 .sideBarHeader{
   width: 100%;height: auto;display: flex;justify-content: center;align-items: center;
@@ -183,12 +184,17 @@
 
 /*-------------------dashboard page section start----------------*/
 .dashboardContainer{
-  border: 1px solid white;
-  width: 100%;height: auto;
+  border: 1px solid red;
+  width: 100%;height: auto;margin-top: 50px;display: flex;flex-direction: column;
+  justify-content: start;align-items: center;
 }
 .backgroundImg{
   width: 100%;height: 100vh;object-fit: cover;object-position: center;
   position: fixed;top: 0%;left: 0%;right: 0%;z-index: -1;
+}
+.categories{
+  border:1px solid greenyellow;
+  width: 100%;height: 200px;
 }
 /*-------------------dashboard page section end------------------*/
 

@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    {%if form.instance.pk%}
+        Edit Product
+    {%else%}
+        Add Product
+    {%endif%}bc
+{% endblock %}
+
+{%block content%}
+    <h2>
+        {%if form.instance.pk%}
+            Edit Produc
+        {%else%}
+            Add New Product
+        {%endif%}
+    </h2>
+
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{form.as_p}}
+
+        <button type="submit">
+            {% if form.instance.pk %}
+                update Product
+            {% else %}
+                save Product
+            {% endif %}
+        </button>
+    </form>
+
+    <!--display errors-->
+    {% if form.errors %}
+        <div style="margin-top: 20px;color: red;">
+            <h4>Errors:</h4>
+            <ul>
+                {% for fields, errors in form.errors.items %}
+                    {% for error in errors %}
+                        <li><strong>{{ fields }}</strong>: {{error}}</li>
+                    {% endfor %}
+                {% endfor %}
+            </ul>
+        </div>
+    {% endif %}
+
+    <br>
+    <a href="{% url 'property_list' %}">Back to Product</a>
+{% endblock %}

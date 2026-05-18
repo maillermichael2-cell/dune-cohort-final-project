@@ -1,14 +1,28 @@
 {% extends 'base.html' %}
-{% load static %}
 
 {% block content %}
-    <div class="dashboardContainer">
-        <form class="searchBarForm">
-            <input type="text" name="search" id="search" placeholder="Search here">
-        </form>
-        <div class="categories">
-            <h1>check categories</h1>
-        </div>
-        <h1>lists of the houses with pics</h1>
+<div class="dashboard-home" style="padding: 40px;">
+    <h1>Welcome to DomusHub</h1>
+    <p>Browse property categories, search listings, or sign in to post properties if you are an estate agent.</p>
+
+    <div class="dashboard-links">
+        <a href="{% url 'property_list' %}">View all properties</a>
+        <a href="{% url 'individual_dashboard' %}">Individual dashboard</a>
+        <a href="{% url 'agent_dashboard' %}">Agent dashboard</a>
     </div>
+
+    <h2>Latest properties</h2>
+    <div class="property-grid">
+        {% for item in properties %}
+            <div class="property-card">
+                <h3>{{ item.title }}</h3>
+                <p>{{ item.property_address }}</p>
+                <p><strong>{{ item.category.name }}</strong></p>
+                <p>{{ item.price }}</p>
+            </div>
+        {% empty %}
+            <p>No recent properties available yet.</p>
+        {% endfor %}
+    </div>
+</div>
 {% endblock %}

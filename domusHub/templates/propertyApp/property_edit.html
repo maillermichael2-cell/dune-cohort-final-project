@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="property-edit-page" style="padding: 40px; max-width: 700px; margin: 0 auto;">
+    <h1>Edit Property</h1>
+
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert alert-{{ message.tags }}">{{ message }}</div>
+        {% endfor %}
+    {% endif %}
+
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Save changes</button>
+    </form>
+
+    <p><a href="{% url 'property_detail' property.pk %}">Back to property</a></p>
+</div>
+{% endblock %}

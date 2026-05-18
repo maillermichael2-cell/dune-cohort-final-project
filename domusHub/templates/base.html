@@ -11,15 +11,14 @@
     <!--fontawesome cdn link section !!! -->
 </head>
 <body class="body">
-    <script src="{% static 'js/main.js' %}"></script>
     <div class="wrapper">
         <header class="header">
             <div class="logo">Logo</div>
             <nav class="nav2">
                 {% if request.user.is_authenticated %}
                 <div class="user">
-                    <button class="sideBarBtn">///</button>
-                    <div id="sidebar" class="sideBar">
+                    <button onclick="toggleDiv()" class="sideBarBtn">///</button>
+                    <div id="sideBar" class="sideBar">
                         <div class="sideBarHeader">
                             <div class="userWelcome">Hello {{request.user.username}}</div>
                         </div>
@@ -52,5 +51,6 @@
             {% endblock %}
         </main>
     </div>
+    <script src="{% static 'js/main.js' %}"></script>
 </body>
 </html>

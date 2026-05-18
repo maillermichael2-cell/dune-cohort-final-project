@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="property-detail-page" style="padding: 40px; max-width: 900px; margin: 0 auto;">
+    <div class="property-detail-header" style="margin-bottom: 24px;">
+        <h1>{{ property.title }}</h1>
+        <p><strong>Category:</strong> {{ property.category.name }}</p>
+        <p><strong>Location:</strong> {{ property.property_address }}</p>
+        <p><strong>Status:</strong> {{ property.get_status_display }}</p>
+        <p><strong>Price:</strong> {{ property.price }}</p>
+        <p><strong>Posted:</strong> {{ property.created_at|date:'F j, Y' }}</p>
+    </div>
+
+    {% if property.image %}
+    <div class="property-detail-image" style="margin-bottom: 24px;">
+        <img src="{{ property.image.url }}" alt="{{ property.title }}" style="width: 100%; border-radius: 8px; object-fit: cover;" />
+    </div>
+    {% endif %}
+
+    <div class="property-detail-description" style="margin-bottom: 24px;">
+        <h2>Description</h2>
+        <p>{{ property.description }}</p>
+    </div>
+
+    <div class="property-detail-meta" style="margin-bottom: 16px;">
+        <p><strong>Category:</strong> {{ property.category.name }}</p>
+        <p><strong>Address:</strong> {{ property.property_address }}</p>
+        <p><strong>Price:</strong> {{ property.price }}</p>
+    </div>
+
+    <div class="property-detail-actions">
+        <a href="{% url 'property_list' %}" style="margin-right: 16px;">Back to listings</a>
+        <a href="{% url 'property_list_by_category' property.category.slug %}" style="margin-right: 16px;">More in {{ property.category.name }}</a>
+        {% if request.user.is_authenticated and property.owner == request.user %}
+            <a href="{% url 'property_edit' property.pk %}" style="margin-right: 16px;">Edit property</a>
+            <form method="post" action="{% url 'property_delete' property.pk %}" style="display:inline;">
+                {% csrf_token %}
+                <button type="submit" style="background:none; border:1px solid red; color:red; padding:6px 10px;">Delete property</button>
+            </form>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
