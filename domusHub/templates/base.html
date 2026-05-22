@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>DomusHub Home</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
     <link rel='stylesheet' href="{% static 'css/main.css' %}">
     <link rel="stylesheet" href="{% static 'css/responsive.css' %}">
     
@@ -17,7 +18,7 @@
             <nav class="nav2">
                 {% if request.user.is_authenticated %}
                 <div class="user">
-                    <button onclick="toggleDiv()" class="sideBarBtn">///</button>
+                    <button onclick="toggleDiv()" class="sideBarBtn"><i class="fa-solid fa-bars"></i></button>
                     <div id="sideBar" class="sideBar">
                         <div class="sideBarHeader">
                             <div class="userWelcome">Hello {{request.user.username}}</div>
@@ -33,7 +34,8 @@
                 </div>
                 {% else %}
                     <div class="linksHolder">
-                        <a href="#">Contact Us</a>
+                        <a class="headerLinks" href="{% url 'individual_dashboard' %}">Properties</a>
+                        <a class="headerLinks" href="{% url 'agent_dashboard' %}">Become Agent</a>
                     </div>
                 {% endif %}
             </nav>

@@ -25,7 +25,6 @@ urlpatterns = [
     path('accounts/', include('accounts.urls')),
     path('app/', include('propertyApp.urls')),
     path('', RedirectView.as_view(pattern_name='property_dashboard', permanent=False)),
-    path('start/', include('start.urls')),
 ]
 
 if settings.DEBUG:

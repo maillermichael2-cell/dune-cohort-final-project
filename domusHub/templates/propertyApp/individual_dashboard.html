@@ -29,13 +29,18 @@
                 {% else %}
                     <p>No image available</p>
                 {% endif %}
+                <p class="propertyStatus">Status: {{ item.get_status_display }}</p>
                 <div class="property-details">
-                    <h2>{{ item.title }}</h2>
-                    <p>{{ item.property_address }}</p>
-                    <p>{{ item.category.name }}</p>
-                    <p>Status: {{ item.get_status_display }}</p>
-                    <p>{{ item.price }}</p>
-                    <a href="{% url 'property_detail' item.pk %}">View details</a>
+                    <div class="detailsHold2">
+                        <h3>{{ item.property_address }}</h3>
+                        <p style="color: gray;font-weight: bold;"><i class="fa-solid fa-naira-sign"></i>{{ item.price }}</p>
+                    </div>
+                    <!-- <h2>{{ item.title }}</h2>
+                    <p>{{ item.category.name }}</p> -->
+                    <div class="detailsHold">
+                        <h2>{{ item.title }}</h2>
+                        <a class="detailsBtn" href="{% url 'property_detail' item.pk %}">View details</a>
+                    </div>
                 </div>
             </div>
         {% empty %}
