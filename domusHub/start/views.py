@@ -1,6 +1,6 @@
-from django.shortcuts import render
+from django.shortcuts import redirect
 
 # Create your views here.
 
 def home(request):
-    return render(request, 'start/landingpage.html')
+    return redirect('property_dashboard')

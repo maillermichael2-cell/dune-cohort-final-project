@@ -1,26 +1,20 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<div class="individual-dashboard" style="padding: 40px;">
-    <h1>Individual View</h1>
-    <p>Browse properties by category and search for listings.</p>
-
-    <form method="get" class="search-form" style="margin-bottom: 24px;">
-        <input type="text" name="search" placeholder="Search by title, location, or category" value="{{ search }}" style="padding: 8px; width: 280px;" />
-        <button type="submit" style="padding: 8px 14px;">Search</button>
+<div class="individual-dashboard">
+    <form method="get" class="search-form">
+        <input type="text" name="search" placeholder="Search by title, location, or category" value="{{ search }}" class="search-input" />
+        <button type="submit" class="search-btn">Search</button>
     </form>
 
-    <div class="categories-list" style="margin-bottom: 24px;">
-        <strong>Categories</strong>
-        <ul>
+    <div class="categories-list" >
+        <div class="categories">
             {% for category in categories %}
-                <li>
-                    <a href="{% url 'property_list_by_category' category.slug %}">{{ category.name }} ({{ category.property_count }})</a>
-                </li>
+                    <a href="{% url 'individual_dashboard_by_category' category.slug %}">{{ category.name }} {{ category.property_count }}</a>
             {% empty %}
                 <li>No categories yet.</li>
             {% endfor %}
-        </ul>
+        </div>
     </div>
 
     <div class="property-grid">
@@ -30,17 +24,19 @@
                 <img 
                     src="{{ item.image.url }}" 
                     alt="{{ item.title }}" 
-                    style="display: block; width: 100%; height: auto; max-height: 400px; object-fit: cover; border-radius: 8px; margin: 20px 0;"
+                    class="propertyImg"
                 />
                 {% else %}
                     <p>No image available</p>
                 {% endif %}
-                <h2>{{ item.title }}</h2>
-                <p>{{ item.property_address }}</p>
-                <p>{{ item.category.name }}</p>
-                <p>Status: {{ item.get_status_display }}</p>
-                <p>{{ item.price }}</p>
-                <a href="{% url 'property_detail' item.pk %}">View details</a>
+                <div class="property-details">
+                    <h2>{{ item.title }}</h2>
+                    <p>{{ item.property_address }}</p>
+                    <p>{{ item.category.name }}</p>
+                    <p>Status: {{ item.get_status_display }}</p>
+                    <p>{{ item.price }}</p>
+                    <a href="{% url 'property_detail' item.pk %}">View details</a>
+                </div>
             </div>
         {% empty %}
             <p>No properties available.</p>

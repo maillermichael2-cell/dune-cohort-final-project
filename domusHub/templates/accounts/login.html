@@ -1,11 +1,13 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block content %}
 <div class="content">
+    <img class="backgroundImg" src="{% static 'images/first-image.jpg' %}" alt="house">
     <div class="formHolder">
         <header class="formHeader">
-        <a class="a2" href="{% url 'home' %}">Back to home</a>
-        <h2>Sign in to DomusHub</h2>
+        <a class="a2" href="{% url 'property_dashboard' %}">Back to home</a>
+        <h2>Sign in</h2>
         </header>
         <form method="POST" class="form">
             {% csrf_token %}

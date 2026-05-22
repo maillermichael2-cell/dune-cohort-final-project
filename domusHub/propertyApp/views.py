@@ -21,10 +21,22 @@ def about(request):
     return render(request, 'propertyApp/about.html')
 
 
-def property_list(request, slug=None):
-    search = request.GET.get('search', '')
-    properties = Property.objects.all()
+def property_detail(request, pk):
+    property_item = get_object_or_404(Property, pk=pk)
     categories = PropertyCategory.objects.annotate(property_count=Count('properties'))
+    profile = getattr(request.user, 'profile', None)
+    is_agent = bool(request.user.is_authenticated and profile and profile.role == 'ESTATE AGENT')
+    return render(request, 'propertyApp/property_detail.html', {
+        'property': property_item,
+        'categories': categories,
+        'is_agent': is_agent,
+    })
+
+@login_required
+def individual(request, slug=None):
+    search = request.GET.get('search', '')
+    categories = PropertyCategory.objects.annotate(property_count=Count('properties'))
+    properties = Property.objects.all().order_by('-created_at')
 
     if slug:
         category = get_object_or_404(PropertyCategory, slug=slug)
@@ -32,25 +44,15 @@ def property_list(request, slug=None):
     if search:
         properties = properties.filter(
             Q(title__icontains=search) |
-            Q(description__icontains=search) |
+            Q(property_address__icontains=search) |
             Q(category__name__icontains=search)
         )
 
-    context = {
-        'properties': properties,
+    return render(request, 'propertyApp/individual_dashboard.html', {
         'categories': categories,
+        'properties': properties,
         'search': search,
         'active_category': slug,
-    }
-    return render(request, 'propertyApp/property_list.html', context)
-
-
-def property_detail(request, pk):
-    property_item = get_object_or_404(Property, pk=pk)
-    categories = PropertyCategory.objects.annotate(property_count=Count('properties'))
-    return render(request, 'propertyApp/property_detail.html', {
-        'property': property_item,
-        'categories': categories,
     })
 
 
@@ -59,7 +61,7 @@ def agent_dashboard(request):
     profile = getattr(request.user, 'profile', None)
     if not profile or profile.role != 'ESTATE AGENT':
         messages.error(request, 'Only estate agents can access the agent dashboard.')
-        return redirect('property_list')
+        return redirect('individual_dashboard')
 
     properties = Property.objects.filter(owner=request.user).order_by('-created_at')
 
@@ -117,42 +119,4 @@ def property_delete(request, pk):
     return render(request, 'propertyApp/property_delete_confirm.html', {
         'property': property_item,
     })
-
-
-def individual(request):
-    search = request.GET.get('search', '')
-    categories = PropertyCategory.objects.annotate(property_count=Count('properties'))
-    properties = Property.objects.all().order_by('-created_at')
-
-    if search:
-        properties = properties.filter(
-            Q(title__icontains=search) |
-            Q(property_address__icontains=search) |
-            Q(category__name__icontains=search)
-        )
-
-    return render(request, 'propertyApp/individual_dashboard.html', {
-        'categories': categories,
-        'properties': properties,
-        'search': search,
-    })
-
-@login_required
-def properties_create(request):
-    profile = getattr(request.user, 'profile', None)
-    if not profile or profile.role != 'ESTATE AGENT':
-        messages.error(request, 'Only estate agents can create properties.')
-        return redirect('property_list')
-
-    if request.method == 'POST':
-        form = PropertyForm(request.POST, request.FILES)
-        if form.is_valid():
-            form.save()
-            messages.success(request, 'Property created successfully.')
-            return redirect('agent_dashboard')
-    else:
-        form = PropertyForm()
-
-    return render(request, 'propertyApp/agent_dashboard.html', {'form': form})
-
 

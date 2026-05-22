@@ -29,10 +29,16 @@
     </div>
 
     <div class="property-detail-actions">
-        <a href="{% url 'property_list' %}" style="margin-right: 16px;">Back to listings</a>
-        <a href="{% url 'property_list_by_category' property.category.slug %}" style="margin-right: 16px;">More in {{ property.category.name }}</a>
+        {% if not is_agent %}
+            <a href="{% url 'individual_dashboard' %}" style="margin-right: 16px;">Back to listings</a>
+            <a href="{% url 'individual_dashboard_by_category' property.category.slug %}" style="margin-right: 16px;">More in {{ property.category.name }}</a>
+        {% else %}
+            <span style="margin-right: 16px; color: #999; pointer-events: none;">Back to listings</span>
+            <span style="margin-right: 16px; color: #999; pointer-events: none;">More in {{ property.category.name }}</span>
+        {% endif %}
         {% if request.user.is_authenticated and property.owner == request.user %}
             <a href="{% url 'property_edit' property.pk %}" style="margin-right: 16px;">Edit property</a>
+            <a href="{% url 'agent_dashboard' %}">back to agent</a>
             <form method="post" action="{% url 'property_delete' property.pk %}" style="display:inline;">
                 {% csrf_token %}
                 <button type="submit" style="background:none; border:1px solid red; color:red; padding:6px 10px;">Delete property</button>

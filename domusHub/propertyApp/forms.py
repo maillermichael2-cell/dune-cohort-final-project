@@ -9,7 +9,8 @@ class PropertyForm(forms.ModelForm):
         fields = ["title", "description", "price", "category", "status", "image", "property_address"]
         widgets = { # lets you customize how each fields render in HTML.
             'title': forms.TextInput(attrs={'placeholder': 'Product name'}),
-            'price': forms.NumberInput(attrs={'min': '0'}),
+            'description': forms.Textarea(attrs={'placeholder': 'Description'}),
+            'price': forms.NumberInput(attrs={'min': '0', 'placeholder': 'Price'}),
             'status': forms.Select(),
         }
 

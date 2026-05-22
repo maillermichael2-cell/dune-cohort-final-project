@@ -1,3 +1,7 @@
+/* radial-gradient(at 10% 12%, rgba(138,43,226,0.18) 0px, transparent 40%),
+      radial-gradient(at 90% 15%, rgba(0,245,255,0.12) 0px, transparent 35%),
+      radial-gradient(at 50% 85%, rgba(255,0,127,0.12) 0px, transparent 45%),
+      radial-gradient(at 0% 100%, rgba(31,23,71,0.5) 0px, transparent 50%); */
 /* Reset */
 * {
   margin: 0;
@@ -7,10 +11,10 @@
 
 /* Base */
 .body {
-  font-family: Arial, sans-serif;
+  font-family: 'Segoe UI',Roboto, sans-serif;
   line-height: 1.6;
-  background: white;
-  color: black;
+  background-color: black;
+  color: white;
 }
 
 
@@ -18,7 +22,8 @@
 /*-------------------base.html section start----------------*/
 .header{
   width: 100%;height: 50px;display: flex;justify-content: center;align-items: center;
-  gap: 10px;position: fixed;top: 0%;left: 0%;right: 0%;background-color: white;
+  gap: 10px;position: fixed;top: 0%;left: 0%;right: 0%;background-color: transparent;
+  z-index: 10;
 }
 .header p{color: greenyellow;font-weight: bolder;font-size:15px;}
 .nav2{
@@ -60,7 +65,7 @@
   width: 70%;height: auto;position: fixed;top: 60px;right: 0px;
   border-radius: 10px 0px 0px 10px ;display: flex;flex-direction: column;
   justify-content: start;align-items: center;background-color: white;
-  display: none;
+  display: none;color: black;
 }
 .sideBarHeader{
   width: 100%;height: auto;display: flex;justify-content: center;align-items: center;
@@ -101,14 +106,76 @@
   background-color: greenyellow;color: black;font-weight: bolbder;
   font-size: 15px;
 }
+.dashboard-links{
+  background: rgba(255,255,255,0.07);
+  backdrop-filter: blur(16px) saturate(180%);
+  -webkit-backdrop-filter: blur(16px) saturate(180%);
+  border-radius: 10px;
+  border: 1px solid rgba(255,255,255,0.15);
+  padding: 20px;
+
+  box-shadow:
+      0 20 50ps rgba(0,0,0,0.15),
+      inset 0 1px 0 rgba(255,255,255,0.2);
+
+  color: #ffffff;
+  width: 100%;
+  max-width: 450px;
+  display: flex;justify-content: center;align-items: center;
+  gap: 15px;margin-top: 20px;
+}
+.homelink{
+  background: rgba(255,255,255,0.1);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border-radius: 5px;
+  border: 0px solid rgba(255,255,255,0.25);
+  padding: 14px 28px;
+  color: #ffffff;
+  font-weight: 600;
+  font-size: 15px;
+  letter-spacing: 0.5px;
+  text-shadow: 0 1px 2px rgba(0,0,0,0.2);
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.25,0.0,0.25,1);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.3);
+  text-decoration: none;
+  width: 100%;max-width: 65px;display: flex;justify-content: center;
+  align-items: center;
+  height: 40px;
+}
+.homelink:hover{
+  background-color: rgba(255,255,255,0.2);
+  border-color: rgba(255,255,255,0.4);
+  transform: translateY(-2px);
+  box-shadow: 
+      0 10px 20px rgba(255,255,255,0.1)
+      inset 0 1px 0 rgba(255,255,255,0.4)
+}
+.dashboard-home{
+  width: 100%;height: 80vh;
+  margin-top: 50px;display: flex;flex-direction: column;justify-content: center;
+  align-items: center;color: white;
+}
+.welcomeMessage{
+  background: rgba(255,255,255,0.1);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  width: 100%;max-width: 350px;padding: 30px;border-radius: 15px;
+  display: flex;flex-direction: column;justify-content: center;align-items: center;
+  height: auto;
+}
+.welcomeMessage h1{font-size: 25px;}
+.welcomeMessage p{font-size: 10px;text-align: center;}
 /*-------------------landingpage.html section end---------------------*/
 
 
 
 /*-------------------login page section start----------------------*/
 .content{
-  background-color: white;width: 100%;height: auto;
-  margin-top: 50px;
+  background-color: transparent;width: 100%;height: auto;
+  margin-top: 50px;display: flex;justify-content: center;align-items: center;
+  flex-direction: column;
 }
 .logout{
   width: 100%;height: 90vh;display: flex;justify-content: center;
@@ -124,13 +191,23 @@
   border-radius: 5px;
 }
 .formHolder{
-  width: 100%;height: auto;display: flex;
+  width: 95%;height: auto;display: flex;
   flex-direction: column;justify-content: center;align-items: center;
-  background-color: white;padding-top: 20px;padding-bottom: 20px;
-  margin-top: 50px;
+  padding-bottom: 20px;
+  background: rgba(255,255,255,0.06);
+  backdrop-filter: blur(24px) saturate(220%);
+  -webkit-backdrop-filter: blur(24px) saturate(220px);
+  border: 1px solid rgba(255,255,255,0.14);
+  background: rgba(10,8,20,0.4);
+  border-radius: 10px;
+  padding: 15px;
+  box-shadow:
+      0 30px 60px rgba(0,0,0,0.4)
+      inset 0 1px 0 rgba(255,255,255,0.2)
+
 }.form{
   width: 100%;height: auto;display: flex;flex-direction: column;justify-content: center;
-  align-items: center;margin-bottom: 50px;padding-top: 20px;
+  align-items: center;margin-bottom: 50px;padding-top: 20px;gap: 30px;
 }
 .input{
   width: 95%;height: auto;
@@ -142,14 +219,18 @@
   display: none;
 }
 .input input{
-  width: 100%;height: 60px;padding-left: 10px;background:white;border: transparent;
+  width: 100%;height: 60px;padding-left: 10px;border: transparent;
   border-radius: 5px;font-size: 15px;border: 3px solid black;color: black;
-  border: 1px solid gray;
+  border: 1px solid rgba(198, 198, 198, 0.4);background: rgba(255,255,255,0.1);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border-radius: 10px;
+  border: 0px solid rgba(255,255,255,0.25);
 }.input input::placeholder{color: black;}
 .input p{
   width: 100%;height: auto;
 }
-.input p label{font-size: 20px;margin-bottom: 20px;}
+.input p label{font-size: 20px;margin-bottom: 20px;display: none;}
 .input span a {
   color: white;text-decoration: none;width: 100%;height:auto;
   margin-top: 20px;
@@ -192,9 +273,66 @@
   width: 100%;height: 100vh;object-fit: cover;object-position: center;
   position: fixed;top: 0%;left: 0%;right: 0%;z-index: -1;
 }
+.individual-dashboard{
+  height: auto;
+  margin-top: 50px;display: flex;flex-direction: column;
+  justify-content: start;align-items: center;
+}
+.search-form{
+  width: 95%;height: auto;border-radius: 20px;display: flex;
+  margin-top: 10px;
+}
+.search-input{
+  width: 90%;height: 50px;border-radius: 10px 0px 0px 10px ;padding: 10px;
+  border: 1px solid rgba(198, 198, 198, 0.4);
+}
+.search-btn{
+  width:20% ;height: auto;
+}
+.categories-list{
+  width: 100%;height: auto;display: flex;justify-content: space-around;
+  align-items: center;flex-direction: column;margin-top: 10px;
+}
 .categories{
-  border:1px solid greenyellow;
-  width: 100%;height: 200px;
+  width: 95%;height: auto;display: flex;justify-content: space-around;align-items: center;
+  gap: 10px;
+}.categories a{
+  border: 1px solid white;
+  text-decoration: none;color: white;
+  width: 50%;height: 40px;display: flex;justify-content: center;
+  align-items: center;border-radius: 5px;background-color: white;
+  color: black;
+}
+.property-grid{
+  width: 100%;height: auto;margin-top: 20px;display: flex;flex-direction: column;
+  justify-content: center;align-items: center;flex-wrap: wrap;
+}
+.property-card{
+  border: 1px solid white;
+  width: 95%;min-height: 350px; position: relative;display: flex;justify-content: center;
+  align-items: center;border-radius: 10px;
+}
+.propertyImg{
+  display: block; width: 100%; 
+  height: 100%;  object-fit: cover;
+  position: absolute;top: 0;left: 0;object-position: center;z-index: -1;
+  border-radius: 10px;
+}
+.property-details{
+  background-color: white;width: 90%;color: black;display: flex;flex-direction: column;
+  justify-content: center;align-items: center;border-radius: 10px;margin-top: 120px;
+  z-index: 1;
+}
+
+/*-----------------agent dashboard--------------*/
+.agent-dashboard{
+  width: 100%;height: auto;margin-top: 50px;padding: 20px;
+  display: flex;flex-direction: column;justify-content: center;align-items: center;
+}
+.agent-form{
+  border: 1px solid red;
+  width: 100%;height: auto;display: flex;flex-direction: column;justify-content: center;
+  align-items: center;
 }
 /*-------------------dashboard page section end------------------*/
 

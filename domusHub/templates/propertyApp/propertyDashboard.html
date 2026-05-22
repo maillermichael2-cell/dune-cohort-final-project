@@ -1,28 +1,19 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block content %}
-<div class="dashboard-home" style="padding: 40px;">
-    <h1>Welcome to DomusHub</h1>
-    <p>Browse property categories, search listings, or sign in to post properties if you are an estate agent.</p>
-
-    <div class="dashboard-links">
-        <a href="{% url 'property_list' %}">View all properties</a>
-        <a href="{% url 'individual_dashboard' %}">Individual dashboard</a>
-        <a href="{% url 'agent_dashboard' %}">Agent dashboard</a>
-    </div>
-
-    <h2>Latest properties</h2>
-    <div class="property-grid">
-        {% for item in properties %}
-            <div class="property-card">
-                <h3>{{ item.title }}</h3>
-                <p>{{ item.property_address }}</p>
-                <p><strong>{{ item.category.name }}</strong></p>
-                <p>{{ item.price }}</p>
-            </div>
-        {% empty %}
-            <p>No recent properties available yet.</p>
-        {% endfor %}
+<div class="dashboard-home" >
+    <img class="backgroundImg" src="{% static 'images/first-image.jpg' %}" alt="house">
+    
+    <div class="welcomeMessage">
+        <h1>Welcome to DomusHub</h1>
+        <p>Browse property categories, search listings, or sign in to post properties if you are an estate agent.</p>
+        <p style="margin-top: 16px; color: black;">Please sign in or register to access full property details and agent tools.</p>
+        <div class="dashboard-links">
+            <a class="homelink" href="{% url 'login' %}">SignIn</a>
+            <a class="homelink" href="{% url 'register' %}">Signup</a>
+            <a class="homelink" href="{% url 'about' %}">About</a>
+        </div>
     </div>
 </div>
 {% endblock %}

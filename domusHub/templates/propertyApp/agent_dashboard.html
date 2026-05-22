@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<div class="agent-dashboard" style="padding: 40px; max-width: 900px; margin: 0 auto;">
+<div class="agent-dashboard">
     <h1>Agent Dashboard</h1>
     <p>Create new properties and manage your active listings.</p>
 
@@ -10,6 +10,16 @@
             <div class="alert alert-{{ message.tags }}">{{ message }}</div>
         {% endfor %}
     {% endif %}
+
+    <div class="agent-form">
+        <h2>Create new property</h2>
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">Create Property</button>
+        </form>
+    </div>
+
 
     <div class="agent-properties" style="margin-bottom: 40px;">
         <h2>Your properties</h2>
@@ -35,15 +45,6 @@
         {% else %}
             <p>You have not created any properties yet.</p>
         {% endif %}
-    </div>
-
-    <div class="agent-form">
-        <h2>Create new property</h2>
-        <form method="post" enctype="multipart/form-data">
-            {% csrf_token %}
-            {{ form.as_p }}
-            <button type="submit">Create Property</button>
-        </form>
     </div>
 </div>
 {% endblock %}

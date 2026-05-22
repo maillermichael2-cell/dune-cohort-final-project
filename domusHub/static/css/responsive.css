@@ -32,6 +32,11 @@
             width: 70%;height: 400px;
             background-color: white;border-radius: 10px;
         }
+        .welcomeMessage h1{font-size: 30px;}
+        .welcomeMessage p{font-size: 15px;}
+        .dashboard-links{max-width: 600px;}
+        .homelink{max-width: 150px;}
+        .welcomeMessage{max-width: 600px;padding: 60px;}
     /*----------landing page section end-------------*/
 
     /*----------------------form section start------------------*/

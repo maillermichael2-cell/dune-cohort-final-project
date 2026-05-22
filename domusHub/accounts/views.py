@@ -6,7 +6,8 @@ from .forms import RegisterForm
 # Create your views here.
 
 def accounts_home(request):
-    if request.user.is_authenticated:
+    # if user is autheticated redirect to dashboard else redirect to login page
+    if request.user.is_authenticated:  
         return redirect('dashboard')
     return redirect('login')
 
@@ -22,7 +23,7 @@ def register(request):
         form = RegisterForm()
     return render(request, 'accounts/register.html', {'form': form})
 
-
+# redirect based on user roles (estate agent, individual)
 @login_required
 def dashboard(request):
     user = request.user
@@ -33,4 +34,4 @@ def dashboard(request):
         if profile.role == 'INDIVIDUAL':
             return redirect('individual_dashboard')
 
-    return redirect('property_list')
+    return redirect('individual_dashboard')
