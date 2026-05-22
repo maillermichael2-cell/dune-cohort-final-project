@@ -1,7 +1,9 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block content %}
 <div class="content">
+    <img class="backgroundImg" src="{% static 'images/first-image.jpg' %}" alt="house">
     <div class="formHolder">
         <header class="formHeader">
             <a class="a2" href="{% url 'login' %}">login</a>
