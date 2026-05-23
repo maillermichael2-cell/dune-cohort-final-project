@@ -26,7 +26,7 @@ class Property(models.Model):
     category = models.ForeignKey(PropertyCategory, on_delete=models.CASCADE, related_name='properties')
     owner = models.ForeignKey(User, null=True, blank=True, on_delete=models.SET_NULL, related_name='properties')
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='AVAILABLE')
-    image = models.ImageField(upload_to='property_images/')
+    image = models.ImageField(upload_to='property_images/', null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):

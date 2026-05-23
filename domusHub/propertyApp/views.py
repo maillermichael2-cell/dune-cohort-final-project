@@ -4,7 +4,21 @@ from django.db.models import Count, Q
 from django.contrib.auth.decorators import login_required
 from .forms import PropertyForm
 from django.contrib import messages
-
+# rest framework imports
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework import status
+from .serializers import PropertySerializer, PropertyCategorySerializer
+#
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.pagination import PageNumberPagination
+from .pagination import PropertyPagination
+from rest_framework.generics import ListAPIView
+from django_filters.rest_framework import DjangoFilterBackend
+from rest_framework.filters import SearchFilter, OrderingFilter
+from rest_framework_simplejwt.authentication import JWTAuthentication
+from rest_framework.authentication import TokenAuthentication
+from rest_framework.permissions import IsAuthenticatedOrReadOnly
 # Create your views here.
 
 def home(request):
@@ -148,3 +162,94 @@ def property_delete(request, pk):
         'property': property_item,
     })
 
+
+
+
+
+# API VIEW SECTION START
+class PropertyListAPIView(ListAPIView):
+    queryset = Property.objects.all().order_by('-created_at')
+    serializer_class = PropertySerializer
+    pagination_class = PropertyPagination
+    authentication_classes = [JWTAuthentication, TokenAuthentication]
+    permission_classes = [IsAuthenticatedOrReadOnly]
+    filter_backends = [DjangoFilterBackend, SearchFilter, OrderingFilter]
+    filterset_fields = ['category__slug']
+    search_fields = ['title', 'property_address', 'category__name']
+    ordering_fields = ['created_at', 'price']
+    ordering = ['-created_at']
+
+    def filter_queryset(self,queryset):
+        for backend in list(self.filter_backends):
+            queryset = backend().filter_queryset(self.request, queryset, self)
+        return queryset
+    
+    def get(self, request):
+        filtered_queryset = self.filter_queryset(self.queryset)
+        paginator = self.pagination_class()
+        page = paginator.paginate_queryset(filtered_queryset, request, view=self)
+
+        if page is not None:
+            serializer = self.serializer_class(page, many=True)
+            return paginator.get_paginated_response(serializer.data)
+
+        serializer = self.serializer_class(filtered_queryset, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+    
+    def post(self, request):
+        serializer = self.serializer_class(data=request.data)
+        if serializer.is_valid():
+            serializer.save(owner=request.user)
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+class PropertyDetail(APIView):
+    def get_object(self,pk):
+        try:
+            return Property.objects.get(pk=pk)
+        except Property.DoesNotExist:
+            return None
+    def get(self,request,pk):
+        property_item = self.get_object(pk)
+        if not property_item:
+            return Response({'detail': 'Property not found.'}, status=status.HTTP_404_NOT_FOUND)
+        serializer = PropertySerializer(property_item)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+    def put(self,request,pk):
+        property_item = self.get_object(pk)
+        if not property_item:
+            return Response({'detail': 'Property not found.'}, status=status.HTTP_404_NOT_FOUND)
+        if property_item.owner != request.user:
+            return Response({'detail': 'You do not have permission to edit this property.'}, status=status.HTTP_403_FORBIDDEN)
+        serializer = PropertySerializer(property_item, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    def delete(self,request,pk):
+        property_item = self.get_object(pk)
+        if not property_item:
+            return Response({'detail': 'Property not found.'}, status=status.HTTP_404_NOT_FOUND)
+        if property_item.owner != request.user:
+            return Response({'detail': 'You do not have permission to delete this property.'}, status=status.HTTP_403_FORBIDDEN)
+        property_item.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
+
+
+class PropertyCategoryListAPIView(ListAPIView):
+    def get(self, request):
+        categories = PropertyCategory.objects.annotate(property_count=Count('properties'))
+        serializer = PropertyCategorySerializer(categories, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+    
+
+class PropertyCreateAPIView(APIView):
+    authentication_classes = [JWTAuthentication, TokenAuthentication]
+    permission_classes = [IsAuthenticatedOrReadOnly]
+
+    def post(self, request):
+        serializer = PropertySerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save(owner=request.user)
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

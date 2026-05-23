@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load humanize %}
 
 {% block content %}
 <div class="individual-dashboard">
@@ -33,7 +34,7 @@
                 <div class="property-details">
                     <div class="detailsHold2">
                         <h3>{{ item.property_address }}</h3>
-                        <p style="color: gray;font-weight: bold;"><i class="fa-solid fa-naira-sign"></i>{{ item.price }}</p>
+                        <p style="color: gray;font-weight: bold;"><i class="fa-solid fa-naira-sign"></i>{{ item.price|intcomma }}</p>
                     </div>
                     <!-- <h2>{{ item.title }}</h2>
                     <p>{{ item.category.name }}</p> -->

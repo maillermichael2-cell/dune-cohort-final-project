@@ -1,64 +1,71 @@
 {% extends 'base.html' %}
+{% load humanize %}
 
 {% block content %}
 <div class="property-detail-page">
-    {% if property.image %}
-        <div class="property-detail-image" style="margin-bottom: 24px;">
-            <img src="{{ property.image.url }}" alt="{{ property.title }}" style="width: 100%; border-radius: 8px; object-fit: cover;" />
+    
+    <div class="hero-image-wrapper">
+        {% if property.image %}
+                <img src="{{ property.image.url }}" alt="{{ property.title }}" style="width: 100%; border-radius: 8px; object-fit: cover;" />
+        {% endif %}
+    </div>
+
+    <div class="detail-container">
+        <div class="detail-header">
+            <div class="title-badge">
+                <span class="category-tag">{{ property.category.name }}</span>
+                <h1 class="main-title"> {{ property.title }}</h1>
+            </div>
+
+            <a class="category-tag2" href="{% url 'favorites_list' %}">View all favorites</a>
+            {% if request.user.is_authenticated and not is_agent %}
+                <a class="toggle-btn" href="{% url 'toggle_favorite' property.pk %}">
+                    {% csrf_token %}
+                        {% if is_favorite %}
+                            &#10084; <!-- Filled heart -->
+                        {% else %}
+                            &#9825; <!-- Empty heart -->
+                        {% endif %}
+                </a>
+            {% endif %}
         </div>
-    {% endif %}
-
-
-    {% if request.user.is_authenticated %}
-        <div class="property-favorite" style="margin-bottom: 16px;border: 1px solid red;">
-            <form method="post" action="{% url 'toggle_favorite' property.pk %}">
-                {% csrf_token %}
-                <button type="submit" style="color: white; border:none; font-size: 24px; cursor: pointer;">
-                    {% if is_favorite %}
-                        &#10084; <!-- Filled heart -->
-                    {% else %}
-                        &#9825; <!-- Empty heart -->
-                    {% endif %}
-                </button>
-            </form>
-            <a href="{% url 'favorites_list' %}">View all favorites</a>
-        </div>
-    {% endif %}
-
-    <div class="property-detail-header" style="margin-bottom: 24px;">
-        <h1>{{ property.title }}</h1>
-        <p><strong>Category:</strong> {{ property.category.name }}</p>
-        <p><strong>Location:</strong> {{ property.property_address }}</p>
-        <p><strong>Status:</strong> {{ property.get_status_display }}</p>
-        <p><strong>Price:</strong> {{ property.price }}</p>
-        <p><strong>Posted:</strong> {{ property.created_at|date:'F j, Y' }}</p>
+            <div class="info-grid">
+                <div class="info-title">
+                    <div class="info-title-label">Location Address</div>
+                    <div class="info-title-value">{{ property.property_address }}</div>
+                </div>
+                <div class="info-title">
+                    <div class="info-title-label">Listing Valuation Price</div>
+                    <div class="info-title-value"><i class="fa-solid fa-naira-sign"></i> {{ property.price|intcomma }}</div>
+                </div>
+                <div class="info-title">
+                    <div class="info-title-label">Current Status</div>
+                    <div class="info-title-value">{{ property.get_status_display }}</div>
+                </div>
+                <div class="info-title">
+                    <div class="info-title-label">Listing Date</div>
+                    <div class="info-title-value">{{ property.created_at|date:'F j, Y' }}</div>
+                </div>
+                <div class="info-title">
+                    <div class="info-title-label">Description</div>
+                    <div class="info-title-value">{{ property.description }}</div>
+                </div>
+            </div>
     </div>
-
-    <div class="property-detail-description" style="margin-bottom: 24px;">
-        <h2>Description</h2>
-        <p>{{ property.description }}</p>
-    </div>
-
-    <div class="property-detail-meta" style="margin-bottom: 16px;">
-        <p><strong>Category:</strong> {{ property.category.name }}</p>
-        <p><strong>Address:</strong> {{ property.property_address }}</p>
-        <p><strong>Price:</strong> {{ property.price }}</p>
-    </div>
+    
 
     <div class="property-detail-actions">
         {% if not is_agent %}
-            <a href="{% url 'individual_dashboard' %}" style="margin-right: 16px;">Back to listings</a>
-            <a href="{% url 'individual_dashboard_by_category' property.category.slug %}" style="margin-right: 16px;">More in {{ property.category.name }}</a>
-            {% if agent %}
-                <a href="https://wa.me{{agent.phone_number}}" target="_blank">chat with {{agent.agency_name}}</a>
-            {% endif %}
+            <a class="action-link" href="{% url 'individual_dashboard' %}" style="margin-right: 16px;">Back to listings</a>
+            <a class="action-link" href="{% url 'individual_dashboard_by_category' property.category.slug %}" style="margin-right: 16px;">More in {{ property.category.name }}</a>
+            <a class="action-link" href="https://wa.me{{agent.phone_number}}" target="_blank">chat with {{agent.agency_name}}</a>
         {% else %}
-            <span style="margin-right: 16px; color: #999; pointer-events: none; display: none;">Back to listings</span>
-            <span style="margin-right: 16px; color: #999; pointer-events: none; display: none;">More in {{ property.category.name }}</span>
+            <span>Back to listings</span>
+            <span>More in {{ property.category.name }}</span>
         {% endif %}
         {% if request.user.is_authenticated and property.owner == request.user %}
-            <a href="{% url 'property_edit' property.pk %}" style="margin-right: 16px;">Edit property</a>
-            <a href="{% url 'agent_dashboard' %}">back to agent</a>
+            <a class="action-link" href="{% url 'property_edit' property.pk %}" style="margin-right: 16px;">Edit property</a>
+            <a class="action-link" href="{% url 'agent_dashboard' %}">back to agent</a>
             <form method="post" action="{% url 'property_delete' property.pk %}" style="display:inline;">
                 {% csrf_token %}
                 <button type="submit" style="background:none; border:1px solid red; color:red; padding:6px 10px;">Delete property</button>

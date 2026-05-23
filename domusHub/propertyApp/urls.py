@@ -12,4 +12,11 @@ urlpatterns = [
     path('agent/<int:pk>/delete/', views.property_delete, name='property_delete'),
     path('favorite/<int:pk>/', views.toggle_favorite, name='toggle_favorite'),
     path('favorites/', views.favorites_list, name='favorites_list'),
+
+
+    # api urls
+    path('api/properties/', views.PropertyListAPIView.as_view(), name='api_property_list'),
+    path('api/properties/<int:pk>/', views.PropertyDetail.as_view(), name='api_property_detail'),   
+    path('api/categories/', views.PropertyCategoryListAPIView.as_view(), name='api_category_list'),
+    path('api/property/create/', views.PropertyCreateAPIView.as_view(), name='api_property_create'),
 ]
