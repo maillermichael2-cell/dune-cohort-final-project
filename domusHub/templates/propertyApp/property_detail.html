@@ -1,7 +1,30 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<div class="property-detail-page" style="padding: 40px; max-width: 900px; margin: 0 auto;">
+<div class="property-detail-page">
+    {% if property.image %}
+        <div class="property-detail-image" style="margin-bottom: 24px;">
+            <img src="{{ property.image.url }}" alt="{{ property.title }}" style="width: 100%; border-radius: 8px; object-fit: cover;" />
+        </div>
+    {% endif %}
+
+
+    {% if request.user.is_authenticated %}
+        <div class="property-favorite" style="margin-bottom: 16px;border: 1px solid red;">
+            <form method="post" action="{% url 'toggle_favorite' property.pk %}">
+                {% csrf_token %}
+                <button type="submit" style="color: white; border:none; font-size: 24px; cursor: pointer;">
+                    {% if is_favorite %}
+                        &#10084; <!-- Filled heart -->
+                    {% else %}
+                        &#9825; <!-- Empty heart -->
+                    {% endif %}
+                </button>
+            </form>
+            <a href="{% url 'favorites_list' %}">View all favorites</a>
+        </div>
+    {% endif %}
+
     <div class="property-detail-header" style="margin-bottom: 24px;">
         <h1>{{ property.title }}</h1>
         <p><strong>Category:</strong> {{ property.category.name }}</p>
@@ -10,12 +33,6 @@
         <p><strong>Price:</strong> {{ property.price }}</p>
         <p><strong>Posted:</strong> {{ property.created_at|date:'F j, Y' }}</p>
     </div>
-
-    {% if property.image %}
-    <div class="property-detail-image" style="margin-bottom: 24px;">
-        <img src="{{ property.image.url }}" alt="{{ property.title }}" style="width: 100%; border-radius: 8px; object-fit: cover;" />
-    </div>
-    {% endif %}
 
     <div class="property-detail-description" style="margin-bottom: 24px;">
         <h2>Description</h2>
@@ -32,9 +49,12 @@
         {% if not is_agent %}
             <a href="{% url 'individual_dashboard' %}" style="margin-right: 16px;">Back to listings</a>
             <a href="{% url 'individual_dashboard_by_category' property.category.slug %}" style="margin-right: 16px;">More in {{ property.category.name }}</a>
+            {% if agent %}
+                <a href="https://wa.me{{agent.phone_number}}" target="_blank">chat with {{agent.agency_name}}</a>
+            {% endif %}
         {% else %}
-            <span style="margin-right: 16px; color: #999; pointer-events: none;">Back to listings</span>
-            <span style="margin-right: 16px; color: #999; pointer-events: none;">More in {{ property.category.name }}</span>
+            <span style="margin-right: 16px; color: #999; pointer-events: none; display: none;">Back to listings</span>
+            <span style="margin-right: 16px; color: #999; pointer-events: none; display: none;">More in {{ property.category.name }}</span>
         {% endif %}
         {% if request.user.is_authenticated and property.owner == request.user %}
             <a href="{% url 'property_edit' property.pk %}" style="margin-right: 16px;">Edit property</a>

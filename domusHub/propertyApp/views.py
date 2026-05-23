@@ -1,5 +1,5 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from .models import Property, PropertyCategory
+from .models import Property, PropertyCategory, Favorite
 from django.db.models import Count, Q
 from django.contrib.auth.decorators import login_required
 from .forms import PropertyForm
@@ -26,10 +26,38 @@ def property_detail(request, pk):
     categories = PropertyCategory.objects.annotate(property_count=Count('properties'))
     profile = getattr(request.user, 'profile', None)
     is_agent = bool(request.user.is_authenticated and profile and profile.role == 'ESTATE AGENT')
+    owner_profile = None
+    if property_item.owner and hasattr(property_item.owner, 'profile'):
+        owner_profile = property_item.owner.profile
+    is_favorite = False
+    if request.user.is_authenticated:
+        is_favorite = Favorite.objects.filter(user=request.user, property=property_item).exists()
     return render(request, 'propertyApp/property_detail.html', {
         'property': property_item,
         'categories': categories,
         'is_agent': is_agent,
+        'agent':owner_profile,
+        'is_favorite': is_favorite,
+    })
+
+@login_required
+def toggle_favorite(request, pk):
+    property_item = get_object_or_404(Property, pk=pk)
+    favorite, created = Favorite.objects.get_or_create(user=request.user, property=property_item)
+    if not created:
+        favorite.delete()
+        messages.info(request, 'Property removed from favorites.')
+    else:
+        messages.success(request, 'Property added to favorites.')
+    return redirect('property_detail', pk=pk)
+
+@login_required
+def favorites_list(request):
+    favorites = Favorite.objects.filter(user=request.user).select_related('property')
+    categories = PropertyCategory.objects.annotate(property_count=Count('properties'))
+    return render(request, 'propertyApp/favorites_list.html', {
+        'favorites': favorites,
+        'categories': categories,
     })
 
 @login_required

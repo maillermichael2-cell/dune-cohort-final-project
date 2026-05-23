@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="favorites-list">
+    <h1>My Favorite Properties</h1>
+    {% if favorites %}
+        <div class="row">
+            {% for favorite in favorites %}
+                <div class="col-md-4">
+                    <div class="card">
+                        {% if favorite.property.image %}
+                            <img src="{{ favorite.property.image.url }}" class="card-img-top" alt="{{ favorite.property.title }}">
+                        {% endif %}
+                        <div class="card-body">
+                            <h5 class="card-title">{{ favorite.property.title }}</h5>
+                            <p class="card-text">{{ favorite.property.description|truncatewords:20 }}</p>
+                            <a href="{% url 'property_detail' favorite.property.pk %}" class="btn btn-primary">View Details</a>
+                            <a href="{% url 'toggle_favorite' favorite.property.pk %}" class="btn btn-outline-danger">Remove from Favorites</a>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <p>You have no favorite properties.</p>
+        <a href="{% url 'individual_dashboard' %}">Browse properties</a>
+    {% endif %}
+</div>
+{% endblock %}

@@ -60,6 +60,13 @@
             height: 40px;
         }
     /*----------------------form section end--------------------*/
+
+    /*---------individual page section start-----------*/
+    .property-grid{
+        flex-direction: row;gap: 30px;width: 95%;
+    }
+    .property-card{width: 30%;}
+    /*---------individual page section end-------------*/
 }
 
 /*1200px*/
