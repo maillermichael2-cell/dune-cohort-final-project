@@ -25,7 +25,7 @@
                             <div class="userWelcome">Hello {{request.user.username}}</div>
                         </div>
                         <div class="menuList">
-                            
+                            <a class="menuLink" href="{% url 'favorites_list' %}">Favorites</a>
                         </div>
                         <form action="{% url 'logout' %}" method="POST" class="logoutForm">
                             {% csrf_token %}

@@ -32,6 +32,11 @@
             width: 70%;height: 400px;
             background-color: white;border-radius: 10px;
         }
+        .welcomeMessage h1{font-size: 30px;}
+        .welcomeMessage p{font-size: 15px;}
+        .dashboard-links{max-width: 600px;}
+        .homelink{max-width: 150px;}
+        .welcomeMessage{max-width: 600px;padding: 60px;}
     /*----------landing page section end-------------*/
 
     /*----------------------form section start------------------*/
@@ -55,6 +60,23 @@
             height: 40px;
         }
     /*----------------------form section end--------------------*/
+    /*--------agent page section start----------*/
+    .agent-properties{
+        flex-direction: row;max-width: 1200px;
+        gap: 50px;
+    }
+    .agentPropertiesCard{max-width: 300px;}
+    /*--------agent page section end------------*/
+
+    /*---------individual page section start-----------*/
+    .property-grid{
+        flex-direction: row;gap: 30px;width: 95%;
+    }
+    .property-card{width: 30%;}
+    .info-grid{
+        flex-direction: row;
+    }
+    /*---------individual page section end-------------*/
 }
 
 /*1200px*/

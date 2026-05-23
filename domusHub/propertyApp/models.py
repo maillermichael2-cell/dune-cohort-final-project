@@ -4,7 +4,7 @@ from django.contrib.auth.models import User
 # Create your models here.
 
 class PropertyCategory(models.Model):
-    name = models.CharField(max_length=100)
+    name = models.CharField(max_length=100, default='Categories')
     slug = models.SlugField(unique=True)
 
     def __str__(self):
@@ -20,7 +20,7 @@ class Property(models.Model):
     ]
 
     title = models.CharField(max_length=200)
-    property_address = models.CharField(max_length=200, default='Nigeria')
+    property_address = models.CharField(max_length=200, default='')
     description = models.TextField(max_length=1000, blank=True)
     price = models.DecimalField(max_digits=15, decimal_places=2)
     category = models.ForeignKey(PropertyCategory, on_delete=models.CASCADE, related_name='properties')

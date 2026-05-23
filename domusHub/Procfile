@@ -1,0 +1,1 @@
+web: gunicorn domusHub.wsgi --log-file -

@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load humanize %}
 
 {% block content %}
 <div class="agent-dashboard">
@@ -13,35 +14,32 @@
 
     <div class="agent-form">
         <h2>Create new property</h2>
-        <form method="post" enctype="multipart/form-data">
+        <form class="input-form" method="post" enctype="multipart/form-data">
             {% csrf_token %}
             {{ form.as_p }}
-            <button type="submit">Create Property</button>
+            <button class="createBtn" type="submit">Create Property</button>
         </form>
     </div>
 
-
+    <h2 style="margin-top: 30px;">Your properties</h2>
     <div class="agent-properties" style="margin-bottom: 40px;">
-        <h2>Your properties</h2>
         {% if properties %}
-            <ul style="list-style:none; padding:0;">
                 {% for item in properties %}
-                    <li style="border:1px solid #ccc; padding:16px; margin-bottom:12px; border-radius:8px;">
+                    <div class="agentPropertiesCard">
                         <h3>{{ item.title }}</h3>
                         <p>{{ item.property_address }}</p>
                         <p>{{ item.category.name }} • {{ item.get_status_display }}</p>
-                        <p>{{ item.price }}</p>
+                        <p>{{ item.price|intcomma }}</p>
                         <div style="display:flex; gap:12px; flex-wrap:wrap; margin-top:10px;">
-                            <a href="{% url 'property_detail' item.pk %}">View</a>
-                            <a href="{% url 'property_edit' item.pk %}">Edit</a>
+                            <a class="agentPropertyView" href="{% url 'property_detail' item.pk %}">View</a>
+                            <a class="agentPropertyEdit" href="{% url 'property_edit' item.pk %}">Edit</a>
                             <form method="post" action="{% url 'property_delete' item.pk %}" style="display:inline;">
                                 {% csrf_token %}
-                                <button type="submit" style="background:none; border:1px solid red; color:red; padding:6px 10px;">Delete</button>
+                                <button type="submit" class="agentPropertyDelete" >Delete</button>
                             </form>
                         </div>
-                    </li>
+                    </div>
                 {% endfor %}
-            </ul>
         {% else %}
             <p>You have not created any properties yet.</p>
         {% endif %}

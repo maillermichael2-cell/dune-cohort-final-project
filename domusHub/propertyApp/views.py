@@ -61,6 +61,7 @@ def toggle_favorite(request, pk):
     if not created:
         favorite.delete()
         messages.info(request, 'Property removed from favorites.')
+        return redirect('individual_dashboard')
     else:
         messages.success(request, 'Property added to favorites.')
     return redirect('property_detail', pk=pk)
