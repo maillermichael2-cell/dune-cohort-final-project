@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<div class="property-edit-page" style="padding: 40px; max-width: 700px; margin: 0 auto;">
+<div class="agent-dashboard" style="margin-top: 60px;">
     <h1>Edit Property</h1>
 
     {% if messages %}
@@ -10,12 +10,14 @@
         {% endfor %}
     {% endif %}
 
-    <form method="post" enctype="multipart/form-data">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Save changes</button>
-    </form>
+    <div class="agent-form">
+        <form class="input-form" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button class="createBtn" type="submit">Save changes</button>
+        </form>
+    </div>
 
-    <p><a href="{% url 'agent_dashboard' %}">Back to property</a></p>
+    <a class="agentPropertyView" href="{% url 'agent_dashboard' %}">Back to property</a>
 </div>
 {% endblock %}

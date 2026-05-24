@@ -6,3 +6,6 @@ __pycache__/
 .env
 *.env
 media
+*.pyc
+*.log
+.DS_Store

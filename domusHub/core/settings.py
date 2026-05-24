@@ -14,6 +14,7 @@ from pathlib import Path
 import os
 from decouple import config
 import dj_database_url
+import sys
 
 
 
@@ -116,12 +117,23 @@ WSGI_APPLICATION = 'core.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/6.0/ref/settings/#databases
 
-DATABASES = {
+if 'runserver' in sys.argv:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',
+        }
+    }
+else :
+    DATABASES = {
     'default': dj_database_url.config(
         default=config('DATABASE_URL', default='sqlite:///db.sqlite3'),
         conn_max_age=600,
     )
 }
+
+
+
 
 
 # Password validation
@@ -165,14 +177,30 @@ STATIC_ROOT = BASE_DIR / 'staticfiles'
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 
-STORAGES = {
-    "default": {
-        "BACKEND": 'django.core.files.storage.FileSystemStorage',
-    },
-    "staticfiles": {
-        "BACKEND": 'whitenoise.storage.CompressedManifestStaticFilesStorage',
-    },
-}
+
+if 'runserver' in sys.argv:
+    DEBUG = True
+    ALLOWED_HOSTS = ['127.0.0.1', 'localhost', '0.0.0.0']
+    STORAGES = {
+        "default":{
+            "BACKEND": "django.core.files.storage.FileSystemStorage",
+        },
+        "staticfiles": {
+            "BACKEND": "django.contrib.staticfiles.storage.StaticFilesStorage",
+        },
+    }
+else :
+    DEBUG = False
+    ALLOWED_HOSTS = ['*']
+    STORAGES = {
+        "default": {
+            "BACKEND": 'django.core.files.storage.FileSystemStorage',
+        },
+        "staticfiles": {
+            "BACKEND": 'whitenoise.storage.CompressedManifestStaticFilesStorage',
+        },
+    }
+
 
 
 WHITENOISE_AUTOREFRESH = True

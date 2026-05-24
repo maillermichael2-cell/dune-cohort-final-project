@@ -93,6 +93,10 @@
   width: 100%;max-width: 200px;display: flex;justify-content: center;
   align-items: center;height: 40px;color: white;
 }
+.menuLinks{
+  text-decoration: none;width:90%;height:40px;color: white;
+  display: flex;justify-content: center;align-items: center;
+}
 .sideBar{
   width: 70%;height: auto;position: fixed;top: 60px;right: 0px;
   border-radius: 10px 0px 0px 10px ;display: flex;flex-direction: column;
@@ -403,7 +407,7 @@
 }
 .detail-container{
   display: flex;flex-direction: column;justify-content: center;align-items: center;
-  padding: 24px 20px 180px 20px
+  padding: 24px 20px 20px;
 }
 .detail-header{
   width: 100%;height: auto;display: flex;justify-content: space-between;align-items: flex-start;
@@ -449,18 +453,35 @@
   font-size: 12px;color: white;text-align: center;
 }
 .property-detail-actions{
-  width: 80%;height: 100px;display: flex;justify-content: center;align-items: center;
+  width: 100%;height: 100px;display: flex;justify-content: center;align-items: center;
   margin-bottom: 20px;
 }
 .action-link{
-  background-color:white;
-  border: 1px solid rgba(255,255,255,0.1);
-  color:black;
-  width: 40%;height: 44px;border-radius:10px;
+  background-color:black;
+  border: 1px solid green;
+  color:white;
+  width: 100%;height: 30px;
   display: flex;justify-content: center;align-items: center;
-  font-size: 18px;box-shadow: inset 0 1px 0 rgba(255,255,255,0.3);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.3);
   transition: transform 0.3s ease;text-decoration: none;
-  padding: 10px;font-size: 14px;
+  padding: 10px;font-size: 10px;max-width: 100px;
+}
+.deleteBtn{
+  background:none; border:1px solid red; 
+  color:red; height: 30px;font-size: 10px;
+  width: 100%;max-width: 100px;display: flex;
+  justify-content: center;align-items: center;
+  padding: 10px; box-shadow: inset 0 1px 0 rgba(255,255,255,0.3);
+  transition: transform 0.3s ease;text-decoration: none;
+}
+.deleteForm{
+  width: 100%;max-width: 100px;
+  display: flex;justify-content: center;align-items: center;
+  padding: 0px;
+}
+.actionhold{
+  width: 100%;height: auto;display: flex;justify-content: center;
+  align-items: center;gap: 15px;
 }
 /*-----------------agent dashboard--------------*/
 .agent-dashboard{
@@ -507,6 +528,7 @@
 }
 .agentPropertyDelete{
   background:none; border:1px solid red; color:red; padding:6px 10px;
+  text-decoration: none;font-size: 10px;
 }
 .agentPropertyEdit{
   background:none; border:1px solid green; color:white; padding:6px 5px;

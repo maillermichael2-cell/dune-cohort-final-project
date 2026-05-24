@@ -6,7 +6,7 @@
     
     <div class="hero-image-wrapper">
         {% if property.image %}
-                <img src="{{ property.image.url }}" alt="{{ property.title }}" style="width: 100%; border-radius: 8px; object-fit: cover;" />
+                <img src="{{ property.image.url }}" alt="{{ property.title }}" style="width: 90%; border-radius: 8px; object-fit: cover;" />
         {% endif %}
     </div>
 
@@ -60,18 +60,20 @@
             <a class="action-link" href="{% url 'individual_dashboard_by_category' property.category.slug %}" style="margin-right: 16px;">More in {{ property.category.name }}</a>
             <a class="action-link" href="https://wa.me{{agent.phone_number}}" target="_blank">chat with {{agent.agency_name}}</a>
         {% else %}
-            <span>Back to listings</span>
-            <span>More in {{ property.category.name }}</span>
+            <span style="display: none;">Back to listings</span>
+            <span style="display: none;">More in {{ property.category.name }}</span>
         {% endif %}
         {% if request.user.is_authenticated and property.owner == request.user %}
-            <a class="action-link" href="{% url 'property_edit' property.pk %}" style="margin-right: 16px;">Edit property</a>
-            <a class="action-link" href="{% url 'agent_dashboard' %}">back to agent</a>
-            <form method="post" action="{% url 'property_delete' property.pk %}" style="display:inline;">
-                {% csrf_token %}
-                <button type="submit" style="background:none; border:1px solid red; color:red; padding:6px 10px;">Delete property</button>
-            </form>
+            <div class="actionhold">
+                <a class="action-link" href="{% url 'property_edit' property.pk %}" >Edit property</a>
+                <a class="action-link" href="{% url 'agent_dashboard' %}">back to agent</a>
+                <!-- <form method="post" action="" class="deleteForm">
+                    {% csrf_token %}
+                    <button type="submit" class="deleteBtn">Delete property</button>
+                </form> -->
+                <a href="{% url 'property_delete' property.pk %}" class="deleteBtn">Delete property</a>
+            </div>
         {% endif %}
     </div>
 </div>
 {% endblock %}
-postgresql://toriloshop_db_3bxf_user:erwMo0WBPmKXd6yJWsCnt9mfEJsONgHs@dpg-d883cs19rddc73b4d71g-a/toriloshop_db_3bxf

@@ -24,9 +24,16 @@
                         <div class="sideBarHeader">
                             <div class="userWelcome">Hello {{request.user.username}}</div>
                         </div>
-                        <div class="menuList">
-                            <a class="menuLink" href="{% url 'favorites_list' %}">Favorites</a>
-                        </div>
+                        {% if request.user.is_authenticated and request.user.profile.role != 'ESTATE AGENT'%}
+                            <div class="menuList">
+                                <a class="menuLinks" href="{% url 'favorites_list' %}">Favorites</a>
+                            </div>
+                        {% endif %}
+                        {% if request.user.is_authenticated and request.user.profile.role == 'ESTATE AGENT'%}
+                            <div style="border: 1px solid red;" class="menuList">
+                                <a style="display: none;" class="menuLinks" href="{% url 'agent_dashboard' %}">Dashboard</a>
+                            </div>
+                        {% endif %}
                         <form action="{% url 'logout' %}" method="POST" class="logoutForm">
                             {% csrf_token %}
                             <button class="logout2" type="submit">Logout</button>

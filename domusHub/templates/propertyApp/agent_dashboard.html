@@ -33,10 +33,11 @@
                         <div style="display:flex; gap:12px; flex-wrap:wrap; margin-top:10px;">
                             <a class="agentPropertyView" href="{% url 'property_detail' item.pk %}">View</a>
                             <a class="agentPropertyEdit" href="{% url 'property_edit' item.pk %}">Edit</a>
-                            <form method="post" action="{% url 'property_delete' item.pk %}" style="display:inline;">
+                            <!-- <form method="post" action="" style="display:inline;">
                                 {% csrf_token %}
                                 <button type="submit" class="agentPropertyDelete" >Delete</button>
-                            </form>
+                            </form> -->
+                            <a class="agentPropertyDelete" href="{% url 'property_delete' item.pk %}">Delete</a>
                         </div>
                     </div>
                 {% endfor %}
