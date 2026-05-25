@@ -58,7 +58,13 @@
         {% if not is_agent %}
             <a class="action-link" href="{% url 'individual_dashboard' %}" style="margin-right: 16px;">Back to listings</a>
             <a class="action-link" href="{% url 'individual_dashboard_by_category' property.category.slug %}" style="margin-right: 16px;">More in {{ property.category.name }}</a>
-            <a class="action-link" href="https://wa.me{{agent.phone_number}}" target="_blank">chat with {{agent.agency_name}}</a>
+            {% if whatsapp_url %}
+                <a class="action-link" href="{{whatsapp_url}}" target="_blank">
+                    <i class="fab fa-whatsapp">Contact agent on whatsapp</i>
+                </a>
+            {% else %}
+                <p>No Whatsapp contact available for this agent</p>
+            {% endif %}
         {% else %}
             <span style="display: none;">Back to listings</span>
             <span style="display: none;">More in {{ property.category.name }}</span>

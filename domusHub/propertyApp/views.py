@@ -4,6 +4,7 @@ from django.db.models import Count, Q
 from django.contrib.auth.decorators import login_required
 from .forms import PropertyForm
 from django.contrib import messages
+import urllib.parse 
 # rest framework imports
 from rest_framework.views import APIView
 from rest_framework.response import Response
@@ -43,14 +44,21 @@ def property_detail(request, pk):
     owner_profile = None
     if property_item.owner and hasattr(property_item.owner, 'profile'):
         owner_profile = property_item.owner.profile
+        if getattr(owner_profile, 'phone_number', None):
+            clean_phone = "".join(filter(str.isdigit, str(owner_profile.phone_number)))
+            message = f'Hello , i am intrested in your property: {property_item.title}'
+            encoded_message = urllib.parse.quote(message)
+            whatsapp_url = f"https://wa.me{clean_phone}?text={encoded_message}"
     is_favorite = False
     if request.user.is_authenticated:
         is_favorite = Favorite.objects.filter(user=request.user, property=property_item).exists()
+    
     return render(request, 'propertyApp/property_detail.html', {
         'property': property_item,
         'categories': categories,
         'is_agent': is_agent,
         'agent':owner_profile,
+        "whatsapp_url": whatsapp_url,
         'is_favorite': is_favorite,
     })
 
@@ -249,6 +257,9 @@ class PropertyCreateAPIView(APIView):
     permission_classes = [IsAuthenticatedOrReadOnly]
 
     def post(self, request):
+        profile = getattr(request.user, 'profile', None)
+        if not profile or profile.role != 'ESTATE AGENT':
+            return Response({'detail': 'Only estate agents can create properties.'}, status=status.HTTP_403_FORBIDDEN)
         serializer = PropertySerializer(data=request.data)
         if serializer.is_valid():
             serializer.save(owner=request.user)

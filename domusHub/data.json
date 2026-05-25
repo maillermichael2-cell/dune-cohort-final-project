@@ -1,0 +1,277 @@
+[
+{
+    "model": "auth.user",
+    "pk": 5,
+    "fields": {
+        "password": "pbkdf2_sha256$1200000$3eWH2YTvagawP8FSu0a9wn$RQeVstbpwtLOKB/4EBt+QzT3OyRSdE1FY901Hq97xFY=",
+        "last_login": "2026-05-18T20:14:18.372Z",
+        "is_superuser": true,
+        "username": "domusHub",
+        "first_name": "",
+        "last_name": "",
+        "email": "domus@gmail.com",
+        "is_staff": true,
+        "is_active": true,
+        "date_joined": "2026-05-17T12:41:19.729Z",
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "auth.user",
+    "pk": 8,
+    "fields": {
+        "password": "pbkdf2_sha256$1200000$DzmtXpab8VprD1RH2Aca1D$jLml0BOH/6/YZbk1IXRE/8+pwCEYl4i6ui+KXtTH96Y=",
+        "last_login": "2026-05-25T21:06:09.834Z",
+        "is_superuser": false,
+        "username": "domus-agent",
+        "first_name": "",
+        "last_name": "",
+        "email": "macmichaelsmichael@gmail.com",
+        "is_staff": false,
+        "is_active": true,
+        "date_joined": "2026-05-18T16:23:03Z",
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "auth.user",
+    "pk": 9,
+    "fields": {
+        "password": "pbkdf2_sha256$1200000$tcGb6GRi1PZVlXlbBDmKb2$JJv0DZDvwbu8WSY35jHPmLvAVfFer7pgZ6AqBkb9NDo=",
+        "last_login": "2026-05-25T20:51:33.187Z",
+        "is_superuser": false,
+        "username": "individual",
+        "first_name": "",
+        "last_name": "",
+        "email": "invidi@gmail.com",
+        "is_staff": false,
+        "is_active": true,
+        "date_joined": "2026-05-18T16:36:43.260Z",
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "auth.user",
+    "pk": 10,
+    "fields": {
+        "password": "pbkdf2_sha256$1200000$KpUOm0uscTgeLKIr49rdCq$S/Rs/stY3gJwrP35PNBSLDLxE3lPqP+aZKq4A4F7Vcg=",
+        "last_login": "2026-05-22T15:25:11.386Z",
+        "is_superuser": false,
+        "username": "michael",
+        "first_name": "",
+        "last_name": "",
+        "email": "mike@gmail.com",
+        "is_staff": false,
+        "is_active": true,
+        "date_joined": "2026-05-22T15:25:09.304Z",
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "sessions.session",
+    "pk": "02yfyy22j82uvowxkgk5ih578ft8mezi",
+    "fields": {
+        "session_data": ".eJxVjDsOwyAQBe9CHSH-2CnT-wyIZZfgJALJ2FWUu0dILpL2zcx7sxCPvYSj0xZWZFcm2eV3g5ieVAfAR6z3xlOr-7YCHwo_aedLQ3rdTvfvoMReRu2UVl45HZMwOQmnzDwbzAa9BbATaWll9kmjnNBAJGcAlQAiUFomzT5f0cY37Q:1wKba3:m6C_LQRiXggpUvVdCEg94PxWkSgz7h0HL37Sel671Ks",
+        "expire_date": "2026-05-20T12:42:23.452Z"
+    }
+},
+{
+    "model": "sessions.session",
+    "pk": "3292gvqmgbr9ttna9jcguh30zc9fdl54",
+    "fields": {
+        "session_data": ".eJxVjDsOwyAQBe9CHSH-2CnT-wyIZZfgJALJ2FWUu0dILpL2zcx7sxCPvYSj0xZWZFcm2eV3g5ieVAfAR6z3xlOr-7YCHwo_aedLQ3rdTvfvoMReRu2UVl45HZMwOQmnzDwbzAa9BbATaWll9kmjnNBAJGcAlQAiUFomzT5f0cY37Q:1wNFgi:gzOA0XFw-rXkYHeh0gPpk36ASZtMpyIKKaiuImo0Ozk",
+        "expire_date": "2026-05-27T19:56:12.047Z"
+    }
+},
+{
+    "model": "sessions.session",
+    "pk": "3a2xc6b31qb0lkfu4m2lhq5pjtkx5m3v",
+    "fields": {
+        "session_data": ".eJxVjDsOwyAQRO9CHSHA5pcyvc-AFnYJTiIsGbuKcvdgyUXSjd68mTcLsG8l7I3WMCO7Ms8uvyxCelI9CnxAvS88LXVb58gPhZ9t49OC9Lqd7t9BgVb6migaJZVQRigvXNQjDtkQRq2Szb4HJwcQxnkCabVLCcijzei063Rkny_kbzfr:1wQsgq:NZl-AnKNefCbZwkoGfoikM5V72X3gCwELMNb7JRORps",
+        "expire_date": "2026-06-06T20:11:20.642Z"
+    }
+},
+{
+    "model": "sessions.session",
+    "pk": "akzraepw1iwis21wzc419cio1q23qka9",
+    "fields": {
+        "session_data": "e30:1wOaOq:S9dQmrru6GMJ58pjkN2bN35MjF7A4wUMyQOp1PuK7eU",
+        "expire_date": "2026-05-31T12:15:16.043Z"
+    }
+},
+{
+    "model": "sessions.session",
+    "pk": "atv58p7n1fphtrpku8kxxyr10r00jp8p",
+    "fields": {
+        "session_data": "e30:1wOaNu:hly8wzO_YvrHeQ74fAd9FU-n9bE8fhB-F131FMd1gZo",
+        "expire_date": "2026-05-31T12:14:18.327Z"
+    }
+},
+{
+    "model": "sessions.session",
+    "pk": "fx3x56873rctswpd4tre1duy7zmjuwrs",
+    "fields": {
+        "session_data": ".eJxVjDsOwjAQBe_iGllZ_6GkzxmstXfBAWRLcVIh7k4ipYB2Zt57i4jrUuLaeY4TiYsI4vTLEuYn113QA-u9ydzqMk9J7ok8bJdjI35dj_bvoGAv2xpBJaAAAfwQvALyxDftQZFBVknZ80YsG-2IyVpSwWXtDCTNg0FnxecL1Qc3bw:1wQMXG:IV9Pr9KxuTcC2SGoi-7sqSNIcC9wbFZjk5yj6TzFctI",
+        "expire_date": "2026-06-05T09:51:18.413Z"
+    }
+},
+{
+    "model": "sessions.session",
+    "pk": "hevbuei17fiiewn4evfxx478jglpnu5d",
+    "fields": {
+        "session_data": ".eJxVjEEOwiAQRe_C2pCi7Qy4dN8zkIEZpGogKe3KeHfbpAvdvvf-fytP65L92mT2E6urOqvTLwsUn1J2wQ8q96pjLcs8Bb0n-rBNj5XldTvav4NMLW9rE6ztEEAcOhOp40TsCCxSiFEsbNhdEtkhITAYk9Agk_TAQ3A9W_X5AutNODY:1wNuE7:pDBx1gBPa-PKWsDEVHXJ0H0BUWhrCwyh6qPfwFhb-gE",
+        "expire_date": "2026-05-29T15:13:23.150Z"
+    }
+},
+{
+    "model": "sessions.session",
+    "pk": "ld8vozz4rsoik8483pjnyakc79ht0d0s",
+    "fields": {
+        "session_data": ".eJxVjDsOwyAQRO9CHSHA5pcyvc-AFnYJTiIsGbuKcvdgyUXSjd68mTcLsG8l7I3WMCO7Ms8uvyxCelI9CnxAvS88LXVb58gPhZ9t49OC9Lqd7t9BgVb6migaJZVQRigvXNQjDtkQRq2Szb4HJwcQxnkCabVLCcijzei063Rkny_kbzfr:1wQpDz:Ncd2f2TlJ1xkbVejFj1APMoKBmEB63nlIx2uDdryVV4",
+        "expire_date": "2026-06-06T16:29:19.163Z"
+    }
+},
+{
+    "model": "sessions.session",
+    "pk": "tpkkz6f8mexp879dhiqeumxfpak25u30",
+    "fields": {
+        "session_data": ".eJxVjDsOwjAQBe_iGllZ_6GkzxmstXfBAWRLcVIh7k4ipYB2Zt57i4jrUuLaeY4TiYsI4vTLEuYn113QA-u9ydzqMk9J7ok8bJdjI35dj_bvoGAv2xpBJaAAAfwQvALyxDftQZFBVknZ80YsG-2IyVpSwWXtDCTNg0FnxecL1Qc3bw:1wRcUz:nRjk9oCMja2IISEdmEPWPrNPKVaTkwviRCgVpZF-F90",
+        "expire_date": "2026-06-08T21:06:09.842Z"
+    }
+},
+{
+    "model": "sessions.session",
+    "pk": "trfhemne8uddl5entkw4hf4hojbvf6bi",
+    "fields": {
+        "session_data": ".eJxVjDsOwyAQRO9CHSHA5pcyvc-AFnYJTiIsGbuKcvdgyUXSjd68mTcLsG8l7I3WMCO7Ms8uvyxCelI9CnxAvS88LXVb58gPhZ9t49OC9Lqd7t9BgVb6migaJZVQRigvXNQjDtkQRq2Szb4HJwcQxnkCabVLCcijzei063Rkny_kbzfr:1wQRZR:4_x4Ya6Mjg2BHEOqaA6ZAI5rx_AucC04mUF_tY9BqeY",
+        "expire_date": "2026-06-05T15:13:53.234Z"
+    }
+},
+{
+    "model": "accounts.profile",
+    "pk": 3,
+    "fields": {
+        "user": 8,
+        "role": "ESTATE AGENT",
+        "phone_number": "09011865076"
+    }
+},
+{
+    "model": "accounts.profile",
+    "pk": 4,
+    "fields": {
+        "user": 9,
+        "role": "INDIVIDUAL",
+        "phone_number": "09011865076"
+    }
+},
+{
+    "model": "accounts.profile",
+    "pk": 5,
+    "fields": {
+        "user": 10,
+        "role": "ESTATE AGENT",
+        "phone_number": "07024567689"
+    }
+},
+{
+    "model": "accounts.agentprofile",
+    "pk": 1,
+    "fields": {
+        "profile": 3,
+        "license_number": "63616318631836818",
+        "agency_name": "Domus Hub"
+    }
+},
+{
+    "model": "accounts.agentprofile",
+    "pk": 2,
+    "fields": {
+        "profile": 5,
+        "license_number": "71836183197139",
+        "agency_name": "8373783837"
+    }
+},
+{
+    "model": "propertyApp.propertycategory",
+    "pk": 1,
+    "fields": {
+        "name": "Land",
+        "slug": "land"
+    }
+},
+{
+    "model": "propertyApp.propertycategory",
+    "pk": 2,
+    "fields": {
+        "name": "Buildings",
+        "slug": "buildings"
+    }
+},
+{
+    "model": "propertyApp.propertycategory",
+    "pk": 3,
+    "fields": {
+        "name": "Rentals",
+        "slug": "rentals"
+    }
+},
+{
+    "model": "propertyApp.property",
+    "pk": 2,
+    "fields": {
+        "title": "mansion",
+        "property_address": "plot 9 lekki ajah road",
+        "description": "4 bed rooms large parking space",
+        "price": "300000000.00",
+        "category": 2,
+        "owner": 8,
+        "status": "SOLD",
+        "image": "property_images/home-pics2.jpg",
+        "created_at": "2026-05-22T15:22:51.501Z"
+    }
+},
+{
+    "model": "propertyApp.property",
+    "pk": 3,
+    "fields": {
+        "title": "3 badroom flat",
+        "property_address": "plot 15 ten ten close off pako bus stop baruwa ipaja lagosState",
+        "description": "pop lights",
+        "price": "1400000.00",
+        "category": 3,
+        "owner": 8,
+        "status": "AVAILABLE",
+        "image": "property_images/home-pics.avif",
+        "created_at": "2026-05-24T13:04:14.388Z"
+    }
+},
+{
+    "model": "propertyApp.property",
+    "pk": 4,
+    "fields": {
+        "title": "Luxury 3 Bedroom Fully Detached Duplex",
+        "property_address": "Ajah olodumare busstop 1, Lagos, Nigeria",
+        "description": "A beautifully built smart home featuring an automated lighting system, fully fitted kitchen, swimming pool, and 24/7 security service.",
+        "price": "185000000.00",
+        "category": 1,
+        "owner": 9,
+        "status": "AVAILABLE",
+        "image": "",
+        "created_at": "2026-05-25T20:57:33.453Z"
+    }
+},
+{
+    "model": "propertyApp.favorite",
+    "pk": 14,
+    "fields": {
+        "user": 9,
+        "property": 3,
+        "created_at": "2026-05-24T13:08:57.810Z"
+    }
+}
+]
