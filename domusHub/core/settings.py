@@ -193,7 +193,7 @@ if 'runserver' in sys.argv:
     }
 else :
     DEBUG = False
-    ALLOWED_HOSTS = ['*']
+    ALLOWED_HOSTS = ['://DomusHub.onrender.com,localhost', '127.0.0.1', '.onrender.com']
     STORAGES = {
         "default": {
             "BACKEND": 'django.core.files.storage.FileSystemStorage',
