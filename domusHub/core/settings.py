@@ -208,13 +208,13 @@ STORAGES = {
             "BACKEND": "cloudinary_storage.storage.MediaCloudinaryStorage",
         },
         "staticfiles": {
-            "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
+            "BACKEND": "whitenoise.storage.StaticFilesStorage",
         },
 }
 
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+STATICFILES_STORAGE = 'whitenoise.storage.StaticFilesStorage'
 DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
-WHITENOISE_IGNORE_PATTERNS = ['cloudinary','html', 'cloudinary_cors.html']
+# WHITENOISE_IGNORE_PATTERNS = ['cloudinary','html', 'cloudinary_cors.html']
 
 # if 'runserver' in sys.argv:
 #     DEBUG = True
