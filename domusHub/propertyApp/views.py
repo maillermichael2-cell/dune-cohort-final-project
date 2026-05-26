@@ -50,7 +50,7 @@ def property_detail(request, pk):
                 clean_phone = '234' + clean_phone[1:]
             message = f'Hello , i am intrested in your property: {property_item.title}'
             encoded_message = urllib.parse.quote(message)
-            whatsapp_url = f"https://whatsapp.com{clean_phone}&text={encoded_message}"
+            whatsapp_url = f"whatsapp://send?phone={clean_phone}&text={encoded_message}"
     is_favorite = False
     if request.user.is_authenticated:
         is_favorite = Favorite.objects.filter(user=request.user, property=property_item).exists()
