@@ -12,7 +12,7 @@ class RegisterForm(UserCreationForm):
     )
     phone_number = forms.CharField(required=False, max_length=20, widget=forms.TextInput(attrs={'placeholder': 'Phone Number'}))
     license_number = forms.CharField(required=False, max_length=50, widget=forms.TextInput(attrs={'placeholder': "License Number"}))
-    agency_name = forms.CharField(required=False, max_length=100, widget=forms.TextInput(attrs={'placeholder': "Agency Number"}))
+    agency_name = forms.CharField(required=False, max_length=100, widget=forms.TextInput(attrs={'placeholder': "Agency Name"}))
 
     class Meta:
         model = User
