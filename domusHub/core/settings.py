@@ -212,6 +212,9 @@ STORAGES = {
         },
 }
 
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
+
 # if 'runserver' in sys.argv:
 #     DEBUG = True
 #     ALLOWED_HOSTS = ['127.0.0.1', 'localhost', '0.0.0.0']
