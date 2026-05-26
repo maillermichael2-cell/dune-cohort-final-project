@@ -59,7 +59,7 @@
             <a class="action-link" href="{% url 'individual_dashboard' %}" style="margin-right: 16px;">Back to listings</a>
             <a class="action-link" href="{% url 'individual_dashboard_by_category' property.category.slug %}" style="margin-right: 16px;">More in {{ property.category.name }}</a>
             {% if whatsapp_url %}
-                <a class="action-link" href="{{whatsapp_url}}" target="_blank">
+                <a class="action-link" href="{{ whatsapp_url }}" target="_blank" rel="noopener noreferrer">
                     <i class="fab fa-whatsapp">Contact agent on whatsapp</i>
                 </a>
             {% else %}
