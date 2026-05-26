@@ -214,6 +214,7 @@ STORAGES = {
 
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
+WHITENOISE_IGNORE_PATTERNS = ['cloudinary','html', 'cloudinary_cors.html']
 
 # if 'runserver' in sys.argv:
 #     DEBUG = True
