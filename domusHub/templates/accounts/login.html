@@ -9,33 +9,20 @@
             <a class="a2" href="{% url 'property_dashboard' %}">Back to home</a>
         <h2>Sign in</h2>
         </header>
-        {% if messages %}
-            <div class="error-message">
-                {% for message in messages %}
-                    <p 
-                    style="color: red;width: 100%;display: flex;justify-content: center;align-items: center;"
-                    >{{message.tags}}</p>
-                {% endfor %}
-            </div>
-        {% endif %}
         <form method="POST" class="form">
             {% csrf_token %}
+            {% if form.non_field_errors %}
+                <div class="error">
+                    {% for error in form.non_field_errors %}
+                        <p style="color: red;">{{ error }}</p>
+                    {% endfor %}
+                </div>
+            {% endif %}
                 <div class="input">
                     {{form.as_p}}
                 </div>
             <button class="submit" type="submit">Login</button>
         </form>
-
-        {% for fiels in form %}
-            {% if field.errors %}
-                <div class="error">
-                    {% for error in field.errors %}
-                        <p style="color: red;">{{ field.label }}: {{ error }}</p>
-                    {% endfor %}
-                </div>
-            {% endif %}
-        {% endfor %}
-
         <p>Follow us on </p>
         <div class="socialMedia">
             <i class="fa-brands fa-facebook"></i>
