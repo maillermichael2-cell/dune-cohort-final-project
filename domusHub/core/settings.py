@@ -23,7 +23,12 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = config('SECRET_KEY')
 DEBUG = config('DEBUG', default=False, cast=bool)
-ALLOWED_HOSTS = config('ALLOWED_HOSTS', default='').split(',')
+_hosts = config('ALLOWED_HOSTS', default='')
+ALLOWED_HOSTS = [h.strip() for h in _hosts.split(',') if h.strip()]
+if DEBUG:
+    for host in ("localhost", "127.0.0.1", "testserver"):
+        if host not in ALLOWED_HOSTS:
+            ALLOWED_HOSTS.append(host)
     
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/6.0/howto/deployment/checklist/
@@ -116,22 +121,32 @@ WSGI_APPLICATION = 'core.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/6.0/ref/settings/#databases
+DATABASE_URL = config('DATABASE_URL', default='')
+if not DATABASE_URL:
+    DATABASE_URL = f'sqlite:///{BASE_DIR / "db.sqlite3"}'
 
-if 'runserver' in sys.argv:
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.sqlite3',
-            'NAME': BASE_DIR / 'db.sqlite3',
-        }
-    }
-else :
-    DATABASES = {
-    'default': dj_database_url.parse(
-        config('DATABASE_URL'),
+DATABASES = {
+    'default': dj_database_url.config(
+        default=DATABASE_URL,
         conn_max_age=600,
-        conn_health_checks=True,
     )
 }
+
+# if 'runserver' in sys.argv:
+#     DATABASES = {
+#         'default': {
+#             'ENGINE': 'django.db.backends.sqlite3',
+#             'NAME': BASE_DIR / 'db.sqlite3',
+#         }
+#     }
+# else :
+#     DATABASES = {
+#     'default': dj_database_url.parse(
+#         config('DATABASE_URL'),
+#         conn_max_age=600,
+#         conn_health_checks=True,
+#     )
+# }
 
 
 ALLOWED_HOSTS = [config('RENDER_EXTERNAL_HOSTNAME', default='127.0.0.1'), 'localhost', '.onrender.com']
@@ -180,32 +195,32 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 
 
-if 'runserver' in sys.argv:
-    DEBUG = True
-    ALLOWED_HOSTS = ['127.0.0.1', 'localhost', '0.0.0.0']
-    STORAGES = {
-        "default":{
-            "BACKEND": "django.core.files.storage.FileSystemStorage",
-        },
-        "staticfiles": {
-            "BACKEND": "django.contrib.staticfiles.storage.StaticFilesStorage",
-        },
-    }
-else :
-    DEBUG = False
-    ALLOWED_HOSTS = ['://DomusHub.onrender.com,localhost', '127.0.0.1', '.onrender.com']
-    STORAGES = {
-        "default": {
-            "BACKEND": 'django.core.files.storage.FileSystemStorage',
-        },
-        "staticfiles": {
-            "BACKEND": 'whitenoise.storage.CompressedManifestStaticFilesStorage',
-        },
-    }
+# if 'runserver' in sys.argv:
+#     DEBUG = True
+#     ALLOWED_HOSTS = ['127.0.0.1', 'localhost', '0.0.0.0']
+#     STORAGES = {
+#         "default":{
+#             "BACKEND": "django.core.files.storage.FileSystemStorage",
+#         },
+#         "staticfiles": {
+#             "BACKEND": "django.contrib.staticfiles.storage.StaticFilesStorage",
+#         },
+#     }
+# else :
+#     DEBUG = False
+#     ALLOWED_HOSTS = ['://DomusHub.onrender.com,localhost', '127.0.0.1', '.onrender.com']
+#     STORAGES = {
+#         "default": {
+#             "BACKEND": 'django.core.files.storage.FileSystemStorage',
+#         },
+#         "staticfiles": {
+#             "BACKEND": 'whitenoise.storage.CompressedManifestStaticFilesStorage',
+#         },
+#     }
 
 
 
-WHITENOISE_AUTOREFRESH = True
+# WHITENOISE_AUTOREFRESH = True
 
 #auth redirect conf 
 LOGIN_REDIRECT_URL = 'dashboard'
