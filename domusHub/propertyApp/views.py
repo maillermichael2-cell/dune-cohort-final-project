@@ -29,7 +29,7 @@ def home(request):
         'properties': properties,
         'categories': categories,
     }
-    return render(request, 'propertyApp/PropertyDashboard.html', context)
+    return render(request, 'propertyApp/propertyDashboard.html', context)
 
 
 def about(request):
