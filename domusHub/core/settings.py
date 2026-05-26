@@ -45,8 +45,6 @@ if DEBUG:
 # Application definition
 
 INSTALLED_APPS = [
-    'clodinary_storage',
-    'cloudinary',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -61,6 +59,8 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework_simplejwt',
     'django_filters',
+    'clodinary_storage',
+    'cloudinary',
 ]
 
 CLOUDINARY_STORAGE = {
