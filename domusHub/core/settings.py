@@ -30,16 +30,6 @@ if DEBUG:
         if host not in ALLOWED_HOSTS:
             ALLOWED_HOSTS.append(host)
     
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/6.0/howto/deployment/checklist/
-
-# # SECURITY WARNING: keep the secret key used in production secret!
-# SECRET_KEY = 'django-insecure-$z-udmu$w12(i)@w8*u9!5+4$k+axttz72gy7pbq!rmwoh=4!='
-
-# # SECURITY WARNING: don't run with debug turned on in production!
-# DEBUG = True
-
-# ALLOWED_HOSTS = []
 
 
 # Application definition
@@ -141,21 +131,7 @@ DATABASES = {
     )
 }
 
-# if 'runserver' in sys.argv:
-#     DATABASES = {
-#         'default': {
-#             'ENGINE': 'django.db.backends.sqlite3',
-#             'NAME': BASE_DIR / 'db.sqlite3',
-#         }
-#     }
-# else :
-#     DATABASES = {
-#     'default': dj_database_url.parse(
-#         config('DATABASE_URL'),
-#         conn_max_age=600,
-#         conn_health_checks=True,
-#     )
-# }
+
 
 
 ALLOWED_HOSTS = [config('RENDER_EXTERNAL_HOSTNAME', default='127.0.0.1'), 'localhost', '.onrender.com']
@@ -214,34 +190,10 @@ STORAGES = {
 
 STATICFILES_STORAGE = 'whitenoise.storage.StaticFilesStorage'
 DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
-# WHITENOISE_IGNORE_PATTERNS = ['cloudinary','html', 'cloudinary_cors.html']
-
-# if 'runserver' in sys.argv:
-#     DEBUG = True
-#     ALLOWED_HOSTS = ['127.0.0.1', 'localhost', '0.0.0.0']
-#     STORAGES = {
-#         "default":{
-#             "BACKEND": "django.core.files.storage.FileSystemStorage",
-#         },
-#         "staticfiles": {
-#             "BACKEND": "django.contrib.staticfiles.storage.StaticFilesStorage",
-#         },
-#     }
-# else :
-#     DEBUG = False
-#     ALLOWED_HOSTS = ['://DomusHub.onrender.com,localhost', '127.0.0.1', '.onrender.com']
-#     STORAGES = {
-#         "default": {
-#             "BACKEND": 'django.core.files.storage.FileSystemStorage',
-#         },
-#         "staticfiles": {
-#             "BACKEND": 'whitenoise.storage.CompressedManifestStaticFilesStorage',
-#         },
-#     }
 
 
 
-# WHITENOISE_AUTOREFRESH = True
+
 
 #auth redirect conf 
 LOGIN_REDIRECT_URL = 'dashboard'

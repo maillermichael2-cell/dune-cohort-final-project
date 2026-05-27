@@ -1,0 +1,50 @@
+{
+  "info": {
+    "_postman_id": "22b966db-a57b-4c83-9993-e33d20aeefc3",
+    "name": "DomusHub api",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "50709986",
+    "_collection_link": "https://go.postman.co/collection/50709986-22b966db-a57b-4c83-9993-e33d20aeefc3?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "New Request",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzc5NTQ3NzYzLCJpYXQiOjE3Nzk1NDY4MDMsImp0aSI6ImY5YjFkMjA2YjkzNDRhNjRhZWY3NDRiMzRmNjFiZWZmIiwidXNlcl9pZCI6IjgifQ.5RcQPqFuzpFZU-zEx2anZAsOu-DmPbm4g1l2zveLmoI",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"username\": \"individual\",\r\n    \"password\": \"dare1234\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://127.0.0.1:3000/api/token/",
+          "protocol": "http",
+          "host": [
+            "127",
+            "0",
+            "0",
+            "1"
+          ],
+          "port": "3000",
+          "path": [
+            "api",
+            "token",
+            ""
+          ]
+        }
+      },
+      "response": []
+    }
+  ]
+}
