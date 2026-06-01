@@ -1,545 +1,1695 @@
-/* radial-gradient(at 10% 12%, rgba(138,43,226,0.18) 0px, transparent 40%),
-      radial-gradient(at 90% 15%, rgba(0,245,255,0.12) 0px, transparent 35%),
-      radial-gradient(at 50% 85%, rgba(255,0,127,0.12) 0px, transparent 45%),
-      radial-gradient(at 0% 100%, rgba(31,23,71,0.5) 0px, transparent 50%); */
-/* Reset */
+/* ==========================================================================
+   1. PREMIUM DARK MODE DESIGN SYSTEM
+   ========================================================================== */
+@import url('https://googleapis.com');
+
+:root {
+    /* Rich Dark Color Spectrum */
+    --bg-clean: #0b0f19;          /* Deep dark canvas background */
+    --surface-card: #111827;      /* Slightly lighter dark background for containers/headers */
+    --surface-hover: #1f2937;     /* Hover state background highlights */
+    --text-primary: #f8fafc;      /* Crisp bright off-white for main headings */
+    --text-muted: #94a3b8;         /* Smooth light-gray slate for subtext */
+    --accent-blue: #38bdf8;       /* Glowing electric sky-blue accent for actions/links */
+    --accent-blue-hover: #0ea5e9;
+    --border-subtle: #1e293b;     /* Slate border dividing lines */
+    
+    --header-height: 72px;
+    --radius-md: 12px;
+    --radius-sm: 8px;
+    --transition: all 0.2s ease-in-out;
+}
+
+/* ==========================================================================
+   2. CORE CANVAS RESETS (Premium Dark Base)
+   ========================================================================== */
 * {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
-/* Base */
 .body {
-  font-family: 'Segoe UI',Roboto, sans-serif;
-  line-height: 1.6;
-  background-color: black;
-  color: white;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    color: var(--text-primary);
+    background-color: var(--bg-clean);
+    min-height: 100vh;
+    -webkit-font-smoothing: antialiased;
+}
+
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+/* ==========================================================================
+   3. FIXED NAVBAR LAYOUT (Dark Contrast Header)
+   ========================================================================== */
+.header {
+    background-color: var(--surface-card);
+    border-bottom: 1px solid var(--border-subtle);
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: var(--header-height);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 2rem;
+    z-index: 1000;
+}
+
+.logo {
+    font-size: 1.15rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    color: var(--text-primary);
+    text-transform: uppercase;
+}
+
+.nav2 {
+    display: flex;
+    align-items: center;
+}
+
+/* Unauthenticated Links Container */
+.linksHolder {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+}
+
+.headerLinks {
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 600;
+    padding: 0.5rem 1rem;
+    border-radius: var(--radius-sm);
+    transition: var(--transition);
+}
+
+/* "Properties" Link */
+.linksHolder .headerLinks:first-child {
+    color: var(--text-muted);
+}
+
+.linksHolder .headerLinks:first-child:hover {
+    color: var(--text-primary);
+    background-color: var(--surface-hover);
+}
+
+/* "Become Agent" Action Button */
+.linksHolder .headerLinks:last-child {
+    color: var(--bg-clean);
+    background-color: var(--text-primary);
+}
+
+.linksHolder .headerLinks:last-child:hover {
+    background-color: #cbd5e1;
+}
+
+/* ==========================================================================
+   4. HOME HERO CONTAINER STYLING (Dark Theme Adaptation)
+   ========================================================================== */
+main {
+    flex-grow: 1;
+    margin-top: var(--header-height);
+    padding: 2.5rem 1.5rem;
+    max-width: 800px;
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Landscape Hero Showcase Image */
+main img, .heroImage {
+    width: 100%;
+    height: auto;
+    max-height: 480px;
+    object-fit: cover;
+    border-radius: var(--radius-md);
+    box-shadow: 0 20px 40px -20px rgba(0, 0, 0, 0.7);
+    margin-bottom: 2rem;
+    border: 1px solid var(--border-subtle);
+}
+
+/* Main Heading Title */
+main h1, .heroTitle {
+    font-size: 2.25rem;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+    margin-bottom: 0.75rem;
+    color: var(--text-primary);
+}
+
+/* Core Paragraph Copy */
+main p, .heroText {
+    font-size: 1.05rem;
+    color: var(--text-muted);
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
+}
+
+/* Authentication CTA Area */
+.authPrompt {
+    font-size: 0.95rem;
+    color: var(--text-muted);
+    border-top: 1px solid var(--border-subtle);
+    padding-top: 1.5rem;
+    margin-top: auto;
+}
+
+.authPrompt a {
+    color: var(--accent-blue);
+    text-decoration: none;
+    font-weight: 600;
+    margin-right: 0.5rem;
+    transition: var(--transition);
+}
+
+.authPrompt a:hover {
+    color: var(--accent-blue-hover);
+    text-underline-offset: 4px;
+    text-decoration: underline;
+}
+
+/* ==========================================================================
+   5. AUTHENTICATED USER DROPDOWN / SIDE PANEL (Dark Mode Mix)
+   ========================================================================== */
+.user {
+    position: relative;
+}
+
+.sideBarBtn {
+    background: none;
+    border: none;
+    color: var(--text-primary);
+    font-size: 1.25rem;
+    cursor: pointer;
+    padding: 0.5rem;
+}
+
+/* SIDEBAR MECHANICS (Matches your exact js display style logic) */
+.sideBar {
+    display: none; 
+    flex-direction: column;
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 340px;
+    height: 100vh;
+    background-color: var(--surface-card);
+    border-left: 1px solid var(--border-subtle);
+    box-shadow: -10px 0 40px -10px rgba(0, 0, 0, 0.5);
+    z-index: 1100;
+    padding: 2rem 1.5rem;
+    
+    animation: fadeInSidebar 0.2s ease-out;
+}
+
+@keyframes fadeInSidebar {
+    from { opacity: 0; transform: translateX(20px); }
+    to { opacity: 1; transform: translateX(0); }
+}
+
+.sideBarHeader {
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--border-subtle);
+    margin-bottom: 1.5rem;
+    display: flex;justify-content: center;align-items: center;
+    gap: 60px;
+}
+.profilePics {
+    width: 60px;
+    height: 40px;
+    background-color: var(--accent-blue);
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: var(--bg-clean);
+    font-weight: 700;
+    font-size: 1.25rem;
+}
+
+.userWelcome {
+    font-weight: 600;
+    font-size: 1.1rem;
+    color: var(--text-primary);
+}
+
+.menuList {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.menuList[style*="border: 1px solid red;"] {
+    border: none !important;
+}
+
+.menuLinks {
+    text-decoration: none;
+    color: var(--text-muted);
+    font-weight: 500;
+    padding: 0.75rem 1rem;
+    border-radius: var(--radius-sm);
+    transition: var(--transition);
+}
+
+.menuLinks:hover {
+    color: var(--accent-blue);
+    background-color: var(--surface-hover);
+}
+
+/* Premium Logout Framework Button */
+.logoutForm {
+    margin-top: auto;
+}
+
+.logout2 {
+    width: 100%;
+    background-color: rgba(239, 68, 68, 0.1);
+    color: #f87171;
+    border: 1px solid rgba(239, 68, 68, 0.2);
+    padding: 0.75rem;
+    border-radius: var(--radius-sm);
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.logout2:hover {
+    background-color: #ef4444;
+    color: var(--text-primary);
+    border-color: #ef4444;
 }
 
 
+/* ==========================================================================
+   DASHBOARD HOME VIEW STYLING (Strictly Main Desktop)
+   ========================================================================== */
 
-/*-------------------base.html section start----------------*/
-.header{
-  width: 100%;height: 50px;display: flex;justify-content: center;align-items: center;
-  gap: 10px;position: fixed;top: 0%;left: 0%;right: 0%; background: rgba(255,255,255,0.07);
-  backdrop-filter: blur(16px) saturate(180%);
-  -webkit-backdrop-filter: blur(16px) saturate(180%);
-  z-index: 10;
-  border: 1px solid rgba(255,255,255,0.15);
-  box-shadow:
-      0 20 50ps rgba(0,0,0,0.15),
-      inset 0 1px 0 rgba(255,255,255,0.2);
-
-}
-.headerLinks{
-  color: white;text-decoration: none;
-}
-.header p{color: greenyellow;font-weight: bolder;font-size:15px;}
-.nav2{
-  width: 80%;height: 50px;display: flex;justify-content: end;align-items: center;
-  gap: 110px;
-}
-.logo{
-  width: 20%;height: 50px;display: flex;justify-content: center;align-items: center;
-  color: greenyellow;
-}
-.linksHolder{
-  width: 80%;height: 50px;display: flex;justify-content: space-around;
-  align-items: center;
-}.links3{
-  border: 1px solid greenyellow;
-  width: 40%;height: 30px;border-radius:3px;background-color: greenyellow;
-  color: black;display: flex;justify-content: center;align-items: center;
-  color: black;text-decoration:none;font-size: 15px;font-weight: bold;
-}
-.logout2{
-  width: 60%;height: 35px;background-color:greenyellow;
-  color: black;border: transparent;border-radius: 2px;
-  margin-right: 0%;font-size: 10px;font-weight: bolder;
-}
-.logoutForm{
-  width: 100%;height: auto;display: flex;justify-content: center;
-  align-items: center;flex-direction: column;margin-bottom: 10px;margin-top: 10px;
-}
-.user{
-  width: 100%;height: 50px;display: flex;justify-content: end;
-  align-items: center;
-}
-.sideBarBtn{
-  width: 20%;height: 40px;border-radius: 3px;
-  color:white;margin-right: 5px;
-  background: rgba(255,255,255,0.1);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-  border-radius: 5px;
-  border: 0px solid rgba(255,255,255,0.25);
-  padding: 14px 28px;
-  color: #ffffff;
-  font-weight: 600;
-  font-size: 15px;
-  letter-spacing: 0.5px;
-  text-shadow: 0 1px 2px rgba(0,0,0,0.2);
-  cursor: pointer;
-  transition: all 0.3s cubic-bezier(0.25,0.0,0.25,1);
-  box-shadow: inset 0 1px 0 rgba(255,255,255,0.3);
-  text-decoration: none;
-  width: 100%;max-width: 65px;display: flex;justify-content: center;
-  align-items: center;
-  height: 40px;
-}
-.menuLink{
-  text-decoration: none;
-  width: 100%;max-width: 200px;display: flex;justify-content: center;
-  align-items: center;height: 40px;color: white;
-}
-.menuLinks{
-  text-decoration: none;width:90%;height:40px;color: white;
-  display: flex;justify-content: center;align-items: center;
-}
-.sideBar{
-  width: 70%;height: auto;position: fixed;top: 60px;right: 0px;
-  border-radius: 10px 0px 0px 10px ;display: flex;flex-direction: column;
-  justify-content: start;align-items: center;background-color: black;
-  display: none;color: white;
-}
-.sideBarHeader{
-  width: 100%;height: auto;display: flex;justify-content: center;align-items: center;
-}
-.userWelcome{
-  width: 100%;height: auto;padding-top: 5px;border-bottom: 1px soli\Fd greenyellow;
-  display: flex;justify-content: center;align-items: center;
-}
-.menuList{
-  width: 100%;height: 400px;display: flex;flex-direction: column;justify-content: start;
-  align-items: center;color: black;
-}
-/*-------------------base.html section end------------------*/
-
-
-/*-------------------landingpage.html section start-------------------*/
-.landingpage{
-  border: transparent;
-  width: 100%;height: 90vh;background-color:transparent;
-  display: flex;justify-content: center;align-items: center;flex-direction: column;
-  gap: 30px;margin-top: 50px;
-}
-.projectExplanation{
-  display: none;
-}
-.links{
-  border: transparent;
-  width: 100%;height: auto;display: flex;justify-content: center;align-items: center;
-}
-.getStarted{
-  text-decoration: none;
-  width: 50%;height: auto;display: flex;justify-content: center;align-items: center;
-}
-.getStartedBtn{
-  border: transparent;
-  display: flex;justify-content: center;align-items: center;
-  color: black;width: 100%;height: 50px;border-radius: 5px;
-  background-color: greenyellow;color: black;font-weight: bolbder;
-  font-size: 15px;
-}
-.dashboard-links{
-  background: rgba(255,255,255,0.07);
-  backdrop-filter: blur(16px) saturate(180%);
-  -webkit-backdrop-filter: blur(16px) saturate(180%);
-  border-radius: 10px;
-  border: 1px solid rgba(255,255,255,0.15);
-  padding: 20px;
-
-  box-shadow:
-      0 20 50ps rgba(0,0,0,0.15),
-      inset 0 1px 0 rgba(255,255,255,0.2);
-
-  color: #ffffff;
-  width: 100%;
-  max-width: 450px;
-  display: flex;justify-content: center;align-items: center;
-  gap: 15px;margin-top: 20px;
-}
-.homelink{
-  background: rgba(255,255,255,0.1);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-  border-radius: 5px;
-  border: 0px solid rgba(255,255,255,0.25);
-  padding: 14px 28px;
-  color: #ffffff;
-  font-weight: 600;
-  font-size: 15px;
-  letter-spacing: 0.5px;
-  text-shadow: 0 1px 2px rgba(0,0,0,0.2);
-  cursor: pointer;
-  transition: all 0.3s cubic-bezier(0.25,0.0,0.25,1);
-  box-shadow: inset 0 1px 0 rgba(255,255,255,0.3);
-  text-decoration: none;
-  width: 100%;max-width: 65px;display: flex;justify-content: center;
-  align-items: center;
-  height: 40px;
-}
-.homelink:hover{
-  background-color: rgba(255,255,255,0.2);
-  border-color: rgba(255,255,255,0.4);
-  transform: translateY(-2px);
-  box-shadow: 
-      0 10px 20px rgba(255,255,255,0.1)
-      inset 0 1px 0 rgba(255,255,255,0.4)
-}
-.dashboard-home{
-  width: 100%;height: 80vh;
-  margin-top: 50px;display: flex;flex-direction: column;justify-content: center;
-  align-items: center;color: white;
-}
-.welcomeMessage{
-  background: rgba(255,255,255,0.1);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-  width: 100%;max-width: 350px;padding: 30px;border-radius: 15px;
-  display: flex;flex-direction: column;justify-content: center;align-items: center;
-  height: auto;
-}
-.welcomeMessage h1{font-size: 25px;}
-.welcomeMessage p{font-size: 10px;text-align: center;}
-/*-------------------landingpage.html section end---------------------*/
-
-
-
-/*-------------------login page section start----------------------*/
-.content{
-  background-color: transparent;width: 100%;height: auto;
-  margin-top: 50px;display: flex;justify-content: center;align-items: center;
-  flex-direction: column;
-}
-.logout{
-  width: 100%;height: 90vh;display: flex;justify-content: center;
-  align-items: center;flex-direction: column;gap: 25px;
-}
-.logout p{color: red;}
-.logout form{
-  width: 50%;height: auto;display: flex;justify-content: center;
-  align-items: center;
-}
-.logout form button{
-  width: 70%;height: 45px;background-color: greenyellow;font-weight: bolder;
-  border-radius: 5px;
-}
-.formHolder{
-  width: 95%;height: auto;display: flex;
-  flex-direction: column;justify-content: center;align-items: center;
-  padding-bottom: 20px;
-  background: rgba(255,255,255,0.06);
-  backdrop-filter: blur(24px) saturate(220%);
-  -webkit-backdrop-filter: blur(24px) saturate(220px);
-  border: 1px solid rgba(255,255,255,0.14);
-  background: rgba(10,8,20,0.4);
-  border-radius: 10px;
-  padding: 15px;
-  box-shadow:
-      0 30px 60px rgba(0,0,0,0.4)
-      inset 0 1px 0 rgba(255,255,255,0.2)
-
-}.form{
-  width: 100%;height: auto;display: flex;flex-direction: column;justify-content: center;
-  align-items: center;margin-bottom: 50px;padding-top: 20px;gap: 30px;
-}
-.input{
-  width: 95%;height: auto;
-  display: flex;flex-direction: column;justify-content: start;align-items: center;
-  gap: 15px;
-}
-.input ul{display: none;}
-.helptext{
-  display: none;
-}
-.input input{
-  width: 100%;height: 60px;padding-left: 10px;border: transparent;
-  border-radius: 5px;font-size: 15px;border: 3px solid black;color: white;
-  border: 1px solid rgba(198, 198, 198, 0.4);background: rgba(255,255,255,0.1);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-  border-radius: 10px;
-  border: 0px solid rgba(255,255,255,0.25);
-}.input input::placeholder{color: white;}
-.input p{
-  width: 100%;height: auto;
-}
-.input p label{font-size: 20px;margin-bottom: 20px;display: none;}
-.input span a {
-  color: white;text-decoration: none;width: 100%;height:auto;
-  margin-top: 20px;
-}
-.submit{
-  border: transparent;
-  margin-top: 50px;width: 95%;height: 55px;background-color: greenyellow;
-  color: black;border-radius: 5px;font-weight: bolder;
-}
-.links2{
-  width: 80%;height: auto;display: flex;justify-content: space-around;align-items: center;
-}
-.a{
-  color:black;text-decoration: none;
-}
-.a2{
-  font-size: 15px;text-decoration: none;color: black;
-}
-.formHeader{
-  width: 100%;height: 40px;display: flex;justify-content: space-around;align-items: center;
-}
-.socialMedia{
-  width: 90%;height: 60px;display: flex;justify-content: space-around;
-  align-items: center;margin-top: 0px;margin-bottom: 15px;
-}
-.sideContent{
-  border: 1px solid red;
-  display: none;
-}
-/*-------------------login page section end------------------------*/
-
-/*-------------------dashboard page section start----------------*/
-.dashboardContainer{
-  border: 1px solid red;
-  width: 100%;height: auto;margin-top: 50px;display: flex;flex-direction: column;
-  justify-content: start;align-items: center;
-}
-.backgroundImg{
-  width: 100%;height: 100vh;object-fit: cover;object-position: center;
-  position: fixed;top: 0%;left: 0%;right: 0%;z-index: -1;
-}
-.individual-dashboard{
-  height: auto;
-  margin-top: 50px;display: flex;flex-direction: column;
-  justify-content: start;align-items: center;
-}
-.search-form{
-  width: 95%;height: auto;border-radius: 20px;display: flex;
-  margin-top: 10px;
-}
-.search-input{
-  width: 90%;height: 50px;border-radius: 10px 0px 0px 10px ;padding: 10px;
-  border: 1px solid rgba(198, 198, 198, 0.4);
-}
-.search-btn{
-  width:20% ;height: auto;
-}
-.categories-list{
-  width: 100%;height: auto;display: flex;justify-content: space-around;
-  align-items: center;flex-direction: column;margin-top: 10px;
-}
-.categories{
-  width: 95%;height: auto;display: flex;justify-content: space-around;align-items: center;
-  gap: 10px;
-}.categories a{
-  border: 1px solid white;
-  text-decoration: none;color: white;
-  width: 50%;height: 40px;display: flex;justify-content: center;
-  align-items: center;border-radius: 5px;background-color: white;
-  color: black;
-}
-.property-grid{
-  width: 100%;height: auto;margin-top: 20px;display: flex;flex-direction: column;
-  justify-content: center;align-items: center;flex-wrap: wrap;gap: 10px;
-  padding-bottom: 10px;
-}
-.property-card{
-  width: 95%;min-height: 420px; position: relative;display: flex;justify-content: end;
-  align-items: center;border-radius: 15px;flex-direction: column;padding-bottom: 15px;
-  gap: 10px;
-}
-.propertyStatus{
-  margin-left: 10px;
-  background: rgba(34, 34, 34, 0.2);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-  border-radius:10px;
-  border: 0px solid rgba(255,255,255,0.25);
-  padding: 14px 28px;
-  color: #ffffff;
-  font-weight: 600;
-  font-size: 15px;
-  letter-spacing: 0.5px;
-  text-shadow: 0 1px 2px rgba(0,0,0,0.2);
-  cursor: pointer;
-  transition: all 0.3s cubic-bezier(0.25,0.0,0.25,1);
-  box-shadow: inset 0 1px 0 rgba(255,255,255,0.3);
-  text-decoration: none;
-  width: 100%;max-width: 200px;display: flex;justify-content: center;
-  align-items: center;
-  height: 45px;font-weight: bolder;
-}
-.propertyImg{
-  display: block; width: 100%; 
-  height: 100%;  object-fit: cover;
-  position: absolute;top: 0;left: 0;object-position: center;z-index: -1;
-  border-radius: 10px;
-}
-.property-details{
-  background-color: white;width: 95%;color: black;display: flex;flex-direction: column;
-  justify-content: center;align-items: center;border-radius: 10px;
-  z-index: 1;padding-top: 10px;padding-bottom: 20px;gap: 20px;
-}
-.property-detail-page{
-  margin-top: 80px;
-}
-.detailsHold{
-  width: 90%;display: flex;justify-content: space-between;
-  align-items: center;
-}
-.detailsHold2{
-  width: 90%;display: flex;justify-content: space-between;
-  align-items: start;flex-direction: column;gap: 10px;
-}
-.detailsBtn{
-  width: 40%;height: 50px;background-color: black;border-radius: 15px;
-  display: flex;justify-content: center;align-items: center;text-decoration: none;
-  color: white;
+/* Main Container Box Layout */
+.dashboard-home {
+    position: relative;
+    width: 100%;
+    min-height: 500px;
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 20px 40px -20px rgba(0, 0, 0, 0.7);
 }
 
-.hero-image-wrapper{
-  width: 100%;height: 280px;display: flex;justify-content: center;align-items: center;
-  position: relative;overflow: hidden;border-radius: 10px;
+/* Fixes the image to fill the container backdrop perfectly */
+.backgroundImg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: 1;
 }
-.hero-image-wrapper img{
-  width: 100%;height: 100%;object-fit: cover;object-position: center;
+
+/* Frosted overlay container text card block */
+.welcomeMessage {
+    position: relative;
+    z-index: 2;
+    background-color: rgba(17, 24, 39, 0.8); /* Dark slate transparency */
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    padding: 3rem;
+    max-width: 540px;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    border-right: 1px solid rgba(255, 255, 255, 0.08);
 }
-.detail-container{
-  display: flex;flex-direction: column;justify-content: center;align-items: center;
-  padding: 24px 20px 20px;
+
+/* Heading text typography */
+.welcomeMessage h1 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+    color: var(--text-primary);
+    margin-bottom: 1rem;
+    line-height: 1.2;
 }
-.detail-header{
-  width: 100%;height: auto;display: flex;justify-content: space-between;align-items: flex-start;
-  margin-bottom: 20px;
+
+/* Core paragraph typography updates */
+.welcomeMessage p {
+    font-size: 1rem;
+    color: var(--text-muted);
+    line-height: 1.6;
 }
-.category-tag{
-  background-color: rgba(34,197,94,0.15);color: white;padding: 5px 10px;border-radius: 5px;
-  font-size: 12px;font-weight: bolder;width:fit-content;display: flex;justify-content: center;align-items: center;
+
+/* Override your legacy inline template tag style text block cleanly */
+.welcomeMessage p[style*="color: black;"] {
+    color: #e2e8f0 !important; /* Force readable light text over the dark overlay banner */
+    font-weight: 500;
+    margin-top: 1.25rem !important;
 }
-.category-tag2{
-  background-color: rgba(12, 237, 94, 0.15);color: white;padding: 5px 10px;border-radius: 5px;
-  font-size: 12px;font-weight: bolder;width:fit-content;display: flex;justify-content: center;align-items: center;
-  text-decoration: none;text-decoration:none;
+
+/* Horizontal Link Grid Alignment */
+.dashboard-links {
+    display: flex;
+    gap: 0.75rem;
+    margin-top: 2rem;
 }
-.main-title{
-  font-size: 30px;font-weight: bolder;color: white;
-  text-transform: capitalize;
+
+/* Premium Navigation Action Buttons */
+.homelink {
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 600;
+    padding: 0.75rem 1.25rem;
+    border-radius: var(--radius-sm);
+    transition: var(--transition);
+    text-align: center;
 }
-.toggle-btn{
-  background: rgba(255,255,255,0.1);
-  border: 1px solid rgba(255,255,255,0.1);
-  color: white;
-  width: 44px;height: 44px;border-radius:10px;
-  display: flex;justify-content: center;align-items: center;
-  font-size: 18px;box-shadow: inset 0 1px 0 rgba(255,255,255,0.3);
-  transition: transform 0.3s ease;text-decoration: none;
-  font-weight: bolder;
+
+/* First Link: SignIn Button */
+.dashboard-links .homelink:nth-child(1) {
+    background-color: var(--text-primary);
+    color: var(--bg-clean);
 }
-.info-grid{
-  width: 100%;height: auto;display: flex;justify-content: space-between;
-  align-items: center;flex-wrap: wrap;gap: 20px;margin-top: 20px;flex-direction: column;
+
+.dashboard-links .homelink:nth-child(1):hover {
+    background-color: #cbd5e1;
+    transform: translateY(-1px);
 }
-.info-title{
-  background-color:rgba(255,255,255,0.1);color: white;padding: 10px;border-radius: 5px;
-  border:1px solid rgba(255,255,255,0.1);width: 100%;max-width: 400px;display: flex;justify-content: center;
-  align-items: center;flex-direction: column;gap: 10px;
+
+/* Second Link: Signup Button */
+.dashboard-links .homelink:nth-child(2) {
+    background-color: var(--accent-blue);
+    color: #040812;
 }
-.info-title-label{
-  font-size: 15px;font-weight: bolder;color: white;
-  text-transform: capitalize;margin-bottom: 5px;
+
+.dashboard-links .homelink:nth-child(2):hover {
+    background-color: var(--accent-blue-hover);
+    transform: translateY(-1px);
 }
-.info-title-value{
-  font-size: 12px;color: white;text-align: center;
+
+/* Third Link: About Text Link */
+.dashboard-links .homelink:nth-child(3) {
+    background-color: rgba(255, 255, 255, 0.06);
+    color: var(--text-primary);
+    border: 1px solid rgba(255, 255, 255, 0.1);
 }
-.property-detail-actions{
-  width: 100%;height: 100px;display: flex;justify-content: center;align-items: center;
-  margin-bottom: 20px;
+
+.dashboard-links .homelink:nth-child(3):hover {
+    background-color: var(--surface-hover);
+    border-color: var(--text-muted);
 }
-.action-link{
-  background-color:black;
-  border: 1px solid green;
-  color:white;
-  width: 100%;height: 30px;
-  display: flex;justify-content: center;align-items: center;
-  box-shadow: inset 0 1px 0 rgba(255,255,255,0.3);
-  transition: transform 0.3s ease;text-decoration: none;
-  padding: 10px;font-size: 10px;max-width: 100px;
+
+/* ==========================================================================
+   LOGIN VIEW TEMPLATE STYLING (Strictly Main Desktop)
+   ========================================================================== */
+
+/* Main Centered Content Wrapper */
+.content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: calc(100vh - var(--header-height) - 80px);
+    width: 100%;
 }
-.deleteBtn{
-  background:none; border:1px solid red; 
-  color:red; height: 30px;font-size: 10px;
-  width: 100%;max-width: 100px;display: flex;
-  justify-content: center;align-items: center;
-  padding: 10px; box-shadow: inset 0 1px 0 rgba(255,255,255,0.3);
-  transition: transform 0.3s ease;text-decoration: none;
+
+/* Premium Form Container Card */
+.formHolder {
+    background-color: var(--surface-card);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-md);
+    padding: 3rem 2.5rem;
+    max-width: 440px;
+    width: 100%;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
 }
-.deleteForm{
-  width: 100%;max-width: 100px;
-  display: flex;justify-content: center;align-items: center;
-  padding: 0px;
+
+/* Header Section Alignment */
+.formHeader {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    margin-bottom: 2rem;
 }
-.actionhold{
-  width: 100%;height: auto;display: flex;justify-content: center;
-  align-items: center;gap: 15px;
+
+/* "Back to home" Navigation Link */
+.formHeader .a2 {
+    text-decoration: none;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--text-muted);
+    transition: var(--transition);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
 }
-/*-----------------agent dashboard--------------*/
-.agent-dashboard{
-  width: 100%;height: auto;margin-top: 50px;padding: 20px;
-  display: flex;flex-direction: column;justify-content: center;align-items: center;
+
+.formHeader .a2:hover {
+    color: var(--accent-blue);
 }
-.agent-form{
-  width: 100%;height: auto;display: flex;flex-direction: column;justify-content: center;
-  align-items: center;
+
+.formHeader .a2::before {
+    content: "\f060"; /* FontAwesome left arrow icon code */
+    font-family: "Font Awesome 6 Free";
+    font-weight: 900;
+    font-size: 0.75rem;
 }
-.input-form{
-  width: 100%;height: auto;display: flex;justify-content: center;align-items: start;
-  flex-direction: column;gap: 10px;
+
+/* "Sign in" Heading Text */
+.formHeader h2 {
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    letter-spacing: -0.5px;
 }
-.input-form p{width: 100%;height: auto;display: flex;justify-content: start;align-items: center;}
-.input-form label{display: none;}
-.input-form input{
-  border: 1px solid gray;
-  width: 100%;height: 50px;max-width: 500px;padding-left: 10px;
-  border-radius: 5px;background-color: black;color: white;
-}.input-form input::placeholder{color: white;}
-.input-form textarea{
-  width: 100%;height: 100px;border-radius: 5px;padding: 10px;
-  background-color: black;color: white;
-}.input-form textarea::placeholder{color: white;}
-.input-form select{
-  border: 1px solid gray;
-  width: 100%;height: 50px;background-color: black;
-  color: white;
-}.input-form select::placeholder{color: white;}
-.createBtn{
-  width: 100%;max-width: 150px;height: 60px;border-radius: 5px;
-  border: 1px solid transparent;margin-top: 20px;font-weight: bolder;
+
+/* Core Form Content Wrapper */
+.form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+    margin-bottom: 1.5rem;
 }
-.agent-properties{
-  width: 100%;max-width: 500px;margin-bottom: 50px;margin-top: 20px;
-  height: auto;display: flex;flex-direction: column;justify-content: center;
-  align-items: center;flex-wrap: wrap;
+
+/* ==========================================================================
+   DJANGO {{form.as_p}} NATIVE FIELD OVERRIDES
+   ========================================================================== */
+.input p {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin-bottom: 1.25rem;
 }
-.agentPropertiesCard{
-  border: 1px solid white;
-  width: 100%;height: auto;max-width: 500px;margin-top: 20px;
-  border:1px solid #ccc; padding:16px; margin-bottom:12px; border-radius:8px;
+
+/* Styles the dynamic input labels automatically generated by Django */
+.input label {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--text-muted);
+    letter-spacing: 0.3px;
 }
-.agentPropertyDelete{
-  background:none; border:1px solid red; color:red; padding:6px 10px;
-  text-decoration: none;font-size: 10px;
+
+/* Styles the raw browser input boxes beautifully */
+.input input[type="text"],
+.input input[type="password"],
+.input input[type="email"] {
+    width: 100%;
+    background-color: var(--bg-clean);
+    border: 1px solid var(--border-subtle);
+    color: var(--text-primary);
+    padding: 0.75rem 1rem;
+    border-radius: var(--radius-sm);
+    font-size: 0.95rem;
+    font-family: inherit;
+    transition: var(--transition);
 }
-.agentPropertyEdit{
-  background:none; border:1px solid green; color:white; padding:6px 5px;
-  text-decoration: none;width: 60px;display: flex;justify-content: center;
-  align-items: center;height: 30px;
+
+.input input:focus {
+    outline: none;
+    border-color: var(--accent-blue);
+    box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.15);
 }
-.agentPropertyView{
-  background:none; border:1px solid white; color:white; padding:6px 5px;
-  text-decoration: none;width: 60px;display: flex;justify-content: center;
-  align-items: center;height: 30px;
+
+/* Error flash message blocks */
+.error {
+    background-color: rgba(239, 68, 68, 0.1);
+    border: 1px solid rgba(239, 68, 68, 0.2);
+    padding: 0.75rem 1rem;
+    border-radius: var(--radius-sm);
 }
-/*-------------------dashboard page section end------------------*/
+
+/* Cleans up your native red text styling safely */
+.error p[style*="color: red;"] {
+    color: #f87171 !important; 
+    font-size: 0.85rem;
+    font-weight: 600;
+}
+
+/* ==========================================================================
+   BUTTONS, SOCIAL LINKS & FOOTER CONTAINER
+   ========================================================================== */
+
+/* High-Contrast Sign In Button */
+.submit {
+    width: 100%;
+    background-color: var(--text-primary);
+    color: var(--bg-clean);
+    border: none;
+    padding: 0.85rem;
+    border-radius: var(--radius-sm);
+    font-size: 0.95rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: var(--transition);
+    margin-top: 0.5rem;
+}
+
+.submit:hover {
+    background-color: #cbd5e1;
+    transform: translateY(-1px);
+}
+
+.submit:active {
+    transform: translateY(0);
+}
 
 
+/* "Follow us on" Label */
+.formHolder > p {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    text-align: center;
+    margin-top: 1.5rem;
+    margin-bottom: 0.75rem;
+}
 
+/* Social Media Icon Set Grid */
+.socialMedia {
+    display: flex;
+    justify-content: center;
+    gap: 1.25rem;
+    margin-bottom: 2rem;
+}
+
+.socialMedia i {
+    font-size: 1.15rem;
+    color: var(--text-muted);
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.socialMedia i:hover {
+    color: var(--accent-blue);
+    transform: scale(1.1);
+}
+
+/* Registration Toggle Redirect Area */
+.links2 {
+    border-top: 1px solid var(--border-subtle);
+    padding-top: 1.25rem;
+    text-align: center;
+}
+
+.links2 .a {
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--text-muted);
+    transition: var(--transition);
+}
+
+.links2 .a:hover {
+    color: var(--accent-blue);
+}
+
+/* ==========================================================================
+   AGENT DASHBOARD CONTAINER STYLING (Strictly Main Desktop)
+   ========================================================================== */
+
+.agent-dashboard {
+    width: 100%;
+    margin-top: 1rem;
+}
+
+/* Page Headers */
+.agent-dashboard h1 {
+    font-size: 2.25rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    letter-spacing: -0.5px;
+    margin-bottom: 0.5rem;
+}
+
+.agent-dashboard > p {
+    font-size: 1.05rem;
+    color: var(--text-muted);
+    margin-bottom: 2.5rem;
+}
+
+/* ==========================================================================
+   PROPERTY CREATION FORM STYLING
+   ========================================================================== */
+
+.agent-form {
+    background-color: var(--surface-card);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-md);
+    padding: 2.5rem;
+    max-width: 700px;
+    width: 100%;
+    box-shadow: 0 20px 40px -20px rgba(0, 0, 0, 0.4);
+    margin-bottom: 3.5rem;
+}
+
+.agent-form h2 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 1.75rem;
+    letter-spacing: -0.3px;
+}
+
+/* Map Django form.as_p inputs cleanly */
+.input-form p {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.input-form label {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--text-muted);
+}
+
+/* Capture inputs, select dropdowns, and file upload buttons safely */
+.input-form input[type="text"],
+.input-form input[type="number"],
+.input-form textarea,
+.input-form select {
+    width: 100%;
+    background-color: var(--bg-clean);
+    border: 1px solid var(--border-subtle);
+    color: var(--text-primary);
+    padding: 0.8rem 1rem;
+    border-radius: var(--radius-sm);
+    font-size: 0.95rem;
+    font-family: inherit;
+    transition: var(--transition);
+}
+
+.input-form textarea {
+    min-height: 120px;
+    resize: vertical;
+}
+
+.input-form input:focus,
+.input-form textarea:focus,
+.input-form select:focus {
+    outline: none;
+    border-color: var(--accent-blue);
+    box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.15);
+}
+
+/* File selector customization */
+.input-form input[type="file"] {
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    margin-top: 0.25rem;
+}
+
+/* Primary Button Layout */
+.createBtn {
+    background-color: var(--text-primary);
+    color: var(--bg-clean);
+    border: none;
+    padding: 0.9rem 1.75rem;
+    border-radius: var(--radius-sm);
+    font-size: 0.95rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: var(--transition);
+    margin-top: 0.5rem;
+}
+
+.createBtn:hover {
+    background-color: #cbd5e1;
+    transform: translateY(-1px);
+}
+
+/* ==========================================================================
+   YOUR PROPERTIES MANAGE FEED GRID
+   ========================================================================== */
+
+/* Cleans out template inline margins elegantly */
+.agent-dashboard h2[style*="margin-top: 30px;"] {
+    margin-top: 0 !important;
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 1.5rem;
+}
+
+.agent-properties {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 40px !important; /* Retain your structure layout limit safely */
+}
+
+/* Property Control Listing Cards */
+.agentPropertiesCard {
+    background-color: var(--surface-card);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-md);
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    transition: var(--transition);
+}
+
+.agentPropertiesCard:hover {
+    border-color: #334155;
+    transform: translateY(-2px);
+    box-shadow: 0 12px 24px -10px rgba(0, 0, 0, 0.5);
+}
+
+.agentPropertiesCard h3 {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 0.35rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* Address line formatting */
+.agentPropertiesCard p:nth-of-type(1) {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    margin-bottom: 0.75rem;
+}
+
+/* Meta Data tags (Category & Status View) */
+.agentPropertiesCard p:nth-of-type(2) {
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--accent-blue);
+    margin-bottom: 0.75rem;
+}
+
+/* Pricing block formatting */
+.agentPropertiesCard p:nth-of-type(3) {
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-top: auto; /* Push prices seamlessly to card bottoms */
+}
+
+.agentPropertiesCard p:nth-of-type(3)::before {
+    content: "$"; /* Drop your regional local currency icon indicator mark cleanly here if needed */
+    margin-right: 2px;
+    font-size: 1rem;
+    color: var(--text-muted);
+}
+
+/* ==========================================================================
+   CARD CONTROL LINKS SECTION BUTTON SETS
+   ========================================================================== */
+
+/* Remove design line clutter from inline dynamic flex configurations safely */
+.agentPropertiesCard div[style*="display:flex;"] {
+    border-top: 1px solid var(--border-subtle);
+    padding-top: 1rem;
+    margin-top: 1.25rem !important;
+    display: flex !important;
+    gap: 0.75rem !important;
+}
+
+.agentPropertyView, 
+.agentPropertyEdit, 
+.agentPropertyDelete {
+    text-decoration: none;
+    font-size: 0.85rem;
+    font-weight: 600;
+    padding: 0.5rem 1rem;
+    border-radius: var(--radius-sm);
+    text-align: center;
+    flex-grow: 1;
+    transition: var(--transition);
+}
+
+/* View Link Actions */
+.agentPropertyView {
+    background-color: var(--surface-hover);
+    color: var(--text-primary);
+    border: 1px solid var(--border-subtle);
+}
+
+.agentPropertyView:hover {
+    background-color: #334155;
+}
+
+/* Edit Link Actions */
+.agentPropertyEdit {
+    background-color: rgba(56, 189, 248, 0.1);
+    color: var(--accent-blue);
+    border: 1px solid rgba(56, 189, 248, 0.15);
+}
+
+.agentPropertyEdit:hover {
+    background-color: var(--accent-blue);
+    color: var(--bg-clean);
+}
+
+/* Delete Link Actions */
+.agentPropertyDelete {
+    background-color: rgba(239, 68, 68, 0.1);
+    color: #f87171;
+    border: 1px solid rgba(239, 68, 68, 0.15);
+}
+
+.agentPropertyDelete:hover {
+    background-color: #ef4444;
+    color: var(--text-primary);
+}
+/* ==========================================================================
+   ABOUT PAGE TEMPLATE STYLING (EXACT ELEMENT CHECKOUT)
+   ========================================================================== */
+
+/* 1. Structural Layer Element: <div class="content"> */
+.content {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    align-items: flex-start;
+    justify-content: flex-start;
+}
+
+/* 2. Link Element: <a href="{% url 'property_dashboard' %}">back to home</a> */
+.content > a[href*="property_dashboard"],
+.content > a:first-child {
+    text-decoration: none !important;
+    font-size: 0.9rem !important;
+    font-weight: 600 !important;
+    color: var(--text-muted) !important;
+    transition: var(--transition) !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 0.5rem !important;
+    margin-bottom: 0.5rem !important;
+    text-transform: capitalize;
+}
+
+.content > a[href*="property_dashboard"]:hover,
+.content > a:first-child:hover {
+    color: var(--accent-blue) !important;
+}
+
+/* Adds FontAwesome arrow icon cleanly before the link text */
+.content > a[href*="property_dashboard"]::before,
+.content > a:first-child::before {
+    content: "\f060"; 
+    font-family: "Font Awesome 6 Free", "Font Awesome 7 Free", sans-serif;
+    font-weight: 900;
+    font-size: 0.75rem;
+}
+
+/* 3. Heading Element: <h1>About DomusHub</h1> */
+.content h1 {
+    font-size: 2.25rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    letter-spacing: -0.5px;
+    margin-top: 0.25rem;
+    margin-bottom: 1.5rem;
+}
+
+/* 4. Card Block Container Layer Override:
+   <div style="background: white; padding: 30px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); color: black;"> */
+.content div[style*="background: white;"],
+.content div[style*="background:white;"] {
+    background-color: var(--surface-card) !important;
+    border: 1px solid var(--border-subtle) !important;
+    color: var(--text-primary) !important;
+    padding: 2.5rem !important;
+    border-radius: var(--radius-md) !important;
+    box-shadow: 0 20px 40px -20px rgba(0, 0, 0, 0.5) !important;
+    width: 100%;
+    max-width: 760px;
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+}
+
+/* 5. Subheaders Inside Card: <h2>Our Story</h2>, <h2>Our Mission</h2>, <h2>Contact Us</h2> */
+.content div[style*="background: white;"] h2,
+.content div[style*="background:white;"] h2 {
+    font-size: 1.35rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    letter-spacing: -0.3px;
+    border-bottom: 1px solid var(--border-subtle);
+    padding-bottom: 0.5rem;
+    margin-top: 1rem;
+}
+
+/* Cleans top space layout boundary condition above 'Our Story' heading */
+.content div[style*="background: white;"] h2:first-of-type,
+.content div[style*="background:white;"] h2:first-of-type {
+    margin-top: 0;
+}
+
+/* 6. Descriptions inside Card: <p>...</p> elements */
+.content div[style*="background: white;"] p,
+.content div[style*="background:white;"] p {
+    font-size: 1rem;
+    line-height: 1.6;
+    color: var(--text-muted) !important; /* Completely neutralizes the legacy color: black inline */
+}
+
+/* ==========================================================================
+   PROPERTIES CATALOG DASHBOARD (90% WIDTH FLEXBOX LAYOUT)
+   ========================================================================== */
+
+/* 1. Base Container Context Wrapper */
+main {
+    flex-grow: 1;
+  
+    padding-left: 0;
+    padding-right: 0;
+    max-width: 90% !important; /* Forces layout container frame to occupy exactly 90% screen viewport */
+    width: 90% !important;
+    margin-left: auto;
+    margin-right: auto;
+    display: flex;
+    flex-direction: column;
+}
+
+.individual-dashboard {
+    width: 100%;
+}
+
+/* ==========================================================================
+   2. SEARCH FILTER BOX ARCHITECTURE
+   ========================================================================== */
+.search-form {
+    display: flex;
+    gap: 12px;
+    width: 100%;
+    max-width: 640px;
+    margin-bottom: 24px;
+}
+
+.search-input {
+    flex: 1;
+    background-color: var(--surface-card);
+    border: 1px solid var(--border-subtle);
+    color: var(--text-primary);
+    padding: 14px 20px;
+    border-radius: var(--radius-sm);
+    font-size: 15px;
+    font-family: inherit;
+    transition: var(--transition);
+}
+
+.search-input:focus {
+    outline: none;
+    border-color: var(--accent-blue);
+    box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.15);
+}
+
+.search-btn {
+    background-color: var(--text-primary);
+    color: var(--bg-clean);
+    border: none;
+    padding: 0 28px;
+    border-radius: var(--radius-sm);
+    font-size: 15px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.search-btn:hover {
+    background-color: #cbd5e1;
+}
+
+/* ==========================================================================
+   3. HORIZONTAL CATEGORIES BAR
+   ========================================================================== */
+.categories-list {
+    width: 100%;
+    border-bottom: 1px solid var(--border-subtle);
+    padding-bottom: 16px;
+    margin-bottom: 32px;
+}
+
+.categories {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+}
+
+.categories a {
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text-muted);
+    background-color: var(--surface-card);
+    border: 1px solid var(--border-subtle);
+    padding: 8px 16px;
+    border-radius: 20px;
+    transition: var(--transition);
+}
+
+.categories a:hover {
+    color: var(--accent-blue);
+    border-color: var(--accent-blue);
+    background-color: var(--surface-hover);
+}
+
+/* ==========================================================================
+   4. FLEXBOX ARCHITECTURE & CARD BOX INTERFACE
+   ========================================================================== */
+.property-grid {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;       /* Allows cards to wrap cleanly to the next row if screen size narrows */
+    justify-content: center;
+    align-items: center;
+    gap: 30px;             /* Gutter spacing between elements */
+    width: 100%;
+}
+
+.property-card {
+    /* Calculates card width evenly minus gap tolerances to maintain sizing structure handles */
+    flex: 0 1 calc(33.333% - 20px); 
+    min-width: 320px;
+    background-color: var(--surface-card) !important;
+    background-image: none !important;
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    transition: var(--transition);
+}
+
+.property-card:hover {
+    transform: translateY(-4px);
+    border-color: #334155;
+    box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.6);
+}
+
+/* Image Presentation Layer Config */
+.property-grid .property-card img.propertyImg {
+    display: block !important;
+    width: 100% !important;
+    height: 240px !important;
+    object-fit: cover !important;
+    position: relative !important;
+    z-index: 2 !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    border-bottom: 1px solid var(--border-subtle);
+}
+
+/* Fallback box layout if no property data image available */
+.property-card > p:not(.propertyStatus) {
+    height: 240px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--surface-hover);
+    color: var(--text-muted);
+    font-size: 14px;
+    border-bottom: 1px solid var(--border-subtle);
+}
+
+/* Floating Status Tag */
+.propertyStatus {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    background-color: rgba(15, 23, 42, 0.8);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    color: var(--text-primary);
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    padding: 6px 12px;
+    border-radius: var(--radius-sm);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    z-index: 10;
+}
+
+.property-details {
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    flex: 1;
+}
+
+/* Address & Financial Layout Alignments */
+.detailsHold2 {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 12px;
+    flex-direction: column;
+}
+
+.detailsHold2 h3 {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--text-primary);
+    line-height: 1.5;
+}
+
+/* Naira Pricing Label Block Element */
+.detailsHold2 p[style*="color: gray;"] {
+    color: var(--text-primary) !important;
+    font-size: 19px;
+    font-weight: 700 !important;
+    display: flex;
+    align-items: center;
+    gap: 2px;
+    white-space: nowrap;
+}
+
+.detailsHold2 p i.fa-naira-sign {
+    font-size: 16px;
+    color: var(--accent-blue);
+}
+
+/* Card lower footer area positioning layout blocks */
+.detailsHold {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    margin-top: auto; 
+    border-top: 1px solid var(--border-subtle);
+    padding-top: 16px;
+}
+
+.detailsHold h2 {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--text-muted);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* "View details" Action Link Component */
+.detailsBtn {
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 600;
+    background-color: var(--surface-hover);
+    color: var(--text-primary);
+    border: 1px solid var(--border-subtle);
+    padding: 8px 16px;
+    border-radius: var(--radius-sm);
+    transition: var(--transition);
+    white-space: nowrap;
+}
+
+.detailsBtn:hover {
+    background-color: var(--accent-blue);
+    color: var(--bg-clean);
+    border-color: var(--accent-blue);
+}
+
+/* ==========================================================================
+   PROPERTY DETAIL PAGE (STANDARD DESKTOP-FIRST VIEW)
+   ========================================================================== */
+
+.property-detail-page {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+    margin-top: 10px;
+}
+
+/* ==========================================================================
+   1. HERO IMAGE DISPLAY WRAPPER
+   ========================================================================== */
+.hero-image-wrapper {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+/* Safely targets your nested inline image attributes and overrides them beautifully */
+.hero-image-wrapper img[style*="width: 90%;"] {
+    width: 100% !important; /* Spreads full width to match our immersive aesthetic */
+    max-height: 520px;
+    object-fit: cover !important;
+    border-radius: var(--radius-md) !important;
+    border: 1px solid var(--border-subtle);
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+}
+
+/* ==========================================================================
+   2. DETAIL HEADER & INTERACTIVE BADGES
+   ========================================================================== */
+.detail-container {
+    background-color: var(--surface-card);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-md);
+    padding: 40px;
+    box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.4);
+    display: flex;justify-content: center;align-items: center;
+    flex-direction: column;
+     gap: 32px;
+}
+
+.detail-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 24px;
+    border-bottom: 1px solid var(--border-subtle);
+    padding-bottom: 24px;
+    margin-bottom: 32px;
+}
+
+.title-badge {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+/* Category Pill Identifiers */
+.category-tag {
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--accent-blue);
+    background-color: rgba(56, 189, 248, 0.1);
+    padding: 6px 14px;
+    border-radius: 100px;
+    width: fit-content;
+    border: 1px solid rgba(56, 189, 248, 0.15);
+}
+
+.main-title {
+    font-size: 32px;
+    font-weight: 700;
+    color: var(--text-primary);
+    letter-spacing: -0.5px;
+}
+
+/* Favorites redirect link badge styling */
+.category-tag2 {
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text-muted);
+    border: 1px solid var(--border-subtle);
+    padding: 8px 16px;
+    border-radius: var(--radius-sm);
+    transition: var(--transition);
+    margin-left: auto; /* Cleanly pushes link to align left of heart toggle */
+}
+
+.category-tag2:hover {
+    color: var(--text-primary);
+    background-color: var(--surface-hover);
+}
+
+/* Dynamic Interactive Favorite Toggle Heart Anchor Button */
+.toggle-btn {
+    text-decoration: none;
+    font-size: 24px;
+    color: #ef4444; /* Clean dynamic red state accent */
+    background-color: rgba(239, 68, 68, 0.08);
+    border: 1px solid rgba(239, 68, 68, 0.15);
+    width: 44px;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: var(--radius-sm);
+    transition: var(--transition);
+}
+
+.toggle-btn:hover {
+    transform: scale(1.05);
+    background-color: #ef4444;
+    color: var(--text-primary);
+}
+
+/* ==========================================================================
+   3. STRUCTURAL DATA INFORMATION INFO-GRID
+   ========================================================================== */
+.info-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;width: 100%;height: auto;
+}
+
+.info-title {
+    display: flex;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+    padding-bottom: 16px;
+    width: 100%;height: auto;
+}
+
+/* Label column */
+.info-title-label {
+    flex: 0 0 240px; /* Locked explicit desktop column breakpoint weight */
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text-muted);
+    text-transform: uppercase;
+}
+
+/* Value data fields column */
+.info-title-value {
+    flex: 1;
+    font-size: 18px;
+    font-weight: 500;
+    color: var(--text-primary);
+    line-height: 1.6;
+}
+
+/* Target valuation pricing row directly to look elite */
+.info-title:has(.fa-naira-sign) .info-title-value {
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--text-primary);
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.info-title i.fa-naira-sign {
+    color: var(--accent-blue);
+    font-size: 20px;
+}
+
+/* Override configuration layout parameter specifically for description summary box block fields */
+.info-grid .info-title:last-of-type {
+    flex-direction: column;
+    gap: 12px;
+    border-bottom: none;
+    padding-bottom: 0;
+    margin-top: 12px;
+}
+
+.info-grid .info-title:last-of-type .info-title-value {
+    font-size: 16px;
+    color: #cbd5e1;
+    background-color: var(--bg-clean);
+    padding: 20px;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--border-subtle);
+}
+
+/* ==========================================================================
+   4. PROPERTY ACTION LINK BUTTON CONTROLS
+   ========================================================================== */
+.property-detail-actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 40px;
+    width: 100%;
+}
+
+.action-link, .deleteBtn {
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 600;
+    padding: 12px 24px;
+    border-radius: var(--radius-sm);
+    transition: var(--transition);
+    text-align: center;
+}
+
+/* Base Standard Links (Back to Listings / More in Category) */
+.action-link {
+    background-color: var(--surface-card);
+    color: var(--text-primary);
+    border: 1px solid var(--border-subtle);
+}
+
+.action-link:hover {
+    background-color: var(--surface-hover);
+    border-color: var(--text-muted);
+}
+
+/* WhatsApp Agent Core Action Button Variant */
+.action-link[href*="whatsapp"] {
+    background-color: #25d366; /* WhatsApp Green */
+    color: #ffffff !important;
+    border: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    box-shadow: 0 4px 14px rgba(37, 211, 102, 0.3);
+}
+
+.action-link[href*="whatsapp"]:hover {
+    background-color: #20ba5a;
+    transform: translateY(-1px);
+    box-shadow: 0 6px 20px rgba(37, 211, 102, 0.4);
+}
+
+.action-link[href*="whatsapp"] i {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-style: normal;
+    font-weight: 600;
+}
+
+/* ==========================================================================
+   5. AGENT LISTING OWNER CONTROL ACTIONS PANEL
+   ========================================================================== */
+.actionhold {
+    display: flex;
+    gap: 16px;
+    margin-left: auto; /* Snaps agent modifications cleanly to the right side of button groups */
+}
+
+/* Specific button layout exceptions */
+.actionhold .action-link:nth-of-type(1) {
+    background-color: rgba(56, 189, 248, 0.1);
+    color: var(--accent-blue);
+    border: 1px solid rgba(56, 189, 248, 0.15);
+}
+
+.actionhold .action-link:nth-of-type(1):hover {
+    background-color: var(--accent-blue);
+    color: var(--bg-clean);
+}
+
+/* Delete action modifier */
+.deleteBtn {
+    background-color: rgba(239, 68, 68, 0.1);
+    color: #f87171;
+    border: 1px solid rgba(239, 68, 68, 0.15);
+    cursor: pointer;
+}
+
+.deleteBtn:hover {
+    background-color: #ef4444;
+    color: var(--text-primary);
+    border-color: #ef4444;
+}
+
+/* ==========================================================================
+   ROBUST WHATSAPP BUTTON STATE
+   ========================================================================== */
+.whatsapp-btn {
+    background-color: #25d366 !important; /* WhatsApp Green */
+    color: #ffffff !important;
+    border: none !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 10px !important;
+    padding: 12px 28px !important; /* Generous padding to prevent squishing */
+    white-space: nowrap !important; /* Absolutely blocks the text from wrapping or folding */
+    box-shadow: 0 4px 14px rgba(37, 211, 102, 0.3) !important;
+    cursor: pointer;
+}
+
+.whatsapp-btn:hover {
+    background-color: #20ba5a !important;
+    transform: translateY(-1px) !important;
+    box-shadow: 0 6px 20px rgba(37, 211, 102, 0.4) !important;
+}
+
+/* Style the logo inside the button cleanly */
+.whatsapp-btn i {
+    font-size: 1.15rem !important;
+    font-style: normal !important;
+}
+
+/* ==========================================================================
+   FAVORITES LIST VIEW TEMPLATE STYLING (STANDARD DESKTOP-FIRST FLEXBOX)
+   ========================================================================== */
+
+.favorites-list {
+    width: 100%;
+    margin-top: 10px;
+}
+
+/* Main Top Header Title */
+.favorites-list h1 {
+    font-size: 2.25rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    letter-spacing: -0.5px;
+    margin-bottom: 24px;
+}
+
+/* Fallback empty favorites notification message state */
+.favorites-list > p {
+    font-size: 1.05rem;
+    color: var(--text-muted);
+    margin-bottom: 16px;
+}
+
+/* Fallback Browse Redirect Link Button */
+.favorites-list > a[href*="individual_dashboard"] {
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 600;
+    background-color: var(--text-primary);
+    color: var(--bg-clean);
+    padding: 10px 20px;
+    border-radius: var(--radius-sm);
+    display: inline-block;
+    transition: var(--transition);
+}
+
+.favorites-list > a[href*="individual_dashboard"]:hover {
+    background-color: #cbd5e1;
+}
+
+/* ==========================================================================
+   FLEXBOX ROW CONTAINER GRID HULL
+   ========================================================================== */
+.favorites-list .row {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    gap: 24px;
+    width: 100%;
+}
+
+/* Desktop sizing column definitions */
+.favorites-list .col-md-4 {
+    flex: 0 1 calc(33.333% - 16px);
+    min-width: 320px;
+    display: flex;
+}
+
+/* Individual Showcase Card Frames */
+.favorites-list .card {
+    background-color: var(--surface-card);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    transition: var(--transition);
+}
+
+.favorites-list .card:hover {
+    transform: translateY(-4px);
+    border-color: #334155;
+    box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.6);
+}
+
+/* Image header showcase boundaries layout formatting */
+.favorites-list .card .card-img-top {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    border-bottom: 1px solid var(--border-subtle);
+    background-color: var(--surface-hover);
+}
+
+/* ==========================================================================
+   CARD DETAIL ELEMENTAL FIELDS & BUTTON FOOTERS
+   ========================================================================== */
+.favorites-list .card-body {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    flex: 1;
+}
+
+/* Property Header Title */
+.favorites-list .card-title {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* Subtext short summary descriptions block fields */
+.favorites-list .card-text {
+    font-size: 0.95rem;
+    line-height: 1.5;
+    color: var(--text-muted);
+    margin-bottom: 8px;
+}
+
+/* View Details Main Anchor Link Button Components */
+.favorites-list .btn-primary {
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 600;
+    background-color: var(--surface-hover);
+    color: var(--text-primary);
+    border: 1px solid var(--border-subtle);
+    padding: 10px 16px;
+    border-radius: var(--radius-sm);
+    text-align: center;
+    transition: var(--transition);
+    margin-top: auto; /* Forces action buttons straight to layout card baselines */
+}
+
+.favorites-list .btn-primary:hover {
+    background-color: var(--accent-blue);
+    color: var(--bg-clean);
+    border-color: var(--accent-blue);
+}
+
+/* Remove/Delete Favorite Accent Button modifier layout configurations */
+.favorites-list .btn-outline-danger {
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 600;
+    background-color: rgba(239, 68, 68, 0.06);
+    color: #f87171;
+    border: 1px solid rgba(239, 68, 68, 0.15);
+    padding: 10px 16px;
+    border-radius: var(--radius-sm);
+    text-align: center;
+    transition: var(--transition);
+}
+
+.favorites-list .btn-outline-danger:hover {
+    background-color: #ef4444;
+    color: var(--text-primary);
+    border-color: #ef4444;
+}

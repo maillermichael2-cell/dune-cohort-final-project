@@ -88,8 +88,8 @@ REST_FRAMEWORK = {
 MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -135,6 +135,7 @@ DATABASES = {
 
 
 ALLOWED_HOSTS = [config('RENDER_EXTERNAL_HOSTNAME', default='127.0.0.1'), 'localhost', '.onrender.com']
+
 
 
 

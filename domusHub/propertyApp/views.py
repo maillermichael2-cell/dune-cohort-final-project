@@ -116,8 +116,6 @@ def agent_dashboard(request):
         messages.error(request, 'Only estate agents can access the agent dashboard.')
         return redirect('individual_dashboard')
 
-    properties = Property.objects.filter(owner=request.user).order_by('-created_at')
-
     if request.method == 'POST':
         form = PropertyForm(request.POST, request.FILES)
         if form.is_valid():
@@ -131,6 +129,21 @@ def agent_dashboard(request):
 
     return render(request, 'propertyApp/agent_dashboard.html', {
         'form': form,
+    })
+
+@login_required
+def agent_properties_list(request):
+    """
+    2. ADD THIS NEW VIEW JUST TO SHOW THE AGENT'S ACTIVE LISTINGS
+    """
+    profile = getattr(request.user, 'profile', None)
+    if not profile or profile.role != 'ESTATE AGENT':
+        messages.error(request, 'Access denied.')
+        return redirect('individual_dashboard')
+
+    properties = Property.objects.filter(owner=request.user).order_by('-created_at')
+
+    return render(request, 'propertyApp/agent_properties.html', {
         'properties': properties,
     })
 

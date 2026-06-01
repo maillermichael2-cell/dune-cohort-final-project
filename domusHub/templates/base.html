@@ -8,7 +8,7 @@
     <title>DomusHub Home</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
     <link rel='stylesheet' href="{% static 'css/main.css' %}">
-    <link rel="stylesheet" href="{% static 'css/responsive.css' %}">
+    <link rel="stylesheet" href="{% static 'css/responsive.css' %} ">
     
     <!--fontawesome cdn link section !!! -->
 </head>
@@ -22,7 +22,9 @@
                     <button onclick="toggleDiv()" class="sideBarBtn"><i class="fa-solid fa-bars"></i></button>
                     <div id="sideBar" class="sideBar">
                         <div class="sideBarHeader">
+                            <div class="profilePics"></div>
                             <div class="userWelcome">Hello {{request.user.username}}</div>
+                            <button onclick="toggleDiv()" class="sideBarBtn"><i class="fa-solid fa-remove"></i></button>
                         </div>
                         {% if request.user.is_authenticated and request.user.profile.role != 'ESTATE AGENT'%}
                             <div class="menuList">
@@ -32,6 +34,7 @@
                         {% if request.user.is_authenticated and request.user.profile.role == 'ESTATE AGENT'%}
                             <div style="border: 1px solid red;" class="menuList">
                                 <a style="display: none;" class="menuLinks" href="{% url 'agent_dashboard' %}">Dashboard</a>
+                                <a class="menuLinks" href="{% url 'agent_properties' %}">My Properties</a>
                             </div>
                         {% endif %}
                         <form action="{% url 'logout' %}" method="POST" class="logoutForm">

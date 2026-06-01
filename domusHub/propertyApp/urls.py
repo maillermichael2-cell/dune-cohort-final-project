@@ -10,6 +10,7 @@ urlpatterns = [
     path('agent/', views.agent_dashboard, name='agent_dashboard'),
     path('agent/<int:pk>/edit/', views.property_edit, name='property_edit'),
     path('agent/<int:pk>/delete/', views.property_delete, name='property_delete'),
+    path('agent_properties/', views.agent_properties_list, name='agent_properties'),
     path('favorite/<int:pk>/', views.toggle_favorite, name='toggle_favorite'),
     path('favorites/', views.favorites_list, name='favorites_list'),
 

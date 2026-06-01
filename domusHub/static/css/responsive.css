@@ -1,85 +1,196 @@
-/*
-    screen breakpoints :
-        600px 
-        768px
-        992px
-        1200px
-*/
+/* ==========================================================================
+   DOMUSHUB RESPONSIVE LAYOUT FRAMEWORK (MOBILE-FIRST SYSTEM)
+   screen breakpoints: 600px, 768px, 992px, 1200px
+   ========================================================================== */
 
-
-/*600px*/
-@media only screen and (min-width:600px){
-
+/* --------------------------------------------------------------------------
+   BASE RESETS FOR MOBILE (Under 600px Viewports)
+   -------------------------------------------------------------------------- */
+main {
+    max-width: 95% !important;
+    width: 95% !important;
+    padding: 1rem 0 !important;
+    padding-top: calc(var(--header-height) + 1.5rem) !important;
 }
 
-/*768px*/
-@media only screen and (min-width:768px){
-
+.header {
+    padding: 0 1rem !important;
 }
 
-/*992px*/
-@media only screen and (min-width:992px){
-    /*----------base section start-----------------*/
-        .nav2{justify-content: space-around;}
-    /*----------base section end-------------------*/
-    /*----------landing page section start-----------*/
-        .getStartedBtn{
-            width: 35%;
-        }
-        .projectExplanation{
-            display: flex;
-            border: 1px solid red;
-            width: 70%;height: 400px;
-            background-color: white;border-radius: 10px;
-        }
-        .welcomeMessage h1{font-size: 30px;}
-        .welcomeMessage p{font-size: 15px;}
-        .dashboard-links{max-width: 600px;}
-        .homelink{max-width: 150px;}
-        .welcomeMessage{max-width: 600px;padding: 60px;}
-    /*----------landing page section end-------------*/
-
-    /*----------------------form section start------------------*/
-        .formHolder{
-            width: 40%;margin-top: 50px;
-        }
-        .linksHolder{
-            display: none;
-        }
-        .content{
-            width: 100%;height: auto;
-            display: flex;justify-content: center;
-            align-items: center;gap: 30px;margin-top: 50px;
-        }
-        .sideContent{
-            border: 1px solid greenyellow;
-            display: flex;border-radius: 10px;
-            width: 50%;height: 70vh;
-        }
-        .input input{
-            height: 40px;
-        }
-    /*----------------------form section end--------------------*/
-    /*--------agent page section start----------*/
-    .agent-properties{
-        flex-direction: row;max-width: 1200px;
-        gap: 50px;
-    }
-    .agentPropertiesCard{max-width: 300px;}
-    /*--------agent page section end------------*/
-
-    /*---------individual page section start-----------*/
-    .property-grid{
-        flex-direction: row;gap: 30px;width: 95%;
-    }
-    .property-card{width: 30%;}
-    .info-grid{
-        flex-direction: row;
-    }
-    /*---------individual page section end-------------*/
+/* Force Flexbox grids to collapse into clean single vertical lists on smartphones */
+.property-grid, .agent-properties, .favorites-list .row {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 20px !important;
 }
 
-/*1200px*/
-@media only screen and (min-width:992px){
+.property-card, .agentPropertiesCard, .favorites-list .col-md-4 {
+    flex: 0 1 100% !important;
+    width: 100% !important;
+}
 
+/* Collapse navigation links on small screens */
+.linksHolder {
+    gap: 8px !important;
+}
+
+.headerLinks {
+    padding: 0.4rem 0.75rem !important;
+    font-size: 0.8rem !important;
+}
+
+/* Force Sidebar drawer container layout matrix to match full mobile frames */
+.sideBar {
+    width: 100% !important;
+    max-width: 100% !important;
+}
+
+/* Fix Hero Dashboard overlays for mobile screens */
+.welcomeMessage {
+    padding: 1.5rem !important;
+    width: 100% !important;
+    max-width: 100% !important;
+}
+
+.welcomeMessage h1 {
+    font-size: 1.75rem !important;
+}
+
+.dashboard-links {
+    flex-direction: column !important;
+    width: 100% !important;
+}
+
+.homelink {
+    width: 100% !important;
+}
+
+/* Fix property information grids on detail pages */
+.info-title {
+    flex-direction: column !important;
+    gap: 4px !important;
+}
+
+.info-title-label {
+    flex: 0 0 auto !important;
+    font-size: 12px !important;
+}
+
+.property-detail-actions {
+    flex-direction: column !important;
+    align-items: stretch !important;
+}
+
+.actionhold {
+    flex-direction: column !important;
+    width: 100% !important;
+    margin-left: 0 !important;
+}
+
+
+/* --------------------------------------------------------------------------
+   600px BREAKPOINT - Large Phones / Small Tablets
+   -------------------------------------------------------------------------- */
+@media only screen and (min-width: 600px) {
+    main {
+        max-width: 92% !important;
+        width: 92% !important;
+        padding-top: calc(var(--header-height) + 2rem) !important;
+    }
+
+    .header {
+        padding: 0 1.5rem !important;
+    }
+
+    .welcomeMessage h1 {
+        font-size: 2.2rem !important;
+    }
+
+    .dashboard-links {
+        flex-direction: row !important;
+    }
+
+    /* Convert flex layout to double items side by side */
+    .property-grid, .agent-properties, .favorites-list .row {
+        flex-direction: row !important;
+        flex-wrap: wrap !important;
+    }
+
+    .property-card, .agentPropertiesCard, .favorites-list .col-md-4 {
+        flex: 0 1 calc(50% - 15px) !important;
+    }
+}
+
+
+/* --------------------------------------------------------------------------
+   768px BREAKPOINT - Medium Tablets
+   -------------------------------------------------------------------------- */
+@media only screen and (min-width: 768px) {
+    :root {
+        --header-height: 80px;
+    }
+
+    main {
+        max-width: 90% !important;
+        width: 90% !important;
+    }
+
+    .header {
+        padding: 0 2rem !important;
+    }
+
+    /* Drop sidebar mobile stretch and restore explicit panel sizing layout values */
+    .sideBar {
+        width: 340px !important;
+    }
+
+    /* Pull information grid sections on detail pages back into clear row blocks */
+    .info-title {
+        flex-direction: row !important;
+        gap: 20px !important;
+    }
+
+    .info-title-label {
+        flex: 0 0 240px !important;
+    }
+
+    .property-detail-actions {
+        flex-direction: row !important;
+    }
+
+    .actionhold {
+        flex-direction: row !important;
+        margin-left: auto !important;
+    }
+}
+
+
+/* --------------------------------------------------------------------------
+   992px BREAKPOINT - Laptops / Small Desktops
+   -------------------------------------------------------------------------- */
+@media only screen and (min-width: 992px) {
+    /* Upgrade flex system into 3 columns */
+    .property-card, .agentPropertiesCard, .favorites-list .col-md-4 {
+        flex: 0 1 calc(33.333% - 20px) !important;
+    }
+
+    .search-form {
+        max-width: 640px !important;
+    }
+}
+
+
+/* --------------------------------------------------------------------------
+   1200px BREAKPOINT - Large Desktop Monitors
+   -------------------------------------------------------------------------- */
+@media only screen and (min-width: 1200px) {
+    main {
+        max-width: 85% !important;
+        width: 85% !important; /* Locks width beautifully on extreme high-res display panels */
+    }
+
+    /* Transition layout views to 4 crisp items per row layout */
+    .property-card, .agentPropertiesCard, .favorites-list .col-md-4 {
+        flex: 0 1 calc(25% - 22px) !important;
+    }
 }
