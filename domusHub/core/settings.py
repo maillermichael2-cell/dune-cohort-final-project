@@ -133,6 +133,8 @@ STORAGES = {
     },
 }
 
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
 # ---------------------------------------------------------------------------
 # Cloudinary
 # ---------------------------------------------------------------------------
