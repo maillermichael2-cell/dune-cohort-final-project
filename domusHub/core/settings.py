@@ -173,30 +173,24 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/6.0/howto/static-files/
 
-# ==========================================================================
-# PRODUCTION STATIC & MEDIA ASSETS STORAGE CONFIGURATION (WHITENOISE + CLOUDINARY)
-# ==========================================================================
+# static settings
 STATIC_URL = 'static/' 
 STATICFILES_DIRS = [BASE_DIR / 'static']  
 STATIC_ROOT = BASE_DIR / 'staticfiles'
-
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 
 STORAGES = {
-    "default": {
-        "BACKEND": "cloudinary_storage.storage.MediaCloudinaryStorage",
-    },
-    "staticfiles": {
-        # Using CompressedStaticFilesStorage bypasses the strict manifest hashing check, preventing clashes with Cloudinary
-        "BACKEND": "whitenoise.storage.CompressedStaticFilesStorage",
-    },
+        "default":{
+            "BACKEND": "cloudinary_storage.storage.MediaCloudinaryStorage",
+        },
+        "staticfiles": {
+            "BACKEND": "whitenoise.storage.StaticFilesStorage",
+        },
 }
 
-# Fallback compatibility hooks for package back-ends
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedStaticFilesStorage'
+STATICFILES_STORAGE = 'whitenoise.storage.StaticFilesStorage'
 DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
-
 
 
 
