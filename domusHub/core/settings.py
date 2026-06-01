@@ -10,30 +10,41 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/6.0/ref/settings/
 """
 
-from pathlib import Path
 import os
-from decouple import config
-import dj_database_url
 import sys
-
-
+from datetime import timedelta
+from pathlib import Path
+import dj_database_url
+from decouple import config
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = config('SECRET_KEY')
 DEBUG = config('DEBUG', default=False, cast=bool)
+
+# ==========================================================================
+# 1. UNIFIED HOST ROUTING MANAGEMENT (FIXED COLLISION BUG)
+# ==========================================================================
 _hosts = config('ALLOWED_HOSTS', default='')
 ALLOWED_HOSTS = [h.strip() for h in _hosts.split(',') if h.strip()]
+
 if DEBUG:
     for host in ("localhost", "127.0.0.1", "testserver"):
         if host not in ALLOWED_HOSTS:
             ALLOWED_HOSTS.append(host)
-    
+
+# Gracefully appends Render variables directly to your array memory safely
+render_host = config('RENDER_EXTERNAL_HOSTNAME', default='')
+if render_host and render_host not in ALLOWED_HOSTS:
+    ALLOWED_HOSTS.append(render_host)
+
+for fallback in ('localhost', '127.0.0.1', '.onrender.com'):
+    if fallback not in ALLOWED_HOSTS:
+        ALLOWED_HOSTS.append(fallback)
 
 
 # Application definition
-
 INSTALLED_APPS = [
     'cloudinary_storage',
     'cloudinary',
@@ -58,38 +69,39 @@ CLOUDINARY_STORAGE = {
     'API_KEY': config('CLOUDINARY_API_KEY'),
     'API_SECRET': config('CLOUDINARY_API_SECRET'),
 }
-#jwt life time settings 
-from datetime import timedelta
+
 SIMPLE_JWT = {
     'ACCESS_TOKEN_LIFETIME': timedelta(minutes=16),
     'REFRESH_TOKEN_LIFETIME': timedelta(days=1),
     'ROTATE_REFRESH_TOKENS': False,
-    'BLACKLIST_AFTER_ROTATION':False,
+    'BLACKLIST_AFTER_ROTATION': False,
 }
+
 CORS_ALLOW_ALL_ORIGINS = True
+
 REST_FRAMEWORK = {
     "DEFAULT_RENDERER_CLASSES": ['rest_framework.renderers.JSONRenderer'],
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
     'PAGE_SIZE': 6,
-    'DEFAULT_AUTHENTICATION_CLASSES':[
-        # 'rest_framework.authentication.TokenAuthentication'
+    'DEFAULT_AUTHENTICATION_CLASSES': [
         'rest_framework_simplejwt.authentication.JWTAuthentication',
         'rest_framework.authentication.TokenAuthentication',
     ],
-    'DEFAULT_PERMISSION_CLASSES':[
+    'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.AllowAny'
     ],
-    'DEFAULT_FILTER_BACKENDS':[
+    'DEFAULT_FILTER_BACKENDS': [
         'django_filters.rest_framework.DjangoFilterBackend',
         'rest_framework.filters.SearchFilter',
         'rest_framework.filters.OrderingFilter',
     ]
 }
+
 MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',  # Optimized position for instant static file delivery
     'django.contrib.sessions.middleware.SessionMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -117,8 +129,7 @@ TEMPLATES = [
 WSGI_APPLICATION = 'core.wsgi.application'
 
 
-# Database
-# https://docs.djangoproject.com/en/6.0/ref/settings/#databases
+# Database configuration
 DATABASE_URL = config('DATABASE_URL', default='')
 
 if not DATABASE_URL:
@@ -132,16 +143,7 @@ DATABASES = {
 }
 
 
-
-
-ALLOWED_HOSTS = [config('RENDER_EXTERNAL_HOSTNAME', default='127.0.0.1'), 'localhost', '.onrender.com']
-
-
-
-
 # Password validation
-# https://docs.djangoproject.com/en/6.0/ref/settings/#auth-password-validators
-
 AUTH_PASSWORD_VALIDATORS = [
     {
         'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
@@ -159,44 +161,38 @@ AUTH_PASSWORD_VALIDATORS = [
 
 
 # Internationalization
-# https://docs.djangoproject.com/en/6.0/topics/i18n/
-
 LANGUAGE_CODE = 'en-us'
-
 TIME_ZONE = 'UTC'
-
 USE_I18N = True
-
 USE_TZ = True
 
-# whitenoise.storage.CompressedManifestStaticFilesStorage
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/6.0/howto/static-files/
 
-# static settings
-STATIC_URL = 'static/' 
-STATICFILES_DIRS = [BASE_DIR / 'static']  
-STATIC_ROOT = BASE_DIR / 'staticfiles'
+# ==========================================================================
+# 2. FIXED PRODUCTION ASSETS ASYNC FILING (WHITENOISE + CLOUDINARY ENGINE)
+# ==========================================================================
+STATIC_URL = '/static/' 
+STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]  
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+
 MEDIA_URL = '/media/'
-MEDIA_ROOT = BASE_DIR / 'media'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 STORAGES = {
-        "default":{
-            "BACKEND": "cloudinary_storage.storage.MediaCloudinaryStorage",
-        },
-        "staticfiles": {
-            "BACKEND": "whitenoise.storage.CompressedStaticFilesStorage",
-        },
+    "default": {
+        "BACKEND": "cloudinary_storage.storage.MediaCloudinaryStorage",
+    },
+    "staticfiles": {
+        # CompressedStaticFilesStorage skips strict hash checking, preventing conflicts with Cloudinary
+        "BACKEND": "whitenoise.storage.CompressedStaticFilesStorage",
+    },
 }
 
+# Compatibility hooks for legacy dependencies
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedStaticFilesStorage'
 DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 
 
-
-
-
-#auth redirect conf 
+# Auth routing parameter targets
 LOGIN_REDIRECT_URL = 'dashboard'
 LOGIN_URL = '/accounts/login/'
 LOGOUT_REDIRECT_URL = '/'
