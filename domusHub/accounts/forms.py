@@ -4,15 +4,15 @@ from django.contrib.auth.models import User
 from .models import Profile, AgentProfile
 
 class RegisterForm(UserCreationForm):
-    email = forms.EmailField(required=True, max_length=20, widget=forms.EmailInput(attrs={'placeholder': "Email"}))
+    email = forms.EmailField(required=True, max_length=400, widget=forms.EmailInput(attrs={'placeholder': "Email"}))
     role = forms.ChoiceField(
         choices=Profile.ROLE_CHOICES,
         required=True,
         widget=forms.Select(attrs={'class': 'role-select'})
     )
-    phone_number = forms.CharField(required=False, max_length=20, widget=forms.TextInput(attrs={'placeholder': 'Phone Number'}))
-    license_number = forms.CharField(required=False, max_length=50, widget=forms.TextInput(attrs={'placeholder': "License Number"}))
-    agency_name = forms.CharField(required=False, max_length=100, widget=forms.TextInput(attrs={'placeholder': "Agency Name"}))
+    phone_number = forms.CharField(required=False, max_length=400, widget=forms.TextInput(attrs={'placeholder': 'Phone Number'}))
+    license_number = forms.CharField(required=False, max_length=400, widget=forms.TextInput(attrs={'placeholder': "License Number"}))
+    agency_name = forms.CharField(required=False, max_length=400, widget=forms.TextInput(attrs={'placeholder': "Agency Name"}))
 
     class Meta:
         model = User
