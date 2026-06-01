@@ -30,7 +30,6 @@ ALLOWED_HOSTS = [
 # Application definition
 # ---------------------------------------------------------------------------
 INSTALLED_APPS = [
-    'cloudinary_storage',
     'cloudinary',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -48,6 +47,10 @@ INSTALLED_APPS = [
     'propertyApp',
 ]
 
+STATICFILES_FINDERS = [
+    'django.contrib.staticfiles.finders.FileSystemFinder',
+    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+]
 # ---------------------------------------------------------------------------
 # Middleware
 # ---------------------------------------------------------------------------
