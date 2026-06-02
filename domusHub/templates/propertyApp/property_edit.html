@@ -14,6 +14,10 @@
         <form class="input-form" method="post" enctype="multipart/form-data">
             {% csrf_token %}
             {{ form.as_p }}
+            <p class="gallery-upload-row">
+                <label for="id_gallery_images">Add Additional Property Pictures (Hold Ctrl/Cmd to choose multiple):</label>
+                <input type="file" name="gallery_images" id="id_gallery_images" multiple accept="image/*">
+            </p>
             <button class="createBtn" type="submit">Save changes</button>
         </form>
     </div>
