@@ -4,11 +4,55 @@
 {% block content %}
 <div class="property-detail-page">
     
-    <div class="hero-image-wrapper">
-        {% if property.image %}
-                <img src="{{ property.image.url }}" alt="{{ property.title }}" style="width: 90%; border-radius: 8px; object-fit: cover;" />
-        {% endif %}
+    <!-- 💡 IMMERSIVE EMBEDDED GALLERY SLIDER CAROUSEL -->
+    {% if gallery_images %}
+    <h2 class="gallery-heading">Property Gallery Showcase</h2>
+
+    <div class="carousel-container">
+        <div class="carousel-viewport" id="carouselViewport">
+            <!-- 🌟 FIXED: Loops through your actual gallery list array strings -->
+            {% for img_url in gallery_images %}
+                <div class="carousel-slide">
+                    <!-- 🌟 FIXED: Changed 'property.image.url' to 'img_url|safe' to pull the correct picture asset -->
+                    <img src="{{ img_url|safe }}" alt="Property Gallery Room View" class="carouselImg">
+                </div>
+            {% endfor %}
+        </div>
+
+        <!-- Navigation Control Handles (Zero external files needed) -->
+        <button class="carousel-control prev" onclick="moveCarousel(-1)"><i class="fa-solid fa-chevron-left"></i>❮</button>
+        <button class="carousel-control next" onclick="moveCarousel(1)">❯<i class="fa-solid fa-chevron-right"></i></button>
     </div>
+
+    <!-- Tiny interactive script block embedded to power the slider controls locally -->
+    <script>
+        let currentSlideIndex = 0;
+        function moveCarousel(direction) {
+            const viewport = document.getElementById('carouselViewport');
+            const slides = document.querySelectorAll('.carousel-slide');
+            const totalSlides = slides.length;
+            
+            if (totalSlides <= 1) return;
+            
+            currentSlideIndex += direction;
+            
+            // Endless loop wrapper parameters
+            if (currentSlideIndex >= totalSlides) currentSlideIndex = 0;
+            if (currentSlideIndex < 0) currentSlideIndex = totalSlides - 1;
+            
+            // Translates the slide deck canvas horizontal width dimensions smoothly
+            viewport.style.transform = `translateX(-${currentSlideIndex * 100}%)`;
+        }
+    </script>
+    {% else %}
+        <!-- 💡 FALLBACK: If they didn't upload additional gallery items, keep showing the primary cover picture cleanly -->
+        <div class="hero-image-wrapper">
+            {% if property.image %}
+                <img src="{{ property.image.url }}" alt="{{ property.title }}" style="width: 100%; max-height: 480px; border-radius: 8px; object-fit: cover;" />
+            {% endif %}
+        </div>
+    {% endif %}
+
 
     <div class="detail-container">
         <div class="detail-header">
@@ -22,35 +66,36 @@
                 <a class="toggle-btn" href="{% url 'toggle_favorite' property.pk %}">
                     {% csrf_token %}
                         {% if is_favorite %}
-                            &#10084; <!-- Filled heart -->
+                            ❤ <!-- Filled heart -->
                         {% else %}
-                            &#9825; <!-- Empty heart -->
+                            ♡ <!-- Empty heart -->
                         {% endif %}
                 </a>
             {% endif %}
         </div>
-            <div class="info-grid">
-                <div class="info-title">
-                    <div class="info-title-label">Location Address</div>
-                    <div class="info-title-value">{{ property.property_address }}</div>
-                </div>
-                <div class="info-title">
-                    <div class="info-title-label">Listing Valuation Price</div>
-                    <div class="info-title-value"><i class="fa-solid fa-naira-sign"></i> {{ property.price|intcomma }}</div>
-                </div>
-                <div class="info-title">
-                    <div class="info-title-label">Current Status</div>
-                    <div class="info-title-value">{{ property.get_status_display }}</div>
-                </div>
-                <div class="info-title">
-                    <div class="info-title-label">Listing Date</div>
-                    <div class="info-title-value">{{ property.created_at|date:'F j, Y' }}</div>
-                </div>
-                <div class="info-title">
-                    <div class="info-title-label">Description</div>
-                    <div class="info-title-value">{{ property.description }}</div>
-                </div>
+        <div class="info-grid">
+            <div class="info-title">
+                <div class="info-title-label">Location Address</div>
+                <div class="info-title-value">{{ property.property_address }}</div>
             </div>
+            <div class="info-title">
+                <div class="info-title-label">Listing Valuation Price</div>
+                <div class="info-title-value"><i class="fa-solid fa-naira-sign"></i> {{ property.price|intcomma }}</div>
+            </div>
+            <div class="info-title">
+                <div class="info-title-label">Current Status</div>
+                <div class="info-title-value">{{ property.get_status_display }}</div>
+            </div>
+            <div class="info-title">
+                <div class="info-title-label">Listing Date</div>
+                <div class="info-title-value">{{ property.created_at|date:'F j, Y' }}</div>
+            </div>
+            <div class="info-title">
+                <div class="info-title-label">Description</div>
+                <!-- 🌟 FIXED: Changed 'property.description' to our dynamic clean 'description' context variable -->
+                <div class="info-title-value">{{ description }}</div>
+            </div>
+        </div>
     </div>
     
 
@@ -60,7 +105,7 @@
             <a class="action-link" href="{% url 'individual_dashboard_by_category' property.category.slug %}" >More in {{ property.category.name }}</a>
             {% if whatsapp_url %}
                 <a class="action-link whatsapp-btn" href="{{ whatsapp_url }}" rel="noopener noreferrer">
-                    <i class="fab fa-whatsapp">Contact agent on whatsapp</i>
+                    <i class="fab fa-whatsapp"></i> Contact agent on WhatsApp
                 </a>
             {% else %}
                 <p>No Whatsapp contact available for this agent</p>
@@ -73,10 +118,6 @@
             <div class="actionhold">
                 <a class="action-link" href="{% url 'property_edit' property.pk %}" >Edit property</a>
                 <a class="action-link" href="{% url 'agent_dashboard' %}">back to agent</a>
-                <!-- <form method="post" action="" class="deleteForm">
-                    {% csrf_token %}
-                    <button type="submit" class="deleteBtn">Delete property</button>
-                </form> -->
                 <a href="{% url 'property_delete' property.pk %}" class="deleteBtn">Delete property</a>
             </div>
         {% endif %}

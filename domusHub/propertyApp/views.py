@@ -20,6 +20,8 @@ from rest_framework.filters import SearchFilter, OrderingFilter
 from rest_framework_simplejwt.authentication import JWTAuthentication
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.permissions import IsAuthenticatedOrReadOnly
+from cloudinary import uploader as cloudinary_uploader
+import json
 # Create your views here.
 
 def home(request):
@@ -42,11 +44,12 @@ def property_detail(request, pk):
     profile = getattr(request.user, 'profile', None)
     is_agent = bool(request.user.is_authenticated and profile and profile.role == 'ESTATE AGENT')
     owner_profile = None
+    whatsapp_url = None
     if property_item.owner and hasattr(property_item.owner, 'profile'):
         owner_profile = property_item.owner.profile
         if getattr(owner_profile, 'phone_number', None):
             clean_phone = "".join(filter(str.isdigit, str(owner_profile.phone_number)))
-            if clean_phone.startswith('0') and len(clean_phone) > 11:
+            if clean_phone.startswith('0'):
                 clean_phone = '234' + clean_phone[1:]
             message = f'Hello , i am intrested in your property: {property_item.title}'
             encoded_message = urllib.parse.quote(message)
@@ -55,6 +58,17 @@ def property_detail(request, pk):
     if request.user.is_authenticated:
         is_favorite = Favorite.objects.filter(user=request.user, property=property_item).exists()
     
+    clean_description = property_item.description
+    gallery_images = []
+
+    if property_item.description and '||GALLERY_SPLIT||' in property_item.description:
+        try:
+            parts = property_item.description.split('||GALLERY_SPLIT||')
+            clean_description = parts[0]
+            gallery_images = json.loads(parts[1]) 
+        except Exception:
+            pass
+    
     return render(request, 'propertyApp/property_detail.html', {
         'property': property_item,
         'categories': categories,
@@ -62,6 +76,8 @@ def property_detail(request, pk):
         'agent':owner_profile,
         "whatsapp_url": whatsapp_url,
         'is_favorite': is_favorite,
+        'description': clean_description,
+        'gallery_images': gallery_images,
     })
 
 @login_required
@@ -121,6 +137,22 @@ def agent_dashboard(request):
         if form.is_valid():
             property_item = form.save(commit=False)
             property_item.owner = request.user
+
+            gallery_files = request.FILES.getlist('gallery_images')
+            uploaded_urls = []
+
+            for file in gallery_files:
+                try:
+                    uploaded_results = cloudinary_uploader.upload(file, folder="property_gallery/")
+                    uploaded_urls.append(uploaded_results['secure_url'])
+                except Exception:
+                    pass
+            
+            if uploaded_urls:
+                gallery_json_string = json.dumps(uploaded_urls)
+                property_item.description = f"{property_item.description}||GALLERY_SPLIT||{gallery_json_string}"
+
+
             property_item.save()
             messages.success(request, 'Property created successfully.')
             return redirect('agent_dashboard')
