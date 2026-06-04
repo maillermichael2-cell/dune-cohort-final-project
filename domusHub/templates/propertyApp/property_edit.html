@@ -14,6 +14,29 @@
         <form class="input-form" method="post" enctype="multipart/form-data">
             {% csrf_token %}
             {{ form.as_p }}
+
+            <!-- 💡 CLEAN SEPARATED AUTO CAROUSEL PREVIEW DECK -->
+            {% if existing_gallery %}
+                <div class="edit-gallery-preview-wrapper">
+                    <p class="edit-preview-title">Current Active Gallery Pictures:</p>
+                    
+                    <div class="edit-auto-carousel-container">
+                        <div class="edit-auto-carousel-viewport" id="autoCarouselViewport">
+                            {% for img_url in existing_gallery %}
+                                <div class="edit-auto-carousel-slide">
+                                    <img src="{{ img_url|safe }}" alt="Current Gallery Asset" class="edit-auto-carousel-image">
+                                </div>
+                            {% endfor %}
+                        </div>
+                        
+                        <!-- Compact Navigation Controls (Targets globally accessible JS functions) -->
+                        <button type="button" class="edit-auto-carousel-control prev" onclick="moveAutoCarousel(-1)">❮</button>
+                        <button type="button" class="edit-auto-carousel-control next" onclick="moveAutoCarousel(1)">❯</button>
+                    </div>
+                </div>
+            {% endif %}
+
+            
             <p class="gallery-upload-row">
                 <label for="id_gallery_images">Add Additional Property Pictures (Hold Ctrl/Cmd to choose multiple):</label>
                 <input type="file" name="gallery_images" id="id_gallery_images" multiple accept="image/*">

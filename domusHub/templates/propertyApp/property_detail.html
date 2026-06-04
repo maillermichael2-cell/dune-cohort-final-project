@@ -4,54 +4,33 @@
 {% block content %}
 <div class="property-detail-page">
     
-    <!-- 💡 IMMERSIVE EMBEDDED GALLERY SLIDER CAROUSEL -->
-    {% if gallery_images %}
-    <h2 class="gallery-heading">Property Gallery Showcase</h2>
+    <!-- 💡 IMMERSIVE EMBEDDED GALLERY AUTO SLIDER CAROUSEL -->
+        {% if gallery_images %}
+        <h2 class="gallery-heading">Property Gallery Showcase</h2>
 
-    <div class="carousel-container">
-        <div class="carousel-viewport" id="carouselViewport">
-            <!-- 🌟 FIXED: Loops through your actual gallery list array strings -->
-            {% for img_url in gallery_images %}
-                <div class="carousel-slide">
-                    <!-- 🌟 FIXED: Changed 'property.image.url' to 'img_url|safe' to pull the correct picture asset -->
-                    <img src="{{ img_url|safe }}" alt="Property Gallery Room View" class="carouselImg">
-                </div>
-            {% endfor %}
+        <div class="carousel-container">
+            <div class="carousel-viewport" id="carouselViewport">
+                {% for img_url in gallery_images %}
+                    <div class="carousel-slide">
+                        <img src="{{ img_url|safe }}" alt="Property Gallery Room View" class="carouselImg">
+                    </div>
+                {% endfor %}
+            </div>
+
+            <!-- Navigation Control Handles (Mapped to Window Scope JS functions) -->
+            <button type="button" class="carousel-control prev" onclick="moveCarousel(-1)"><i class="fa-solid fa-chevron-left"></i></button>
+            <button type="button" class="carousel-control next" onclick="moveCarousel(1)"><i class="fa-solid fa-chevron-right"></i></button>
         </div>
+        {% else %}
+            <!-- FALLBACK: Keeps showing the primary cover picture cleanly if no additional images exist -->
+            <div class="hero-image-wrapper">
+                {% if property.image %}
+                    <img src="{{ property.image.url }}" alt="{{ property.title }}" class="main-fallback-img" />
+                {% endif %}
+            </div>
+        {% endif %}
 
-        <!-- Navigation Control Handles (Zero external files needed) -->
-        <button class="carousel-control prev" onclick="moveCarousel(-1)"><i class="fa-solid fa-chevron-left"></i>❮</button>
-        <button class="carousel-control next" onclick="moveCarousel(1)">❯<i class="fa-solid fa-chevron-right"></i></button>
-    </div>
 
-    <!-- Tiny interactive script block embedded to power the slider controls locally -->
-    <script>
-        let currentSlideIndex = 0;
-        function moveCarousel(direction) {
-            const viewport = document.getElementById('carouselViewport');
-            const slides = document.querySelectorAll('.carousel-slide');
-            const totalSlides = slides.length;
-            
-            if (totalSlides <= 1) return;
-            
-            currentSlideIndex += direction;
-            
-            // Endless loop wrapper parameters
-            if (currentSlideIndex >= totalSlides) currentSlideIndex = 0;
-            if (currentSlideIndex < 0) currentSlideIndex = totalSlides - 1;
-            
-            // Translates the slide deck canvas horizontal width dimensions smoothly
-            viewport.style.transform = `translateX(-${currentSlideIndex * 100}%)`;
-        }
-    </script>
-    {% else %}
-        <!-- 💡 FALLBACK: If they didn't upload additional gallery items, keep showing the primary cover picture cleanly -->
-        <div class="hero-image-wrapper">
-            {% if property.image %}
-                <img src="{{ property.image.url }}" alt="{{ property.title }}" style="width: 100%; max-height: 480px; border-radius: 8px; object-fit: cover;" />
-            {% endif %}
-        </div>
-    {% endif %}
 
 
     <div class="detail-container">
@@ -105,7 +84,7 @@
             <a class="action-link" href="{% url 'individual_dashboard_by_category' property.category.slug %}" >More in {{ property.category.name }}</a>
             {% if whatsapp_url %}
                 <a class="action-link whatsapp-btn" href="{{ whatsapp_url }}" rel="noopener noreferrer">
-                    <i class="fab fa-whatsapp"></i> Contact agent on WhatsApp
+                    <i class="fa-brands fa-square-whatsapp"></i> Contact agent on WhatsApp
                 </a>
             {% else %}
                 <p>No Whatsapp contact available for this agent</p>

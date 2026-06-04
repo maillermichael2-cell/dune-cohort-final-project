@@ -186,19 +186,46 @@ def property_edit(request, pk):
     if property_item.owner != request.user:
         messages.error(request, 'You can only edit your own properties.')
         return redirect('property_detail', pk=property_item.pk)
+    
+    current_description = property_item.description
+    existing_gallery_urls = []
+
+    if property_item.description and '||GALLERY_SPLIT||' in property_item.description:
+        try:
+            parts = property_item.description.split('||GALLERY_SPLIT||')
+            current_description = parts[0].strip()
+            existing_gallery_urls = json.loads(parts[1].strip()) 
+        except Exception:
+            pass
 
     if request.method == 'POST':
         form = PropertyForm(request.POST, request.FILES, instance=property_item)
         if form.is_valid():
-            form.save()
+            updated_item = form.save(commit=False)
+            fresh_form_description = form.cleaned_data.get('description', current_description)
+            new_gallery_files = request.FILES.getlist('gallery_images')
+            for file in new_gallery_files:
+                try:
+                    uploaded_results = cloudinary_uploader.upload(file, folder="property_gallery/")
+                    existing_gallery_urls.append(uploaded_results['secure_url'])
+                except Exception:
+                    pass
+            if existing_gallery_urls:
+                gallery_json_string = json.dumps(existing_gallery_urls)
+                updated_item.description = f"{fresh_form_description}||GALLERY_SPLIT||{gallery_json_string}"
+            else:
+                updated_item.description = fresh_form_description
+
+            updated_item.save()
             messages.success(request, 'Property updated successfully.')
             return redirect('property_detail', pk=property_item.pk)
     else:
-        form = PropertyForm(instance=property_item)
+        form = PropertyForm(instance=property_item, initial={'description': current_description})
 
     return render(request, 'propertyApp/property_edit.html', {
         'form': form,
         'property': property_item,
+        'existing_gallery': existing_gallery_urls,
     })
 
 
