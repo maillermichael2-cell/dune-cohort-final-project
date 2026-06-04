@@ -74,6 +74,56 @@
                 <!-- 🌟 FIXED: Changed 'property.description' to our dynamic clean 'description' context variable -->
                 <div class="info-title-value">{{ description }}</div>
             </div>
+            <div class="info-title">
+                <div class="info-title-label">Posted by</div>
+                <div class="info-title-value">{{ property.owner }}</div>
+            </div>
+            <h2 class="statusHold">Documentation Status</h2>
+            <div class="info-title">
+                <div class="info-title-label">Registered Survey</div>
+                <div class="info-title-value">{{ property.registered_survey }}</div>
+            </div>
+            <div class="info-title">
+                <div class="info-title-label">Deed of assignment</div>
+                <div class="info-title-value">{{ property.deed_of_assignment }}</div>
+            </div>
+            <div class="info-title">
+                <div class="info-title-label">Building Plan Approval</div>
+                <div class="info-title-value">{{ property.building_plan_approval }}</div>
+            </div>
+            <div class="info-title">
+                <div class="info-title-label">C of O</div>
+                <div class="info-title-value">{{ property.c_of_o }}</div>
+            </div>
+            <div class="info-title">
+                <div class="info-title-label">Governors Consent</div>
+                <div class="info-title-value">{{ property.governors_consent }}</div>
+            </div>
+            <h2 class="statusHold">House & Land Features</h2>
+            <div class="info-title">
+                <div class="info-title-label">Land Size</div>
+                <div class="info-title-value">{{ property.land_size }}</div>
+            </div>
+            <div class="info-title">
+                <div class="info-title-label">Square Meters</div>
+                <div class="info-title-value">{{ property.sq_meters|intcomma }}</div>
+            </div>
+            <div class="info-title">
+                <div class="info-title-label">Unit Size </div>
+                <div class="info-title-value">{{ property.unit_size }}</div>
+            </div>
+            <div class="info-title">
+                <div class="info-title-label">Construction status</div>
+                <div class="info-title-value">{{ property.construction_status }}</div>
+            </div>
+            <div class="info-title">
+                <div class="info-title-label">Bedrooms</div>
+                <div class="info-title-value">{{ property.number_of_bedrooms }} Bedrooms</div>
+            </div>
+            <div class="info-title">
+                <div class="info-title-label">Bath rooms</div>
+                <div class="info-title-value">{{ property.number_of_bathrooms }} Bathrooms</div>
+            </div>
         </div>
     </div>
     

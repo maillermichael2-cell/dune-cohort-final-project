@@ -42,6 +42,7 @@
                         <h2>{{ item.title }}</h2>
                         <a class="detailsBtn" href="{% url 'property_detail' item.pk %}">View details</a>
                     </div>
+                    <p>Posted by : {{ item.owner }}  {{ item.created_at|naturaltime }}</p>
                 </div>
             </div>
         {% empty %}

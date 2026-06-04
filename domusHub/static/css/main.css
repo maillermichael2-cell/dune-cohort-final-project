@@ -1173,6 +1173,11 @@ main {
     gap: 16px;
     flex: 1;
 }
+.statusHold{
+    width: 100%;color:white;
+    background-color: rgba(15, 23, 42, 0.8);text-decoration: underline;
+    border-bottom: 1px solid white;
+}
 
 /* Address & Financial Layout Alignments */
 .detailsHold2 {

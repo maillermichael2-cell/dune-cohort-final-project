@@ -11,7 +11,34 @@
                         <h3>{{ item.title }}</h3>
                         <p>{{ item.property_address }}</p>
                         <p>{{ item.category.name }} • {{ item.get_status_display }}</p>
-                        <p>{{ item.price|intcomma }}</p>
+                        <p><i class="fas fa-naira-sign"></i> {{ item.price|intcomma }}</p>
+                        
+                        <!-- House & Land Features -->
+                        <div class="agentPropertyFeatures">
+                            {% if item.land_size %}<p class="featureItem">Land Size: {{ item.land_size }}</p>{% endif %}
+                            {% if item.sq_meters %}<p class="featureItem">Square Meters: {{ item.sq_meters|intcomma }}</p>{% endif %}
+                            <p class="featureItem">Construction Status: {{ item.get_construction_status_display }}</p>
+                            {% if item.number_of_bedrooms %}<p class="featureItem">Bedrooms: {{ item.number_of_bedrooms }}</p>{% endif %}
+                            {% if item.number_of_bathrooms %}<p class="featureItem">Bathrooms: {{ item.number_of_bathrooms }}</p>{% endif %}
+                            {% if item.unit_size %}<p class="featureItem">Unit Size: {{ item.unit_size }}</p>{% endif %}
+                        </div>
+
+                        <!-- Documentation Statuses -->
+                        <div class="agentPropertyDocs">
+                            <p class="docItem">Registered Survey: {{ item.get_registered_survey_display }}</p>
+                            <p class="docItem">Deed of Assignment: {{ item.get_deed_of_assignment_display }}</p>
+                            <p class="docItem">Building Plan Approval: {{ item.get_building_plan_approval_display }}</p>
+                            <p class="docItem">C of O: {{ item.get_c_of_o_display }}</p>
+                            <p class="docItem">Governor's Consent: {{ item.get_governors_consent_display }}</p>
+                        </div>
+
+                        <!-- Detailed Note / Description Preview -->
+                        {% if item.description %}
+                        <div class="agentPropertyDescription">
+                            <p>{{ item.description|truncatewords:20 }}</p>
+                        </div>
+                        {% endif %}
+
                         <div style="display:flex; gap:12px; flex-wrap:wrap; margin-top:10px;">
                             <a class="agentPropertyView" href="{% url 'property_detail' item.pk %}">View</a>
                             <a class="agentPropertyEdit" href="{% url 'property_edit' item.pk %}">Edit</a>

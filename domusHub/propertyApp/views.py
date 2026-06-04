@@ -280,6 +280,9 @@ class PropertyListAPIView(ListAPIView):
         return Response(serializer.data, status=status.HTTP_200_OK)
     
     def post(self, request):
+        profile = getattr(request.user, 'profile', None)
+        if not profile or profile.role != 'ESTATE AGENT':
+            return Response({'detail': 'Only estate agents can create properties.'}, status=status.HTTP_403_FORBIDDEN)
         serializer = self.serializer_class(data=request.data)
         if serializer.is_valid():
             serializer.save(owner=request.user)
@@ -328,7 +331,7 @@ class PropertyCategoryListAPIView(ListAPIView):
 
 class PropertyCreateAPIView(APIView):
     authentication_classes = [JWTAuthentication, TokenAuthentication]
-    permission_classes = [IsAuthenticatedOrReadOnly]
+    permission_classes = [IsAuthenticated]
 
     def post(self, request):
         profile = getattr(request.user, 'profile', None)
