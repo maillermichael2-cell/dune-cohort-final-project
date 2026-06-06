@@ -1,0 +1,133 @@
+{% extends 'base.html' %}
+{% load humanize %}
+
+{% block content %}
+<div class="individual-dashboard search-results-page">
+
+    <!-- 🔍 ADVANCED SEARCH FILTER SIDEBAR / PANEL -->
+    <div class="search-filters-wrapper">
+        <form method="get" action="{% url 'advanced_search' %}" class="search-form advanced-filter-form">
+            
+            <!-- Main Keyword Input Box -->
+            <div class="filter-field-group">
+                <label for="id_q">Keyword Search</label>
+                <input type="text" name="q" id="id_q" placeholder="Search title or location..." value="{{ request.GET.q }}" class="search-input" />
+            </div>
+
+            <!-- Category Picker Dropdown -->
+            <div class="filter-field-group">
+                <label for="id_category">Category</label>
+                <select name="category" id="id_category" class="filter-select">
+                    <option value="">-- All Categories --</option>
+                    {% for cat in categories %}
+                        <option value="{{ cat.slug }}" {% if request.GET.category == cat.slug %}selected{% endif %}>{{ cat.name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <!-- Price Constraints -->
+            <div class="filter-field-group price-range-inputs">
+                <label>Price Range (₦)</label>
+                <input type="number" name="min_price" placeholder="Min Price" value="{{ request.GET.min_price }}" class="filter-number-input">
+                <input type="number" name="max_price" placeholder="Max Price" value="{{ request.GET.max_price }}" class="filter-number-input">
+            </div>
+
+            <!-- Construction Status Dropdown -->
+            <div class="filter-field-group">
+                <label for="id_construction">Construction Status</label>
+                <select name="construction_status" id="id_construction" class="filter-select">
+                    <option value="">-- All Statuses --</option>
+                    <option value="BARE_LAND" {% if request.GET.construction_status == 'BARE_LAND' %}selected{% endif %}>Bare Land / Unimproved</option>
+                    <option value="OFF_PLAN" {% if request.GET.construction_status == 'OFF_PLAN' %}selected{% endif %}>Off-Plan</option>
+                    <option value="UNDER_CONSTRUCTION" {% if request.GET.construction_status == 'UNDER_CONSTRUCTION' %}selected{% endif %}>Under Construction</option>
+                    <option value="COMPLETED" {% if request.GET.construction_status == 'COMPLETED' %}selected{% endif %}>Completed</option>
+                </select>
+            </div>
+
+            <!-- Bedrooms Filter -->
+            <div class="filter-field-group">
+                <label for="id_bedrooms">Minimum Bedrooms</label>
+                <input type="number" name="min_bedrooms" id="id_bedrooms" min="0" placeholder="e.g. 3" value="{{ request.GET.min_bedrooms }}" class="filter-number-input">
+            </div>
+
+            <!-- Legal Verified Documentation Checkboxes -->
+            <div class="filter-field-group document-checkboxes-group">
+                <label class="group-title-label">Required Verified Title Docs:</label>
+                
+                <label class="checkbox-item-label">
+                    <input type="checkbox" name="registered_survey" {% if request.GET.registered_survey == 'on' %}checked{% endif %}> Registered Survey
+                </label>
+                
+                <label class="checkbox-item-label">
+                    <input type="checkbox" name="deed_of_assignment" {% if request.GET.deed_of_assignment == 'on' %}checked{% endif %}> Deed of Assignment
+                </label>
+                
+                <label class="checkbox-item-label">
+                    <input type="checkbox" name="building_plan_approval" {% if request.GET.building_plan_approval == 'on' %}checked{% endif %}> Building Plan Approval
+                </label>
+                
+                <label class="checkbox-item-label">
+                    <input type="checkbox" name="c_of_o" {% if request.GET.c_of_o == 'on' %}checked{% endif %}> Certificate of Occupancy (C of O)
+                </label>
+                
+                <label class="checkbox-item-label">
+                    <input type="checkbox" name="governors_consent" {% if request.GET.governors_consent == 'on' %}checked{% endif %}> Governor's Consent
+                </label>
+            </div>
+
+            <button type="submit" class="search-btn filter-submit-btn">Filter Listings</button>
+            <a href="{% url 'advanced_search' %}" class="clear-filters-link">Clear All Filters</a>
+        </form>
+    </div>
+
+    <!-- 📊 SEARCH OUTPUT COUNT & RESULTS MATCHING GRID -->
+    <div class="search-results-wrapper">
+        <h2 style="margin-top: 10px; margin-bottom: 20px;" class="results-counter-heading">
+            Search Results Found ({{ properties.count }})
+        </h2>
+
+        <div class="property-grid">
+            {% for item in properties %}
+                <div class="property-card">
+                    {% if item.image %}
+                    <img 
+                        src="{{ item.image.url }}" 
+                        alt="{{ item.title }}" 
+                        class="propertyImg"
+                    />
+                    {% else %}
+                        <p>No image available</p>
+                    {% endif %}
+                    <p class="propertyStatus">Status: {{ item.get_status_display }}</p>
+                    <div class="property-details">
+                        <div class="detailsHold2">
+                            <h3>{{ item.property_address }}</h3>
+                            <p style="color: gray;font-weight: bold;"><i class="fa-solid fa-naira-sign"></i>{{ item.price|intcomma }}</p>
+                        </div>
+                        
+                        <div class="detailsHold">
+                            <h2>{{ item.title }}</h2>
+                            <a class="detailsBtn" href="{% url 'property_detail' item.pk %}">View details</a>
+                        </div>
+                        
+                        <!-- Mini specifications label list for scannability -->
+                        <div class="search-card-specs-preview" style="font-size: 0.85em; color: #555; margin: 4px 0;">
+                            <span>{{ item.category.name }}</span>
+                            {% if item.number_of_bedrooms %} • <span> {{ item.number_of_bedrooms }} Beds</span>{% endif %}
+                            {% if item.land_size %} • <span> {{ item.land_size }}</span>{% endif %}
+                        </div>
+
+                        <p>Posted by : {{ item.owner }}  {{ item.created_at|naturaltime }}</p>
+                    </div>
+                </div>
+            {% empty %}
+                <div class="no-properties-fallback">
+                    <p>No listings matched your criteria exactly.</p>
+                    <p style="color: gray; font-size: 0.9em;">Try removing some documentation checkboxes or raising your maximum price limit.</p>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+
+</div>
+{% endblock %}

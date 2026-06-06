@@ -3,8 +3,9 @@
 
 {% block content %}
 <div class="individual-dashboard">
-    <form method="get" class="search-form">
-        <input type="text" name="search" placeholder="Search by title, location, or category" value="{{ search }}" class="search-input" />
+    <!-- Form updated to route to the advanced search engine with parameter 'q' -->
+    <form method="get" action="{% url 'advanced_search' %}" class="search-form">
+        <input type="text" name="q" placeholder="Search by title, location, or category" value="{{ request.GET.q }}" class="search-input" />
         <button type="submit" class="search-btn">Search</button>
     </form>
 

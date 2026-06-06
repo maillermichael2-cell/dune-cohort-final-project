@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework_simplejwt',
     'django_filters',
+    'django.contrib.postgres',
     'accounts',
     'start',
     'propertyApp',

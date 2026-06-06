@@ -13,6 +13,7 @@ urlpatterns = [
     path('agent_properties/', views.agent_properties_list, name='agent_properties'),
     path('favorite/<int:pk>/', views.toggle_favorite, name='toggle_favorite'),
     path('favorites/', views.favorites_list, name='favorites_list'),
+    path('search/', views.advanced_property_search, name='advanced_search'),
 
 
     # api urls

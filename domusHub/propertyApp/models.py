@@ -1,5 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.contrib.postgres.indexes import GinIndex
+from django.contrib.postgres.operations import TrigramExtension
 
 # Create your models here.
 
@@ -39,27 +41,37 @@ class Property(models.Model):
     price = models.DecimalField(max_digits=15, decimal_places=2)
     category = models.ForeignKey(PropertyCategory, on_delete=models.CASCADE, related_name='properties')
     owner = models.ForeignKey(User, null=True, blank=True, on_delete=models.SET_NULL, related_name='properties')
-    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='AVAILABLE')
+    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='Available')
     image = models.ImageField(upload_to='property_images/', null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
 
     # --- DOCUMENTATION STATUS FIELDS ---
-    registered_survey = models.CharField(max_length=20, choices=DOC_STATUS_CHOICES, default='NOT_AVAILABLE')
-    deed_of_assignment = models.CharField(max_length=20, choices=DOC_STATUS_CHOICES, default='NOT_AVAILABLE')
-    building_plan_approval = models.CharField(max_length=20, choices=DOC_STATUS_CHOICES, default='NOT_AVAILABLE')
-    c_of_o = models.CharField(verbose_name="C of O", max_length=20, choices=DOC_STATUS_CHOICES, default='NOT_AVAILABLE')
-    governors_consent = models.CharField(verbose_name="Governor's Consent", max_length=20, choices=DOC_STATUS_CHOICES, default='NOT_AVAILABLE')
+    registered_survey = models.CharField(max_length=20, choices=DOC_STATUS_CHOICES, default='Not_Available')
+    deed_of_assignment = models.CharField(max_length=20, choices=DOC_STATUS_CHOICES, default='Not_Available')
+    building_plan_approval = models.CharField(max_length=20, choices=DOC_STATUS_CHOICES, default='Not_Available')
+    c_of_o = models.CharField(verbose_name="C of O", max_length=20, choices=DOC_STATUS_CHOICES, default='Not_Available')
+    governors_consent = models.CharField(verbose_name="Governor's Consent", max_length=20, choices=DOC_STATUS_CHOICES, default='Not_Available')
 
     # --- LAND & BUILDING FEATURE FIELDS ---
     land_size = models.CharField(max_length=100, blank=True, help_text="e.g., '600 sqm' or '2 Plots'")
     sq_meters = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True, help_text="Numeric square meters")
     unit_size = models.CharField(max_length=100, blank=True, null=True, help_text="Built-up area (leave blank for land)")
-    construction_status = models.CharField(max_length=30, choices=CONSTRUCTION_STATUS_CHOICES, default='COMPLETED')
+    construction_status = models.CharField(max_length=30, choices=CONSTRUCTION_STATUS_CHOICES, default='Completed')
     number_of_bedrooms = models.PositiveIntegerField(blank=True, null=True)
     number_of_bathrooms = models.PositiveIntegerField(blank=True, null=True)
 
     def __str__(self):
         return f'{self.title} ({self.get_status_display()})'
+
+    #--------------system design high perfomance database indexing----------------
+    class Meta:
+        indexes = [
+            models.Index(fields=['status', 'category', 'price']),
+            models.Index(fields=['category', 'price']),
+
+            GinIndex(fields=['property_address'], name='property_address_trgm_idx', opclasses=['gin_trgm_ops']),
+            GinIndex(fields=['title'], name='property_title_trgm_idx', opclasses=['gin_trgm_ops'])
+        ]
 
 
 class Favorite(models.Model):

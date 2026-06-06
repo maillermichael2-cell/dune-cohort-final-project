@@ -22,6 +22,10 @@ from rest_framework.authentication import TokenAuthentication
 from rest_framework.permissions import IsAuthenticatedOrReadOnly
 from cloudinary import uploader as cloudinary_uploader
 import json
+# propertyApp/views.py
+from django.shortcuts import render
+from django.db.models import Q
+from .models import Property, PropertyCategory
 # Create your views here.
 
 def home(request):
@@ -36,6 +40,68 @@ def home(request):
 
 def about(request):
     return render(request, 'propertyApp/about.html')
+
+def advanced_property_search(request):
+    """
+    High-performance real estate search engine.
+    Utilizes PostgreSQL GIN Trigram indexes for instant text matching.
+    """
+    # 1. Base Query: Only pull available properties and pre-fetch category details 
+    # to avoid hitting the database inside loops (N+1 query optimization)
+    queryset = Property.objects.filter(status='AVAILABLE').select_related('category')
+    categories = PropertyCategory.objects.all()
+
+    # 2. Extract input metrics from the frontend GET query string parameters
+    query = request.GET.get('q', '').strip()
+    category_slug = request.GET.get('category')
+    min_price = request.GET.get('min_price')
+    max_price = request.GET.get('max_price')
+    construction = request.GET.get('construction_status')
+    min_bedrooms = request.GET.get('min_bedrooms')
+
+    # 3. Apply Text Keywords Search (Triggers PostgreSQL GIN Trigram Index)
+    if query:
+        queryset = queryset.filter(
+            Q(title__icontains=query) | Q(property_address__icontains=query)
+        )
+
+    # 4. Apply Category Dropdown Selection
+    if category_slug:
+        queryset = queryset.filter(category__slug=category_slug)
+
+    # 5. Apply Numeric Valuation / Price Constraints (B-Tree Indexed)
+    if min_price and min_price.isdigit():
+        queryset = queryset.filter(price__gte=min_price)
+    if max_price and max_price.isdigit():
+        queryset = queryset.filter(price__lte=max_price)
+
+    # 6. Apply Land / Building Construction Status Checks
+    if construction:
+        queryset = queryset.filter(construction_status=construction)
+
+    # 7. Apply Physical Specification Filters
+    if min_bedrooms and min_bedrooms.isdigit():
+        queryset = queryset.filter(number_of_bedrooms__gte=min_bedrooms)
+
+    # 8. Apply Document Verification Checklist Filters 
+    # (Matches standard HTML form checkbox output)
+    if request.GET.get('registered_survey') == 'on':
+        queryset = queryset.filter(registered_survey='AVAILABLE')
+    if request.GET.get('deed_of_assignment') == 'on':
+        queryset = queryset.filter(deed_of_assignment='AVAILABLE')
+    if request.GET.get('building_plan_approval') == 'on':
+        queryset = queryset.filter(building_plan_approval='AVAILABLE')
+    if request.GET.get('c_of_o') == 'on':
+        queryset = queryset.filter(c_of_o='AVAILABLE')
+    if request.GET.get('governors_consent') == 'on':
+        queryset = queryset.filter(governors_consent='AVAILABLE')
+
+    # 9. Pack results for the UI layout renderer
+    context = {
+        'properties': queryset,
+        'categories': categories,
+    }
+    return render(request, 'propertyApp/search_results.html', context)
 
 
 def property_detail(request, pk):
@@ -103,24 +169,18 @@ def favorites_list(request):
 
 @login_required
 def individual(request, slug=None):
-    search = request.GET.get('search', '')
     categories = PropertyCategory.objects.annotate(property_count=Count('properties'))
-    properties = Property.objects.all().order_by('-created_at')
+    
+    # Using select_related('category') here keeps this dashboard lightning fast too!
+    properties = Property.objects.all().select_related('category').order_by('-created_at')
 
     if slug:
         category = get_object_or_404(PropertyCategory, slug=slug)
         properties = properties.filter(category=category)
-    if search:
-        properties = properties.filter(
-            Q(title__icontains=search) |
-            Q(property_address__icontains=search) |
-            Q(category__name__icontains=search)
-        )
 
     return render(request, 'propertyApp/individual_dashboard.html', {
         'categories': categories,
         'properties': properties,
-        'search': search,
         'active_category': slug,
     })
 

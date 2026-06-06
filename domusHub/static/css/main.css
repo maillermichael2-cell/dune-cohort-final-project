@@ -1874,3 +1874,328 @@ main {
 
 .edit-auto-carousel-control.prev { left: 12px; }
 .edit-auto-carousel-control.next { right: 12px; }
+
+/* ==========================================================================
+   DOMUSHUB ADVANCED SEARCH ENGINE STYLES (Rich Dark Palette)
+   ========================================================================== */
+
+/* Page Wrapper Layout Split */
+.search-results-page {
+    display: flex;
+    gap: 32px;
+    background-color: var(--bg-clean);
+    color: var(--text-primary);
+    min-height: calc(100vh - var(--header-height));
+    padding: 30px;
+    box-sizing: border-box;
+}
+
+/* 🔍 LEFT COLUMN: FILTER DASHBOARD PANEL */
+.search-filters-wrapper {
+    flex: 0 0 320px;
+    background-color: var(--surface-card);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-md);
+    padding: 24px;
+    height: fit-content;
+    position: sticky;
+    top: calc(var(--header-height) + 20px);
+}
+
+.advanced-filter-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+/* Individual Form Fields Setup */
+.filter-field-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.filter-field-group label {
+    color: var(--text-primary);
+    font-size: 0.9rem;
+    font-weight: 600;
+}
+
+/* Inputs, Select Fields, & Textareas Elements */
+.advanced-filter-form .search-input,
+.filter-select,
+.filter-number-input {
+    width: 100%;
+    background-color: var(--bg-clean);
+    color: var(--text-primary);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-sm);
+    padding: 12px;
+    font-size: 0.9rem;
+    outline: none;
+    transition: var(--transition);
+    box-sizing: border-box;
+}
+
+.advanced-filter-form .search-input:focus,
+.filter-select:focus,
+.filter-number-input:focus {
+    border-color: var(--accent-blue);
+    box-shadow: 0 0 0 2px rgba(56, 189, 248, 0.15);
+}
+
+/* Split Min/Max Numeric Container */
+.price-range-inputs {
+    flex-direction: column;
+}
+
+.price-range-inputs .filter-number-input {
+    margin-bottom: 8px;
+}
+
+.price-range-inputs .filter-number-input:last-child {
+    margin-bottom: 0;
+}
+
+/* Verified Legal Documentation Checklist Group */
+.document-checkboxes-group {
+    border-top: 1px solid var(--border-subtle);
+    padding-top: 16px;
+    margin-top: 8px;
+}
+
+.document-checkboxes-group .group-title-label {
+    display: block;
+    margin-bottom: 12px;
+    color: var(--text-muted);
+}
+
+.checkbox-item-label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: var(--text-muted);
+    font-size: 0.88rem;
+    margin-bottom: 10px;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.checkbox-item-label:hover {
+    color: var(--text-primary);
+}
+
+.checkbox-item-label input[type="checkbox"] {
+    accent-color: var(--accent-blue);
+    width: 16px;
+    height: 16px;
+    cursor: pointer;
+}
+
+/* Action Execution Buttons */
+.filter-submit-btn {
+    background-color: var(--accent-blue);
+    color: #000000; /* Clean high-contrast dark text on bright sky blue */
+    font-weight: 700;
+    border: none;
+    border-radius: var(--radius-sm);
+    padding: 14px;
+    cursor: pointer;
+    transition: var(--transition);
+    text-align: center;
+}
+
+.filter-submit-btn:hover {
+    background-color: var(--accent-blue-hover);
+    transform: translateY(-1px);
+}
+
+.clear-filters-link {
+    color: var(--text-muted);
+    text-align: center;
+    font-size: 0.85rem;
+    text-decoration: none;
+    transition: var(--transition);
+}
+
+.clear-filters-link:hover {
+    color: var(--text-primary);
+    text-decoration: underline;
+}
+
+/* 📊 RIGHT COLUMN: GRID CONTENT WRAPPER */
+.search-results-wrapper {
+    flex: 1;
+}
+
+.results-counter-heading {
+    color: var(--text-primary);
+    font-size: 1.5rem;
+    font-weight: 700;
+    border-bottom: 1px solid var(--border-subtle);
+    padding-bottom: 12px;
+}
+
+/* Shared Marketplace Cards Interface Override */
+.search-results-page .property-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 24px;
+}
+
+.search-results-page .property-card {
+    background-color: var(--surface-card);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    transition: var(--transition);
+}
+
+.search-results-page .property-card:hover {
+    transform: translateY(-4px);
+    border-color: var(--surface-hover);
+    box-shadow: 0 12px 24px -10px rgba(0, 0, 0, 0.5);
+}
+
+/* Card Visual Media Layer */
+.search-results-page .propertyImg {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    border-bottom: 1px solid var(--border-subtle);
+}
+
+/* Floating Status Stamp Over Images */
+.search-results-page .propertyStatus {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    background-color: rgba(17, 24, 39, 0.85);
+    color: var(--accent-blue);
+    padding: 4px 10px;
+    border-radius: var(--radius-sm);
+    font-size: 0.75rem;
+    font-weight: bold;
+    backdrop-filter: blur(4px);
+    border: 1px solid var(--border-subtle);
+    margin: 0;
+}
+
+/* Card Information Body padding context */
+.search-results-page .property-details {
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
+
+.search-results-page .detailsHold2 {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 12px;
+    margin-bottom: 12px;
+}
+
+.search-results-page .detailsHold2 h3 {
+    font-size: 0.95rem;
+    color: var(--text-muted);
+    margin: 0;
+    line-height: 1.4;
+}
+
+.search-results-page .detailsHold2 p {
+    font-size: 1.1rem;
+    color: var(--text-primary) !important; /* Forces layout overrides */
+    margin: 0;
+    white-space: nowrap;
+}
+
+.search-results-page .detailsHold {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 14px;
+    margin-top: auto; /* Forces action layer to align evenly along card bottoms */
+}
+
+.search-results-page .detailsHold h2 {
+    font-size: 1.1rem;
+    color: var(--text-primary);
+    margin: 0;
+    font-weight: 600;
+}
+
+/* Interactive Navigation Action Handles */
+.search-results-page .detailsBtn {
+    background-color: var(--surface-hover);
+    color: var(--accent-blue);
+    text-decoration: none;
+    font-size: 0.85rem;
+    font-weight: 600;
+    padding: 8px 14px;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--border-subtle);
+    transition: var(--transition);
+    white-space: nowrap;
+}
+
+.search-results-page .detailsBtn:hover {
+    background-color: var(--accent-blue);
+    color: #000000;
+    border-color: var(--accent-blue);
+}
+
+/* Embedded Specs Tokens Bar */
+.search-card-specs-preview {
+    background-color: var(--bg-clean);
+    border: 1px solid var(--border-subtle);
+    padding: 6px 12px;
+    border-radius: var(--radius-sm);
+    color: var(--text-muted) !important;
+    font-weight: 500;
+    margin-bottom: 12px !important;
+}
+
+.search-results-page .property-details > p:last-child {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    margin: 0;
+    border-top: 1px solid var(--border-subtle);
+    padding-top: 10px;
+}
+
+/* Zero Results Fallback Alert Alert */
+.no-properties-fallback {
+    background-color: var(--surface-card);
+    border: 1px dashed var(--border-subtle);
+    border-radius: var(--radius-md);
+    padding: 40px;
+    text-align: center;
+    grid-column: 1 / -1;
+}
+
+.no-properties-fallback p:first-child {
+    color: var(--text-primary);
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin-bottom: 8px;
+}
+
+/* Responsive Fluidity Breaking Points */
+@media (max-width: 992px) {
+    .search-results-page {
+        flex-direction: column;
+        padding: 16px;
+    }
+    
+    .search-filters-wrapper {
+        flex: 1 1 auto;
+        width: 100%;
+        position: static;
+    }
+}
